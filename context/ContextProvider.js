@@ -9,12 +9,29 @@ const ContextProvider = ({ children }) => {
 
   const [darkTheme, setDarkTheme] = useState(false);
 
+  const [themeSettings, setThemeSettings] = useState(false);
+
+  const [pageURL, setPageURL] = useState("");
+
+  const setTheme = (e) => {
+    setDarkTheme(e.target.checked);
+
+    localStorage.setItem("portfolioDarkTheme", e.target.checked);
+  };
+
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
   }, [setScreenSize]);
+
+  useEffect(() => {
+    const darkTheme = localStorage.getItem("portfolioDarkTheme") || false;
+    setDarkTheme(darkTheme);
+
+    setPageURL(window.location.pathname);
+  }, [setPageURL]);
 
   return (
     <StateContext.Provider
@@ -25,6 +42,10 @@ const ContextProvider = ({ children }) => {
         setBottomNavbar,
         darkTheme,
         setDarkTheme,
+        setTheme,
+        themeSettings,
+        setThemeSettings,
+        pageURL,
       }}
     >
       {children}
