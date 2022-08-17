@@ -1,119 +1,25 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Basic Testing for CI
+name: Node.js CI
 
 on:
   push:
-#     branches : 
-#       - '*' 
-    branches: [ main, develop ]
-
+    branches: [main, dev]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, dev]
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  greet:
-#     runs-on: ubuntu-latest
-    runs-on: self-hosted
-    steps:
-    - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
-    
-
-  # npm_build:
-  #   runs-on: ubuntu-latest
-
-  #   strategy:
-  #     matrix:
-  #       node-version: [12.x, 14.x, 16.x]
-  #       # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-  #   steps:
-  #   - name: Checkout repository
-  #     uses: actions/checkout@v2
-  #     with:
-  #       submodules: recursive
-  #       token: ${{ secrets.RAFAT97_BOT_ACCESS_TOKEN }}
-
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v2
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #       cache: 'npm'
-  #   - name: Install npm package
-  #     run: npm install
-  #   - name: Project Build
-  #     run: npm run build --if-present
-  #   - name: Done
-  #     run: |
-  #       echo "🎉 The  npm_build test job was automatically done"  
-    
-  yarn_build:
-#     runs-on: ubuntu-latest
-    runs-on: self-hosted
-    needs: [greet]
     strategy:
       matrix:
-        node-version: [ 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [10.x, 12.x, 14.x, 15.x]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-#       with:
-#         submodules: recursive
-#         token: ${{ secrets.RAFAT97_BOT_ACCESS_TOKEN }}
-        
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install yarn
-      run: npm install -g yarn
-    - name: Install project packages
-      run: yarn install --frozen-lockfile
-    - name: Build project
-      run: yarn build
-    - name: Done
-      run: |
-        echo "🎉 The  yarn_build test job was automatically done"  
-      
-      
-#   docker_image_build:
-# #     runs-on: ubuntu-latest
-#     runs-on: self-hosted
-#     # needs: [greet,npm_build,yarn_build]
-#     needs: [greet,yarn_build]
-
-#     steps:
-#     - name: Checkout repository
-#       uses: actions/checkout@v2
-#       with:
-#         submodules: recursive
-#         token: ${{ secrets.RAFAT97_BOT_ACCESS_TOKEN }}
-        
-#     - name: Declare some variables
-#       id: vars
-#       shell: bash
-#       run: |
-#         echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-#         echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-#     - name: Get branch & short sha
-#       run: |
-#         echo "Branch: ${{ steps.vars.outputs.branch }}"
-#         echo "Sha: ${{ steps.vars.outputs.sha_short }}"
-#     - name: Docker build push action
-#       uses: docker/build-push-action@v2
-#       with:
-#         context: ./
-#         file: ./Dockerfile.PROD
-#         push: false
-#         tags: ${{ steps.vars.outputs.branch }}:${{ steps.vars.outputs.sha_short }}
-#     - name: Done
-#       run: |
-#         echo "🎉 The  docker_image_build test job was automatically done"
-    
-
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
