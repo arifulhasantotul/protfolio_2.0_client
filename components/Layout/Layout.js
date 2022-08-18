@@ -1,10 +1,17 @@
 import React from "react";
+import UpperNavbar from "../Navbar/UpperNavbar/UpperNavbar";
 
-const Layout = () => {
+const Layout = ({ children }) => {
   return (
-    <div>
-      <h1>This is layout</h1>
-    </div>
+    <>
+      <nav>
+        <UpperNavbar />
+        <div className="empty_div"></div>
+      </nav>
+      <main>{children}</main>
+
+      <footer></footer>
+    </>
   );
 };
 
