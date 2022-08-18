@@ -1,3 +1,4 @@
+import "swiper/css/bundle";
 import Layout from "../components/Layout/Layout";
 import ContextProvider from "../context/ContextProvider";
 import "../styles/globals.css";
