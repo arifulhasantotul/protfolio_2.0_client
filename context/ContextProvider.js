@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
+import { useRouter } from "next/router";
+
 const StateContext = createContext();
 
 const ContextProvider = ({ children }) => {
@@ -10,6 +12,9 @@ const ContextProvider = ({ children }) => {
   const [darkTheme, setDarkTheme] = useState(false);
 
   const [themeSettings, setThemeSettings] = useState(false);
+
+  const { pathname } = useRouter();
+  console.log(pathname);
 
   const [pageURL, setPageURL] = useState("");
 
@@ -30,8 +35,8 @@ const ContextProvider = ({ children }) => {
     const darkTheme = localStorage.getItem("portfolioDarkTheme") || false;
     setDarkTheme(darkTheme);
 
-    setPageURL(window.location.pathname);
-  }, [setPageURL]);
+    setPageURL(pathname);
+  }, [pathname]);
 
   return (
     <StateContext.Provider

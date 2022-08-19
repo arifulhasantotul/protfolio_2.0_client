@@ -7,6 +7,8 @@
   --offblack: #0d1013;
   --gray: #f6f6f6;
   --ash: #ecf0f3;
+  --light_dark_text: #878e99;
+  --dark_text: #3c3e41;
   --background-color-1: linear-gradient(145deg, #1e2024, #23272b);
   --background-color-2: #212428;
   --shadow-1: 10px 10px 19px #1c1e22, -10px -10px 19px #262a2e;
@@ -18,8 +20,7 @@
   --gradient-red-hover: linear-gradient(145deg, #f95230, #fb2c02);
   --color_heading: #ffffff;
   --color_heading-wv: #1e2125;
-  --color_body: #878e99;
-  --color_body-white: #3c3e41;
+
   --color_lightn: #c4cfde;
   --color_midgray: #878787;
   --color_light: #e4e6ea;
@@ -40,11 +41,12 @@
   --color_twitch: #6441a3;
   --color_discord: #7289da;
   --transition: 0.4s;
-  --font-primary: "Poppins", sans-serif;
-  --font-secondary: "Montserrat", sans-serif;
+  --FF_pop: "Poppins", sans-serif;
+  --FF_mont: "Montserrat", sans-serif;
   --FW_light: 300;
   --FW_regular: 400;
   --FW_medium: 500;
+  --FW_bold: 600;
   --FS_xxl: 45px;
   --FS_xl: 30px;
   --FS_md: 20px;
@@ -90,4 +92,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 110vw;
+}
+
+.empty_div {
+  height: 90px;
+  background: transparent;
 }
