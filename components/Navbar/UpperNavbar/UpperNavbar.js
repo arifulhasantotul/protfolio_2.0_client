@@ -9,7 +9,6 @@ import styles from "./UpperNavbar.module.css";
 
 const UpperNavbar = () => {
   const { pageURL } = useStateContext();
-  console.log(pageURL);
 
   return (
     <div className={styles.nav_sec}>

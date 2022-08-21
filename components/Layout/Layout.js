@@ -1,4 +1,5 @@
 import React from "react";
+import LowerNavbar from "../Navbar/LowerNavbar/LowerNavbar";
 import UpperNavbar from "../Navbar/UpperNavbar/UpperNavbar";
 
 const Layout = ({ children }) => {
@@ -10,7 +11,10 @@ const Layout = ({ children }) => {
       </nav>
       <main>{children}</main>
 
-      <footer></footer>
+      <footer>
+        <div className="empty_div"></div>
+        <LowerNavbar />
+      </footer>
     </>
   );
 };

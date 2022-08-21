@@ -57,6 +57,7 @@
 ::-webkit-scrollbar {
   width: 8px;
   border-radius: 10px;
+  cursor: pointer;
 }
 ::-webkit-scrollbar-track {
   background: none !important;
