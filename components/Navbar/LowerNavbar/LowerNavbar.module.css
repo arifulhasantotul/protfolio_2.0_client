@@ -40,11 +40,6 @@
   margin: 0 10px;
 }
 
-.link:last-child,
-.activeLink:last-child {
-  margin-right: 0;
-}
-
 .link_icon {
   position: relative;
   display: block;
@@ -60,8 +55,12 @@
   z-index: 10;
 }
 
-.nav_links .link:hover .link_icon svg,
+.nav_links .link:hover .link_icon svg {
+  transform: translateY(-20px);
+}
+
 .nav_links .activeLink .link_icon svg {
+  color: var(--ash);
   fill: var(--ash);
   transform: translateY(-35px);
 }
@@ -87,17 +86,24 @@
 
 .indicator {
   position: absolute;
-  top: -50%;
+  top: -100%;
   width: 60px;
   height: 60px;
   background: var(--orange);
   z-index: -1;
   border-radius: 50%;
   border: 6px solid #fff;
+  transition: var(--transition);
   opacity: 0;
 }
 
-.nav_links .link:hover .indicator,
 .nav_links .activeLink .indicator {
+  transform: translateY(65%);
   opacity: 1;
+}
+
+@media (max-width: 400px) {
+  .nav_links {
+    width: 100%;
+  }
 }
