@@ -25,6 +25,7 @@ const LowerNavbar = () => {
                     {path.icon}
                   </span>
                   <span className={styles.link_name}>{path.name}</span>
+                  <div className={styles.indicator}></div>
                 </span>
               </Link>
             ))}

@@ -14,7 +14,6 @@ const ContextProvider = ({ children }) => {
   const [themeSettings, setThemeSettings] = useState(false);
 
   const { pathname } = useRouter();
-  console.log(pathname);
 
   const [pageURL, setPageURL] = useState("");
 

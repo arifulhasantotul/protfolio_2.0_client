@@ -3,6 +3,7 @@
 
 :root {
   --orange: #fd4520;
+  --green: #29fd53;
   --offwhite: #f4f5f6;
   --offblack: #0d1013;
   --gray: #f6f6f6;
@@ -92,7 +93,6 @@ html {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 110vw;
 }
 
 .empty_div {
