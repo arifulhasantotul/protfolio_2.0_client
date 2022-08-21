@@ -67,3 +67,6 @@
   width: 16px;
   height: 16px;
 }
+.activeLink .link_icon svg {
+  fill: var(--orange);
+}

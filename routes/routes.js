@@ -1,28 +1,28 @@
-import * as AiIcons from "react-icons/ai";
-import * as BiIcons from "react-icons/bi";
-import * as BsIcons from "react-icons/bs";
-import * as FaIcons from "react-icons/fa";
 import * as ImIcons from "react-icons/im";
-import * as SiIcons from "react-icons/si";
+import ChatIcon from "../components/CustomIcons/ChatIcon.js";
+import DashboardIcon from "../components/CustomIcons/DashboardIcon.js";
+import HomeIcon from "../components/CustomIcons/HomeIcon.js";
+import ProgressIcon from "../components/CustomIcons/ProgressIcon.js";
+import ProjectIcon from "../components/CustomIcons/ProjectIcon.js";
 
 const routes = [
   {
-    icon: <FaIcons.FaHome />,
+    icon: <HomeIcon />,
     name: "Home",
     to: "/",
   },
   {
-    icon: <AiIcons.AiOutlineFundProjectionScreen />,
+    icon: <DashboardIcon />,
     name: "Dashboard",
     to: "/dashboard",
   },
   {
-    icon: <BsIcons.BsGrid1X2Fill />,
+    icon: <ProjectIcon />,
     name: "Projects",
     to: "/projects",
   },
   {
-    icon: <SiIcons.SiProgress />,
+    icon: <ProgressIcon />,
     name: "About",
     to: "/about",
   },
@@ -32,7 +32,7 @@ const routes = [
     to: "/blogs",
   },
   {
-    icon: <BiIcons.BiChat />,
+    icon: <ChatIcon />,
     name: "Contact",
     to: "/contact",
   },
