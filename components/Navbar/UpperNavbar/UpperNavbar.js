@@ -6,6 +6,8 @@ import Switch from "react-switch";
 import { useStateContext } from "../../../context/ContextProvider";
 import logo from "../../../public/logo.jpg";
 import routes from "../../../routes/routes";
+import MoonIcon from "../../CustomIcons/MoonIcon";
+import SunIcon from "../../CustomIcons/SunIcon";
 import styles from "./UpperNavbar.module.css";
 
 const UpperNavbar = () => {
@@ -24,6 +26,12 @@ const UpperNavbar = () => {
           <Switch
             checked={darkTheme}
             onChange={() => toggleDarkTheme(darkTheme)}
+            offColor="#fff"
+            onColor="#d1d9e6"
+            offHandleColor="#ecf0f3"
+            onHandleColor="#3c3e41"
+            uncheckedIcon={<MoonIcon />}
+            checkedIcon={<SunIcon />}
           />
           <div className={styles.nav_links}>
             {routes.map((path, idx) => (
