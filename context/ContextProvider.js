@@ -17,15 +17,15 @@ const ContextProvider = ({ children }) => {
 
   const [pageURL, setPageURL] = useState("");
 
-  const setTheme = (e) => {
-    setDarkTheme(e.target.checked);
-
-    localStorage.setItem("portfolioDarkTheme", e.target.checked);
+  const toggleDarkTheme = (prevState) => {
+    setDarkTheme(!prevState);
+    localStorage.setItem("portfolioDarkTheme", !prevState);
   };
 
   useEffect(() => {
-    const darkTheme = localStorage.getItem("portfolioDarkTheme") || false;
-    setDarkTheme(darkTheme);
+    const savedTheme = localStorage.getItem("portfolioDarkTheme") || false;
+    const isTrue = savedTheme === "true" ? true : false;
+    setDarkTheme(isTrue);
 
     setPageURL(pathname);
 
@@ -44,7 +44,7 @@ const ContextProvider = ({ children }) => {
         setBottomNavbar,
         darkTheme,
         setDarkTheme,
-        setTheme,
+        toggleDarkTheme,
         themeSettings,
         setThemeSettings,
         pageURL,

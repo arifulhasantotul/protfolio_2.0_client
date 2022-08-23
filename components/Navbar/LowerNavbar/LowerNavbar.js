@@ -5,10 +5,13 @@ import routes from "../../../routes/routes";
 import styles from "./LowerNavbar.module.css";
 
 const LowerNavbar = () => {
-  const { pageURL } = useStateContext();
+  const { pageURL, darkTheme } = useStateContext();
+
+  // css conditionalClass for dark mode
+  const conditionalClass = darkTheme ? styles.dark : styles.light;
 
   return (
-    <div className={styles.nav_sec}>
+    <div className={`${conditionalClass} ${styles.nav_sec}`}>
       <div className={styles.nav_wrapper}>
         <div className={styles.nav_links}>
           {routes.map((path, idx) => (
