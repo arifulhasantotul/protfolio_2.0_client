@@ -1,5 +1,6 @@
 import React from "react";
 import { useStateContext } from "../../context/ContextProvider";
+import DarkToggleButton from "../DarkToggleButton/DarkToggleButton";
 import LowerNavbar from "../Navbar/LowerNavbar/LowerNavbar";
 import UpperNavbar from "../Navbar/UpperNavbar/UpperNavbar";
 
@@ -11,6 +12,7 @@ const Layout = ({ children }) => {
         <UpperNavbar />
         <div className="empty_div"></div>
       </nav>
+      <DarkToggleButton />
       <main>{children}</main>
 
       <footer>
