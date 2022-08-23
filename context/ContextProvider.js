@@ -24,18 +24,16 @@ const ContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const handleResize = () => setScreenSize(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setScreenSize]);
-
-  useEffect(() => {
     const darkTheme = localStorage.getItem("portfolioDarkTheme") || false;
     setDarkTheme(darkTheme);
 
     setPageURL(pathname);
-  }, [pathname]);
+
+    const handleResize = () => setScreenSize(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setScreenSize, pathname]);
 
   return (
     <StateContext.Provider
