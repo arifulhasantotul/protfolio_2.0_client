@@ -1,7 +1,7 @@
 .nav_sec {
   position: fixed;
   left: 0;
-  bottom: 5px;
+  bottom: 0;
   z-index: 10;
   width: 100%;
 }
@@ -14,8 +14,15 @@
   margin: 0 auto;
   justify-content: center;
   align-items: center;
-  background: var(--ash);
   border-radius: 10px;
+}
+
+.light .nav_wrapper {
+  background: var(--bg_white);
+}
+
+.dark .nav_wrapper {
+  background: var(--bg_dark);
 }
 
 .nav_links {
@@ -50,18 +57,41 @@
 .link_icon svg {
   width: 24px;
   height: 24px;
-  fill: var(--dark_text);
   transition: var(--transition);
   z-index: 10;
 }
 
-.nav_links .link:hover .link_icon svg {
+.light .link_icon {
+  color: var(--dark_text);
+  fill: var(--dark_text);
+}
+
+.dark .link_icon {
+  color: var(--light_text);
+  fill: var(--light_text);
+}
+
+.light .nav_links .link:hover .link_icon svg {
+  color: var(--offdark_text);
+  fill: var(--offdark_text);
   transform: translateY(-20px);
 }
 
-.nav_links .activeLink .link_icon svg {
-  color: var(--ash);
-  fill: var(--ash);
+.dark .nav_links .link:hover .link_icon svg {
+  color: var(--offwhite);
+  fill: var(--offwhite);
+  transform: translateY(-20px);
+}
+
+.light .nav_links .activeLink .link_icon svg {
+  color: var(--bg_white);
+  fill: var(--bg_white);
+  transform: translateY(-35px);
+}
+
+.dark .nav_links .activeLink .link_icon svg {
+  color: var(--bg_dark);
+  fill: var(--bg_dark);
   transform: translateY(-35px);
 }
 
@@ -75,7 +105,15 @@
   opacity: 0;
 }
 
-.nav_links .link:hover .link_name {
+.light .nav_links .link:hover .link_name {
+  color: var(--dark_text);
+  fill: var(--dark_text);
+  opacity: 1;
+}
+
+.dark .nav_links .link:hover .link_name {
+  color: var(--offwhite);
+  fill: var(--offwhite);
   opacity: 1;
 }
 
@@ -92,9 +130,17 @@
   background: var(--orange);
   z-index: -1;
   border-radius: 50%;
-  border: 6px solid #fff;
   transition: var(--transition);
   opacity: 0;
+}
+
+.light .indicator {
+  border: 6px solid #fff;
+}
+
+.dark .indicator {
+  border: 6px solid #141414;
+  border: 6px solid #fff;
 }
 
 .nav_links .activeLink .indicator {

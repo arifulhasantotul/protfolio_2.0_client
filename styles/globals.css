@@ -2,14 +2,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&amp;display=swap");
 
 :root {
+  --bg_dark: #212428;
+  --bg_white: #ecf0f3;
+  --red: #ed4141;
+  --pink: #c231a1;
+  --purple: #6441a3;
   --orange: #fd4520;
   --green: #29fd53;
   --offwhite: #f4f5f6;
   --offblack: #0d1013;
   --gray: #f6f6f6;
-  --ash: #ecf0f3;
-  --light_dark_text: #878e99;
   --dark_text: #3c3e41;
+  --offdark_text: #878e99;
+  --light_text: #878787;
   --background-color-1: linear-gradient(145deg, #1e2024, #23272b);
   --background-color-2: #212428;
   --shadow-1: 10px 10px 19px #1c1e22, -10px -10px 19px #262a2e;
@@ -23,7 +28,6 @@
   --color_heading-wv: #1e2125;
 
   --color_lightn: #c4cfde;
-  --color_midgray: #878787;
   --color_light: #e4e6ea;
   --color_lighter: #ced0d4;
   --color_lightest: #f0f2f5;
@@ -35,11 +39,8 @@
   --color_info: #1ba2db;
   --color_facebook: #3b5997;
   --color_twitter: #1ba1f2;
-  --color_youtube: #ed4141;
   --color_linkedin: #0077b5;
-  --color_instagram: #c231a1;
   --color_vimeo: #00adef;
-  --color_twitch: #6441a3;
   --color_discord: #7289da;
   --transition: 0.4s;
   --FF_pop: "Poppins", sans-serif;
