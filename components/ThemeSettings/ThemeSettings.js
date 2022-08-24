@@ -6,31 +6,47 @@ import { themeColors } from "./themeColor";
 import styles from "./ThemeSettings.module.css";
 
 const ThemeSettings = () => {
-  const { darkTheme, currentColor, setColor } = useStateContext();
+  const { darkTheme, currentColor, sidebar, setSidebar, setColor } =
+    useStateContext();
+
+  const toggleSidebar = () => {
+    setSidebar((prevState) => !prevState);
+  };
+
+  const handleColorBtn = (name, color) => {
+    setColor(name, color);
+    toggleSidebar();
+  };
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
+  const conditionalSidebar = sidebar ? "" : styles.inactive;
+
   return (
-    <div className={`${conditionalMode} ${styles.theme_sec}`}>
-      <div className={styles.theme_wrapper}>
-        <p className={styles.color_options}>Theme Colors</p>
-        <div className={styles.color_sec}>
-          {themeColors.map((item, idx) => (
-            <button
-              key={idx}
-              type="button"
-              title={item?.name}
-              className={styles.theme_btn}
-              style={{
-                background: item?.color,
-              }}
-              onClick={() => setColor(item?.name, item?.color)}
-            >
-              {item?.color === currentColor && (
-                <BsIcons.BsCheck className={styles.checkIcon} />
-              )}
-            </button>
-          ))}
+    <>
+      <div
+        className={`${conditionalMode} ${styles.theme_sec} ${conditionalSidebar}`}
+      >
+        <div className={styles.theme_wrapper}>
+          <p className={styles.color_options}>Theme Colors</p>
+          <div className={styles.color_sec}>
+            {themeColors.map((item, idx) => (
+              <button
+                key={idx}
+                type="button"
+                title={item?.name}
+                className={styles.theme_btn}
+                style={{
+                  background: item?.color,
+                }}
+                onClick={() => handleColorBtn(item?.name, item?.color)}
+              >
+                {item?.color === currentColor && (
+                  <BsIcons.BsCheck className={styles.checkIcon} />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       <div
@@ -39,10 +55,11 @@ const ThemeSettings = () => {
         style={{
           background: currentColor,
         }}
+        onClick={toggleSidebar}
       >
         <FiIcons.FiSettings className={styles.settings} />
       </div>
-    </div>
+    </>
   );
 };
 
