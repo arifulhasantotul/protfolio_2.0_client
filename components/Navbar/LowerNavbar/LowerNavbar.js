@@ -7,8 +7,6 @@ import styles from "./LowerNavbar.module.css";
 const LowerNavbar = () => {
   const { pageURL, currentColor, darkTheme } = useStateContext();
 
-  console.log(currentColor);
-
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
 

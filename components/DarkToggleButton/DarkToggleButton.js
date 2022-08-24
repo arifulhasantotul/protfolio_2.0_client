@@ -6,9 +6,15 @@ import SunIcon from "../CustomIcons/SunIcon";
 import styles from "./DarkToggleButton.module.css";
 
 const DarkToggleButton = () => {
-  const { darkTheme, toggleDarkTheme } = useStateContext();
+  const { darkTheme, currentColor, toggleDarkTheme } = useStateContext();
   return (
-    <div className={styles.dark_toggle_div} title="Dark mode">
+    <div
+      className={styles.dark_toggle_div}
+      title="Dark mode"
+      style={{
+        border: `3px solid ${currentColor}`,
+      }}
+    >
       <Switch
         checked={darkTheme}
         onChange={() => toggleDarkTheme(darkTheme)}

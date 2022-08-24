@@ -24,7 +24,7 @@ const ThemeSettings = () => {
               style={{
                 background: item?.color,
               }}
-              onClick={() => setColor(item?.color)}
+              onClick={() => setColor(item?.name, item?.color)}
             >
               {item?.color === currentColor && (
                 <BsIcons.BsCheck className={styles.checkIcon} />

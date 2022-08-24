@@ -12,6 +12,7 @@ const ContextProvider = ({ children }) => {
   const [darkTheme, setDarkTheme] = useState(false);
 
   const [currentColor, setCurrentColor] = useState("#FD4520");
+  const [currentColorName, setCurrentColorName] = useState("orange");
 
   const [themeSettings, setThemeSettings] = useState(false);
 
@@ -25,10 +26,12 @@ const ContextProvider = ({ children }) => {
     localStorage.setItem("portfolioDarkTheme", !prevState);
   };
 
-  const setColor = (color) => {
+  const setColor = (name, color) => {
     setCurrentColor(color);
+    setCurrentColorName(name);
 
     localStorage.setItem("portfolioThemeColor", color);
+    localStorage.setItem("portfolioThemeColorName", name);
   };
 
   useEffect(() => {
@@ -39,13 +42,17 @@ const ContextProvider = ({ children }) => {
     const savedColor = localStorage.getItem("portfolioThemeColor") || "#FD4520";
     setCurrentColor(savedColor);
 
+    const savedColorName =
+      localStorage.getItem("portfolioThemeColorName") || "orange";
+    setCurrentColorName(savedColorName);
+
     setPageURL(pathname);
 
     const handleResize = () => setScreenSize(window.innerWidth);
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [setScreenSize, pathname]);
+  }, [setScreenSize, pathname, currentColorName]);
 
   return (
     <StateContext.Provider
@@ -63,6 +70,8 @@ const ContextProvider = ({ children }) => {
         currentColor,
         setCurrentColor,
         setColor,
+        currentColorName,
+        setCurrentColorName,
       }}
     >
       {children}
