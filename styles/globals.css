@@ -4,6 +4,9 @@
 :root {
   --bg_dark: #212428;
   --bg_white: #ecf0f3;
+  --red: #ed4141;
+  --pink: #c231a1;
+  --purple: #6441a3;
   --orange: #fd4520;
   --green: #29fd53;
   --offwhite: #f4f5f6;
@@ -36,11 +39,8 @@
   --color_info: #1ba2db;
   --color_facebook: #3b5997;
   --color_twitter: #1ba1f2;
-  --color_youtube: #ed4141;
   --color_linkedin: #0077b5;
-  --color_instagram: #c231a1;
   --color_vimeo: #00adef;
-  --color_twitch: #6441a3;
   --color_discord: #7289da;
   --transition: 0.4s;
   --FF_pop: "Poppins", sans-serif;

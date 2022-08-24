@@ -8,7 +8,7 @@ import styles from "./DarkToggleButton.module.css";
 const DarkToggleButton = () => {
   const { darkTheme, toggleDarkTheme } = useStateContext();
   return (
-    <div className={styles.dark_toggle_div}>
+    <div className={styles.dark_toggle_div} title="Dark mode">
       <Switch
         checked={darkTheme}
         onChange={() => toggleDarkTheme(darkTheme)}
