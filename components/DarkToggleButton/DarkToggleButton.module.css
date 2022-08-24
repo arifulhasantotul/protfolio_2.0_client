@@ -1,0 +1,20 @@
+.dark_toggle_div {
+  position: fixed;
+  bottom: 15px;
+  left: -12px;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  border-radius: 50px;
+  z-index: 100;
+  transform: rotate(-90deg);
+}
+
+@media (max-width: 600px) {
+  .dark_toggle_div {
+    top: 5px;
+    left: 5px;
+    bottom: auto;
+    transform: rotate(0deg);
+  }
+}
