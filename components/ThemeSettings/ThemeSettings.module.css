@@ -1,0 +1,69 @@
+.theme_sec {
+  position: fixed;
+  top: 90px;
+  right: 0;
+  font-family: var(--FF_mont);
+  height: 100%;
+}
+
+.light.theme_sec {
+  background: var(--bg_white);
+}
+
+.dark.theme_sec {
+  background: var(--bg_dark);
+}
+
+.color_options {
+  padding: 0 10px;
+  font-size: var(--FS_sm);
+  font-weight: var(--FW_bold);
+}
+
+.light .color_options {
+  color: var(--dark_text);
+}
+
+.dark .color_options {
+  color: var(--light_text);
+}
+
+.color_sec {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 10px;
+}
+
+.theme_btn {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.checkIcon {
+  display: flex;
+  font-size: 25px;
+  color: #fff;
+}
+
+.setting_icon {
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+  width: 45px;
+  height: 45px;
+  z-index: 100;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.settings {
+  font-size: var(--FS_xl);
+  color: #fff;
+}

@@ -11,6 +11,8 @@ const ContextProvider = ({ children }) => {
 
   const [darkTheme, setDarkTheme] = useState(false);
 
+  const [currentColor, setCurrentColor] = useState("#FD4520");
+
   const [themeSettings, setThemeSettings] = useState(false);
 
   const { pathname } = useRouter();
@@ -19,13 +21,23 @@ const ContextProvider = ({ children }) => {
 
   const toggleDarkTheme = (prevState) => {
     setDarkTheme(!prevState);
+
     localStorage.setItem("portfolioDarkTheme", !prevState);
+  };
+
+  const setColor = (color) => {
+    setCurrentColor(color);
+
+    localStorage.setItem("portfolioThemeColor", color);
   };
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("portfolioDarkTheme") || false;
     const isTrue = savedTheme === "true" ? true : false;
     setDarkTheme(isTrue);
+
+    const savedColor = localStorage.getItem("portfolioThemeColor") || "#FD4520";
+    setCurrentColor(savedColor);
 
     setPageURL(pathname);
 
@@ -48,6 +60,9 @@ const ContextProvider = ({ children }) => {
         themeSettings,
         setThemeSettings,
         pageURL,
+        currentColor,
+        setCurrentColor,
+        setColor,
       }}
     >
       {children}

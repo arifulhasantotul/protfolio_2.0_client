@@ -5,7 +5,9 @@ import routes from "../../../routes/routes";
 import styles from "./LowerNavbar.module.css";
 
 const LowerNavbar = () => {
-  const { pageURL, darkTheme } = useStateContext();
+  const { pageURL, currentColor, darkTheme } = useStateContext();
+
+  console.log(currentColor);
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
@@ -25,8 +27,20 @@ const LowerNavbar = () => {
                 <span title={path.name} className={styles.link_icon}>
                   {path.icon}
                 </span>
-                <span className={styles.link_name}>{path.name}</span>
-                <div className={styles.indicator}></div>
+                <span
+                  className={`${styles.link_name}`}
+                  style={{
+                    color: currentColor,
+                  }}
+                >
+                  {path.name}
+                </span>
+                <div
+                  className={styles.indicator}
+                  style={{
+                    background: currentColor,
+                  }}
+                ></div>
               </span>
             </Link>
           ))}
