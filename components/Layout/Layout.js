@@ -6,20 +6,24 @@ import UpperNavbar from "../Navbar/UpperNavbar/UpperNavbar";
 import ThemeSettings from "../ThemeSettings/ThemeSettings";
 
 const Layout = ({ children }) => {
-  const { darkTheme } = useStateContext();
+  const { darkTheme, screenSize } = useStateContext();
+
   return (
     <div id={darkTheme ? "dark" : "light"}>
-      <nav>
-        <UpperNavbar />
-        <div className="empty_div"></div>
-      </nav>
+      {screenSize >= 900 && (
+        <nav>
+          <UpperNavbar />
+          <div className="empty_div"></div>
+        </nav>
+      )}
       <DarkToggleButton />
       <ThemeSettings />
+
       <main>{children}</main>
 
       <footer>
         <div className="empty_div"></div>
-        <LowerNavbar />
+        {screenSize < 900 && <LowerNavbar />}
       </footer>
     </div>
   );

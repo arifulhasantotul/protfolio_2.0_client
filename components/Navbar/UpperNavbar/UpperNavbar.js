@@ -10,7 +10,7 @@ import routes from "../../../routes/routes";
 import styles from "./UpperNavbar.module.css";
 
 const UpperNavbar = () => {
-  const { pageURL, darkTheme } = useStateContext();
+  const { pageURL, currentColor, darkTheme } = useStateContext();
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
@@ -23,13 +23,17 @@ const UpperNavbar = () => {
             <Image src={logo} alt="logo" layout="fill" objectFit="cover" />
           </div>
 
-          <div className={styles.nav_links}>
+          <div className={`${styles.nav_links}`}>
             {routes.map((path, idx) => (
               <Link key={idx} href={path.to}>
                 <span
                   className={
                     pageURL === path.to ? styles.activeLink : styles.link
                   }
+                  style={{
+                    color: pageURL === path.to ? currentColor : "",
+                    fill: pageURL === path.to ? currentColor : "",
+                  }}
                   title={`Go to: ${path.to}`}
                 >
                   <span title={path.name} className={styles.link_icon}>

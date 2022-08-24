@@ -106,14 +106,14 @@
 }
 
 .light .nav_links .link:hover .link_name {
-  color: var(--dark_text);
-  fill: var(--dark_text);
+  color: var(--dark_text) !important;
+  fill: var(--dark_text) !important;
   opacity: 1;
 }
 
 .dark .nav_links .link:hover .link_name {
-  color: var(--offwhite);
-  fill: var(--offwhite);
+  color: var(--offwhite) !important;
+  fill: var(--offwhite) !important;
   opacity: 1;
 }
 
@@ -127,7 +127,7 @@
   top: -100%;
   width: 60px;
   height: 60px;
-  background: var(--orange);
+  /* background: var(--orange); */
   z-index: -1;
   border-radius: 50%;
   transition: var(--transition);
