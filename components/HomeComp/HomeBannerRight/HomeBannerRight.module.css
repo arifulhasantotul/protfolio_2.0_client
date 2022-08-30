@@ -1,0 +1,24 @@
+.fig_div {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.figure {
+  position: relative;
+  width: 450px;
+  height: 450px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.light .figure {
+  border-radius: 10px;
+  background: #ecf0f3;
+  box-shadow: 5px 5px 8px #898b8d, -5px -5px 8px #ffffff;
+}
+
+.dark .figure {
+  border-radius: 10px;
+  background: #212428;
+  box-shadow: 5px 5px 4px #0d0e10, -5px -5px 4px #353a40;
+}

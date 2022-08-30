@@ -1,6 +1,7 @@
-import { Container } from "@mui/system";
+import { Container, Grid } from "@mui/material";
 import React from "react";
 import HomeBannerLeft from "../../components/HomeComp/HomeBannerLeft/HomeBannerLeft";
+import HomeBannerRight from "../../components/HomeComp/HomeBannerRight/HomeBannerRight";
 import { useStateContext } from "../../context/ContextProvider";
 import styles from "./HomePage.module.css";
 
@@ -13,7 +14,14 @@ const HomePage = () => {
   return (
     <div className={`${styles.home_page} ${conditionalMode}`}>
       <Container maxWidth="xl">
-        <HomeBannerLeft />
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <HomeBannerLeft />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <HomeBannerRight />
+          </Grid>
+        </Grid>
       </Container>
     </div>
   );
