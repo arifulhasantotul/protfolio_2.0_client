@@ -15,10 +15,10 @@ const HomePage = () => {
     <div className={`${styles.home_page} ${conditionalMode}`}>
       <Container maxWidth="xl">
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <HomeBannerLeft />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <HomeBannerRight />
           </Grid>
         </Grid>

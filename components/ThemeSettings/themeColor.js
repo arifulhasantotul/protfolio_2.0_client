@@ -1,7 +1,7 @@
 export const themeColors = [
   {
     name: "blue",
-    color: "#1A97F5",
+    color: "#22d1ee",
   },
   {
     name: "green",
@@ -17,10 +17,14 @@ export const themeColors = [
   },
   {
     name: "indigo",
-    color: "#1E4DB7",
+    color: "#146eb4",
   },
   {
-    color: "#FD4520",
     name: "orange",
+    color: "#FD4520",
+  },
+  {
+    name: "brown",
+    color: "#c94e4e",
   },
 ];

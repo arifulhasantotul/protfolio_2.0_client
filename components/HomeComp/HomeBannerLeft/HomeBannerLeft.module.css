@@ -1,13 +1,12 @@
 .greetings {
   margin-bottom: 20px;
+  font-size: var(--FS_sm);
 }
 .light .greetings {
-  font-size: var(--FS_sm);
   color: var(--dark_text);
 }
 
 .dark .greetings {
-  font-size: var(--FS_sm);
   color: var(--light_text);
 }
 
@@ -51,4 +50,36 @@
 
 .dark .about {
   color: var(--light_text);
+}
+
+@media (max-width: 768px) {
+  .type_writer,
+  .name {
+    font-size: var(--FS_xl);
+  }
+}
+
+@media (max-width: 600px) {
+  .greetings {
+    padding-top: 25px;
+  }
+}
+
+@media (max-width: 400px) {
+  .greetings {
+    margin-bottom: 10px;
+  }
+  .type_writer {
+    margin-top: 10px;
+  }
+}
+@media (max-width: 350px) {
+  .type_writer,
+  .name {
+    font-size: var(--FS_md);
+  }
+
+  .about {
+    font-size: var(--FS_sm);
+  }
 }

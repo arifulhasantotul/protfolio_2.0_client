@@ -22,3 +22,30 @@
   background: #212428;
   box-shadow: 5px 5px 4px #0d0e10, -5px -5px 4px #353a40;
 }
+
+@media (max-width: 900px) {
+  .fig_div {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 450px) {
+  .figure {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+@media (max-width: 400px) {
+  .figure {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 350px) {
+  .figure {
+    width: 300px;
+    height: 300px;
+  }
+}
