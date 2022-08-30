@@ -52,6 +52,26 @@
   color: var(--light_text);
 }
 
+.banner_btn .btn {
+  font-size: var(--FS_sm);
+  border-radius: 6px;
+  display: inline-block;
+  width: max-content;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.light .banner_btn .btn {
+  background: var(--bg_light_btn);
+  box-shadow: var(--bg_light_btn_shadow);
+}
+
+.dark .banner_btn .btn {
+  background: var(--bg_dark_btn);
+  box-shadow: var(--bg_dark_btn_shadow);
+}
+
 @media (max-width: 768px) {
   .type_writer,
   .name {

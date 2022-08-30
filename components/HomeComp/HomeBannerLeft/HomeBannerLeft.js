@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Link from "next/link";
 import React from "react";
 import Typewriter from "typewriter-effect";
 import { useStateContext } from "../../../context/ContextProvider";
@@ -9,6 +10,14 @@ const HomeBannerLeft = () => {
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
+
+  function handleMouseEnter(x) {
+    console.log(x);
+    // x.style.backgroundColor = currentColor;
+    // x.style.color = "fff";
+  }
+
+  function handleMouseLeave(x) {}
 
   return (
     <div className={conditionalMode}>
@@ -62,6 +71,35 @@ const HomeBannerLeft = () => {
         to keep my work simple, clean and effective for other developers and
         users.
       </p>
+
+      <div className={styles.banner_btn}>
+        <Link href="">
+          <span
+            id="resume"
+            className={styles.btn}
+            style={{
+              color: currentColor,
+            }}
+            // onMouseEnter={() => handleMouseEnter(this)}
+            // onMouseLeave={() => handleMouseLeave(this)}
+          >
+            Download Resume
+          </span>
+        </Link>
+        <Link href="/contact">
+          <span
+            id="contact"
+            className={styles.btn}
+            style={{
+              color: currentColor,
+            }}
+            // onMouseEnter={handleMouseEnter(this)}
+            // onMouseLeave={handleMouseLeave(this)}
+          >
+            Contact
+          </span>
+        </Link>
+      </div>
     </div>
   );
 };
