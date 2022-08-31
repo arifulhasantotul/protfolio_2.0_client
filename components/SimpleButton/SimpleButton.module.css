@@ -1,0 +1,26 @@
+.btn {
+  font-size: var(--FS_sm);
+  border-radius: 6px;
+  display: inline-block;
+  width: max-content;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--FF_mont);
+  font-weight: var(--FW_medium);
+  letter-spacing: 1px;
+  transition: var(--transition);
+}
+
+.light.btn {
+  background: var(--bg_light_btn);
+  box-shadow: var(--bg_light_btn_shadow);
+}
+
+.dark.btn {
+  background: var(--bg_dark_btn);
+  box-shadow: var(--bg_dark_btn_shadow);
+}
