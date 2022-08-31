@@ -2,6 +2,7 @@ import { Container, Grid } from "@mui/material";
 import React from "react";
 import HomeBannerLeft from "../../components/HomeComp/HomeBannerLeft/HomeBannerLeft";
 import HomeBannerRight from "../../components/HomeComp/HomeBannerRight/HomeBannerRight";
+import HomeSkills from "../../components/HomeComp/HomeSkills/HomeSkills";
 import { useStateContext } from "../../context/ContextProvider";
 import styles from "./HomePage.module.css";
 
@@ -20,6 +21,11 @@ const HomePage = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <HomeBannerRight />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <HomeSkills />
           </Grid>
         </Grid>
       </Container>
