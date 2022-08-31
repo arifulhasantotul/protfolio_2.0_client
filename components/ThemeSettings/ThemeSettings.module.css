@@ -4,6 +4,7 @@
   right: 0;
   font-family: var(--FF_mont);
   height: 100%;
+  z-index: 100;
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   transition: clip-path var(--transition);
 }
@@ -48,10 +49,14 @@
   border: none;
   border-radius: 50%;
   cursor: pointer;
+  position: relative;
 }
 
 .checkIcon {
-  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 25px;
   color: #fff;
 }

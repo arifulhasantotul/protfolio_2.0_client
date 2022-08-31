@@ -1,0 +1,12 @@
+.skill_head {
+  font-size: var(--FS_md);
+  font-family: var(--FF_mont);
+  margin-top: 20px;
+}
+
+.light .skill_head {
+  color: var(--dark_text);
+}
+.dark .skill_head {
+  color: var(--light_text);
+}

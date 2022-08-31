@@ -1,0 +1,85 @@
+.greetings {
+  margin-bottom: 20px;
+  font-size: var(--FS_sm);
+}
+.light .greetings {
+  color: var(--dark_text);
+}
+
+.dark .greetings {
+  color: var(--light_text);
+}
+
+.type_writer,
+.name {
+  font-size: var(--FS_xxl);
+  font-family: var(--FF_mont);
+}
+
+.type_writer {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  font-weight: var(--FW_bold);
+  margin-top: 20px;
+}
+
+.light .words,
+.light .name {
+  color: var(--dark_heading);
+}
+
+.dark .words,
+.dark .name {
+  color: var(--light_heading);
+}
+
+.words {
+  padding-right: 10px;
+}
+
+.about {
+  font-size: var(--FS_md);
+  line-height: var(--FS_xl);
+  margin-top: 20px;
+}
+
+.light .about {
+  color: var(--dark_text);
+}
+
+.dark .about {
+  color: var(--light_text);
+}
+
+@media (max-width: 768px) {
+  .type_writer,
+  .name {
+    font-size: var(--FS_xl);
+  }
+}
+
+@media (max-width: 600px) {
+  .greetings {
+    padding-top: 25px;
+  }
+}
+
+@media (max-width: 400px) {
+  .greetings {
+    margin-bottom: 10px;
+  }
+  .type_writer {
+    margin-top: 10px;
+  }
+}
+@media (max-width: 350px) {
+  .type_writer,
+  .name {
+    font-size: var(--FS_md);
+  }
+
+  .about {
+    font-size: var(--FS_sm);
+  }
+}

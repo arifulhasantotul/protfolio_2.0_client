@@ -1,0 +1,35 @@
+.skill {
+  font-size: var(--FS_sm);
+  border-radius: 6px;
+  display: inline-block;
+  width: max-content;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 15px;
+  outline: none;
+  border: none;
+  font-family: var(--FF_mont);
+  font-weight: var(--FW_medium);
+  letter-spacing: 1px;
+  transition: var(--transition);
+}
+
+.skill:hover {
+  transform: translateY(-3px);
+}
+
+.light.skill {
+  background: var(--bg_light_btn);
+  box-shadow: var(--bg_light_btn_shadow);
+}
+
+.dark.skill {
+  background: var(--bg_dark_btn);
+  box-shadow: var(--bg_dark_btn_shadow);
+}
+
+@media (max-width: 600px) {
+  .skill {
+    padding: 10px;
+  }
+}
