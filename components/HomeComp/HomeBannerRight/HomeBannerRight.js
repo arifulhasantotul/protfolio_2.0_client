@@ -19,6 +19,7 @@ const HomeBannerRight = () => {
             alt="Profile picture"
             layout="fill"
             objectFit="cover"
+            priority
           />
         </div>
       </div>
