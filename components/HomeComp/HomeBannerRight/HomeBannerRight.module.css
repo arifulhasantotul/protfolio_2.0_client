@@ -1,0 +1,51 @@
+.fig_div {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.figure {
+  position: relative;
+  width: 450px;
+  height: 450px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.light .figure {
+  border-radius: 10px;
+  background: #ecf0f3;
+  box-shadow: 5px 5px 8px #898b8d, -5px -5px 8px #ffffff;
+}
+
+.dark .figure {
+  border-radius: 10px;
+  background: #212428;
+  box-shadow: 5px 5px 4px #0d0e10, -5px -5px 4px #353a40;
+}
+
+@media (max-width: 900px) {
+  .fig_div {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 450px) {
+  .figure {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+@media (max-width: 400px) {
+  .figure {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 350px) {
+  .figure {
+    width: 300px;
+    height: 300px;
+  }
+}
