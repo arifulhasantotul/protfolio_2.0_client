@@ -11,3 +11,7 @@
 .home_page.dark {
   background: var(--bg_dark);
 }
+
+.break_line {
+  margin: 40px 0;
+}

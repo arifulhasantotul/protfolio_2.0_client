@@ -23,6 +23,7 @@ const Layout = ({ children }) => {
 
       <footer>
         <div className="empty_div"></div>
+        {/* {screenSize < 900 && <div className="empty_div"></div>} */}
         {screenSize < 900 && <LowerNavbar />}
       </footer>
     </div>

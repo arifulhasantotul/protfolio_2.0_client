@@ -28,7 +28,8 @@
     -1px -3px 3px -2px rgba(255, 255, 255, 0.2) inset;
   --gradient-red-hover: linear-gradient(145deg, #f95230, #fb2c02);
 
-  --color_lightn: #c4cfde;
+  --light_page_head: #c4cfde;
+  --dark_page_head: #3c3e41;
   --color_light: #e4e6ea;
   --color_lighter: #ced0d4;
   --color_lightest: #f0f2f5;
@@ -52,6 +53,7 @@
   --FW_bold: 600;
   --FS_xxl: 45px;
   --FS_xl: 30px;
+  --FS_lg: 25px;
   --FS_md: 20px;
   --FS_sm: 14px;
   --FS_xs: 12px;
