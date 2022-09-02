@@ -5,7 +5,7 @@ import SkillPaper from "../../SkillPaper/SkillPaper";
 import styles from "./HomeSkills.module.css";
 
 const HomeSkills = () => {
-  const { currentColor, darkTheme } = useStateContext();
+  const { darkTheme } = useStateContext();
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
