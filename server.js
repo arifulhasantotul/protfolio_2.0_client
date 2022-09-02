@@ -9,7 +9,7 @@ const handle = app.getRequestHandler();
 
 const apiPaths = {
   "/api": {
-    target: "http://localhost:3080",
+    target: "http://localhost:5000",
     pathRewrite: {
       "^/api": "/api",
     },
@@ -34,7 +34,7 @@ app
 
     server.listen(port, (err) => {
       if (err) throw err;
-      console.log(`> Ready on http://localhost:${port}`);
+      console.log(`Development server http://localhost:${port}`, port);
     });
   })
   .catch((err) => {
