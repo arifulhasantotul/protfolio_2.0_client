@@ -34,7 +34,7 @@ app
 
     server.listen(port, (err) => {
       if (err) throw err;
-      console.log(`Development server http://localhost:${port}`, port);
+      console.log(`Development client server http://localhost:${port}`, port);
     });
   })
   .catch((err) => {
