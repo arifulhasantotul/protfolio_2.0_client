@@ -1,6 +1,5 @@
-import React from "react";
-import { useStateContext } from "../../context/ContextProvider";
-import styles from "./SkillPaper.module.css";
+import { useStateContext } from "@/context/ContextProvider";
+import styles from "@/styles/SkillPaper.module.css";
 
 const SkillPaper = ({ tooltip, children }) => {
   const { darkTheme } = useStateContext();

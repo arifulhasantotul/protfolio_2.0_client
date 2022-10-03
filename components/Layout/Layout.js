@@ -1,5 +1,4 @@
-import React from "react";
-import { useStateContext } from "../../context/ContextProvider";
+import { useStateContext } from "@/context/ContextProvider";
 import DarkToggleButton from "../DarkToggleButton/DarkToggleButton";
 import LowerNavbar from "../Navbar/LowerNavbar/LowerNavbar";
 import UpperNavbar from "../Navbar/UpperNavbar/UpperNavbar";
@@ -23,6 +22,7 @@ const Layout = ({ children }) => {
 
       <footer>
         <div className="empty_div"></div>
+        {/* {screenSize < 900 && <div className="empty_div"></div>} */}
         {screenSize < 900 && <LowerNavbar />}
       </footer>
     </div>

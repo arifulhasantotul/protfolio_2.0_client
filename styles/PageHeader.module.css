@@ -1,0 +1,27 @@
+.header_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--FS_xxl);
+  font-family: var(--FF_mont);
+}
+
+.light.header_div {
+  color: var(--dark_page_head);
+}
+
+.dark.header_div {
+  color: var(--light_page_head);
+}
+
+@media (max-width: 1200px) {
+  .header_div {
+    font-size: var(--FS_xl);
+  }
+}
+
+@media (max-width: 600px) {
+  .header_div {
+    font-size: var(--FS_lg);
+  }
+}

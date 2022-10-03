@@ -1,11 +1,10 @@
-import React from "react";
-import { useStateContext } from "../../../context/ContextProvider";
+import { useStateContext } from "@/context/ContextProvider";
 import { skillData } from "../../SkillPaper/skillData";
 import SkillPaper from "../../SkillPaper/SkillPaper";
-import styles from "./HomeSkills.module.css";
+import styles from "@/styles/HomeSkills.module.css";
 
 const HomeSkills = () => {
-  const { currentColor, darkTheme } = useStateContext();
+  const { darkTheme } = useStateContext();
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;

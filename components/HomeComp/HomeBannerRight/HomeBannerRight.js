@@ -1,7 +1,6 @@
+import { useStateContext } from "@/context/ContextProvider";
 import Image from "next/image";
-import React from "react";
-import { useStateContext } from "../../../context/ContextProvider";
-import styles from "./HomeBannerRight.module.css";
+import styles from "@/styles/HomeBannerRight.module.css";
 import PicSrc from "./own.jpg";
 
 const HomeBannerRight = () => {

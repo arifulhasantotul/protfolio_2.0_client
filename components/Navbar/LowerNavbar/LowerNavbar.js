@@ -1,8 +1,7 @@
+import { useStateContext } from "@/context/ContextProvider";
 import Link from "next/link";
-import React from "react";
-import { useStateContext } from "../../../context/ContextProvider";
 import routes from "../../../routes/routes";
-import styles from "./LowerNavbar.module.css";
+import styles from "@/styles/LowerNavbar.module.css";
 
 const LowerNavbar = () => {
   const { pageURL, currentColor, darkTheme } = useStateContext();

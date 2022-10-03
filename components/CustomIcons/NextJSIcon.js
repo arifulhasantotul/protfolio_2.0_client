@@ -1,5 +1,4 @@
-import React from "react";
-import { useStateContext } from "../../context/ContextProvider";
+import { useStateContext } from "@/context/ContextProvider";
 
 const NextJSIcon = ({ className }) => {
   const { darkTheme } = useStateContext();

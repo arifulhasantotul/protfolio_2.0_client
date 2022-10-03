@@ -1,4 +1,4 @@
-import * as ImIcons from "react-icons/im";
+import { ImBlog } from "react-icons/im";
 import ChatIcon from "../components/CustomIcons/ChatIcon.js";
 import DashboardIcon from "../components/CustomIcons/DashboardIcon.js";
 import HomeIcon from "../components/CustomIcons/HomeIcon.js";
@@ -27,7 +27,7 @@ const routes = [
     to: "/about",
   },
   {
-    icon: <ImIcons.ImBlog />,
+    icon: <ImBlog />,
     name: "Blogs",
     to: "/blogs",
   },

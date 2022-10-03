@@ -1,10 +1,11 @@
+import { useStateContext } from "@/context/ContextProvider";
+import styles from "@/styles/HomePage.module.css";
 import { Container, Grid } from "@mui/material";
-import React from "react";
 import HomeBannerLeft from "../../components/HomeComp/HomeBannerLeft/HomeBannerLeft";
 import HomeBannerRight from "../../components/HomeComp/HomeBannerRight/HomeBannerRight";
+import HomeProjects from "../../components/HomeComp/HomeProjects/HomeProjects";
 import HomeSkills from "../../components/HomeComp/HomeSkills/HomeSkills";
-import { useStateContext } from "../../context/ContextProvider";
-import styles from "./HomePage.module.css";
+import PageHeader from "../../components/PageHeader/PageHeader";
 
 const HomePage = () => {
   const { currentColor, darkTheme } = useStateContext();
@@ -26,6 +27,14 @@ const HomePage = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <HomeSkills />
+          </Grid>
+        </Grid>
+
+        <hr className={styles.break_line} />
+        <PageHeader title="Demo Projects" />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <HomeProjects />
           </Grid>
         </Grid>
       </Container>
