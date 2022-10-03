@@ -1,11 +1,11 @@
 import { useStateContext } from "@/context/ContextProvider";
+import styles from "@/styles/HomeProjects.module.css";
 import { Rating, styled } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { FaHeartbeat, FaRegHeart, FaSlideshare } from "react-icons/fa";
-import { VscGithub } from "react-icons/vsc";
+import { VscGithub, VscGithubInverted } from "react-icons/vsc";
 import ImgSrc from "./02login.png";
-import styles from "/HomeProjects.module.css";
 
 const HomeProjects = ({
   name,
