@@ -1,5 +1,4 @@
-import React from "react";
-import { useStateContext } from "../../context/ContextProvider";
+import { useStateContext } from "@/context/ContextProvider";
 import DarkToggleButton from "../DarkToggleButton/DarkToggleButton";
 import LowerNavbar from "../Navbar/LowerNavbar/LowerNavbar";
 import UpperNavbar from "../Navbar/UpperNavbar/UpperNavbar";

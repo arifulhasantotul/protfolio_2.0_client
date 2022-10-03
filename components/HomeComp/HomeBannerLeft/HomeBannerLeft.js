@@ -1,10 +1,9 @@
+import { useStateContext } from "@/context/ContextProvider";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import React from "react";
 import Typewriter from "typewriter-effect";
-import { useStateContext } from "../../../context/ContextProvider";
 import SimpleButton from "../../SimpleButton/SimpleButton";
-import styles from "./HomeBannerLeft.module.css";
+import styles from "@/styles/HomeBannerLeft.module.css";
 
 const HomeBannerLeft = () => {
   const { currentColor, darkTheme } = useStateContext();

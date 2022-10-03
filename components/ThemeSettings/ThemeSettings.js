@@ -1,9 +1,8 @@
-import React from "react";
-import * as BsIcons from "react-icons/bs";
-import * as FiIcons from "react-icons/fi";
-import { useStateContext } from "../../context/ContextProvider";
+import { useStateContext } from "@/context/ContextProvider";
+import { BsCheck } from "react-icons/bs";
+import { FiSettings } from "react-icons/fi";
 import { themeColors } from "./themeColor";
-import styles from "./ThemeSettings.module.css";
+import styles from "@/styles/ThemeSettings.module.css";
 
 const ThemeSettings = () => {
   const { darkTheme, currentColor, sidebar, setSidebar, setColor } =
@@ -42,7 +41,7 @@ const ThemeSettings = () => {
                 onClick={() => handleColorBtn(item?.name, item?.color)}
               >
                 {item?.color === currentColor && (
-                  <BsIcons.BsCheck className={styles.checkIcon} />
+                  <BsCheck className={styles.checkIcon} />
                 )}
               </button>
             ))}
@@ -57,7 +56,7 @@ const ThemeSettings = () => {
         }}
         onClick={toggleSidebar}
       >
-        <FiIcons.FiSettings className={styles.settings} />
+        <FiSettings className={styles.settings} />
       </div>
     </>
   );

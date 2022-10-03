@@ -1,6 +1,5 @@
-import React from "react";
-import { useStateContext } from "../../context/ContextProvider";
-import styles from "./PageHeader.module.css";
+import { useStateContext } from "@/context/ContextProvider";
+import styles from "@/styles/PageHeader.module.css";
 
 const PageHeader = ({ title }) => {
   const { darkTheme } = useStateContext();

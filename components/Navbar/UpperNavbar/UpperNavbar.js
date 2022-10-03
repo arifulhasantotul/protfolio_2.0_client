@@ -1,13 +1,12 @@
 import { Container } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
-import { useStateContext } from "../../../context/ContextProvider";
+import { useStateContext } from "@/context/ContextProvider";
 import logo from "../../../public/logo.jpg";
 import routes from "../../../routes/routes";
 
-import styles from "./UpperNavbar.module.css";
+import styles from "@/styles/UpperNavbar.module.css";
 
 const UpperNavbar = () => {
   const { pageURL, currentColor, darkTheme } = useStateContext();

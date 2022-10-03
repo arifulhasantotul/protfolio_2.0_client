@@ -1,12 +1,11 @@
+import { useStateContext } from "@/context/ContextProvider";
 import { Rating, styled } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import * as FaIcons from "react-icons/fa";
 import * as VscIcons from "react-icons/vsc";
-import { useStateContext } from "../../../context/ContextProvider";
 import ImgSrc from "./02login.png";
-import styles from "./HomeProjects.module.css";
+import styles from "@/styles/HomeProjects.module.css";
 
 const HomeProjects = ({
   name,

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useStateContext } from "../../context/ContextProvider";
-import styles from "./SimpleButton.module.css";
+import { useStateContext } from "@/context/ContextProvider";
+import { useEffect, useState } from "react";
+import styles from "@/styles/SimpleButton.module.css";
 
 const SimpleButton = ({ name, type, onClick, children, tooltip }) => {
   const { currentColor, darkTheme } = useStateContext();

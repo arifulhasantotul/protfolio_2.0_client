@@ -1,8 +1,8 @@
+import ContextProvider from "@/context/ContextProvider";
+import "@/styles/globals.css";
 import { AnimatePresence, motion } from "framer-motion";
 import "swiper/css/bundle";
 import Layout from "../components/Layout/Layout";
-import ContextProvider from "../context/ContextProvider";
-import "../styles/globals.css";
 
 function MyApp({ Component, pageProps, router }) {
   return (
