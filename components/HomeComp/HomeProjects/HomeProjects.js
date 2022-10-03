@@ -2,10 +2,10 @@ import { useStateContext } from "@/context/ContextProvider";
 import { Rating, styled } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import * as FaIcons from "react-icons/fa";
-import * as VscIcons from "react-icons/vsc";
+import { FaHeartbeat, FaRegHeart, FaSlideshare } from "react-icons/fa";
+import { VscGithub } from "react-icons/vsc";
 import ImgSrc from "./02login.png";
-import styles from "@/styles/HomeProjects.module.css";
+import styles from "/HomeProjects.module.css";
 
 const HomeProjects = ({
   name,
@@ -117,7 +117,7 @@ const HomeProjects = ({
                   }}
                   className={styles.card_btn}
                 >
-                  <FaIcons.FaSlideshare />
+                  <FaSlideshare />
                 </span>
               </Link>
               <Link href={client_repo} passHref>
@@ -128,7 +128,7 @@ const HomeProjects = ({
                   }}
                   className={styles.card_btn}
                 >
-                  <VscIcons.VscGithubInverted />
+                  <VscGithubInverted />
                 </span>
               </Link>
               <Link href={server_repo} passHref>
@@ -139,7 +139,7 @@ const HomeProjects = ({
                   }}
                   className={styles.card_btn}
                 >
-                  <VscIcons.VscGithub />
+                  <VscGithub />
                 </span>
               </Link>
             </div>
@@ -154,8 +154,8 @@ const HomeProjects = ({
             defaultValue={2}
             getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
             precision={0.1}
-            icon={<FaIcons.FaHeartbeat fontSize="inherit" />}
-            emptyIcon={<FaIcons.FaRegHeart fontSize="inherit" />}
+            icon={<FaHeartbeat fontSize="inherit" />}
+            emptyIcon={<FaRegHeart fontSize="inherit" />}
           />
         </div>
       </div>
