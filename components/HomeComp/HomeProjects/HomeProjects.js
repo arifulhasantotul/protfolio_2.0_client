@@ -1,11 +1,25 @@
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/HomeProjects.module.css";
+import { gql, useQuery } from "@apollo/client";
 import { Rating, styled } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { FaHeartbeat, FaRegHeart, FaSlideshare } from "react-icons/fa";
 import { VscGithub, VscGithubInverted } from "react-icons/vsc";
 import ImgSrc from "./02login.png";
+
+// Fetching all projects using graphql
+const ALL_PROJECTS = gql`
+  query AllProjects {
+    listProjects {
+      id
+      name
+      categories
+      des
+      clientId
+    }
+  }
+`;
 
 const HomeProjects = ({
   name,
@@ -16,6 +30,13 @@ const HomeProjects = ({
   server_repo = "",
 }) => {
   const { currentColor, darkTheme } = useStateContext();
+  const { loading, error, data } = useQuery(ALL_PROJECTS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Something went wrong(</p>;
+  if (!loading && !error) {
+    console.log(data.listProjects);
+  }
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
