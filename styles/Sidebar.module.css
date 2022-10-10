@@ -1,0 +1,112 @@
+.sidebar_sec {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  font-family: var(--FF_mont);
+  width: 150px;
+  height: calc(100vh - 90px);
+  z-index: 10;
+  /* clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); */
+  transition: clip-path var(--transition);
+}
+
+.sidebar_sec.inactive {
+  /* clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 0%); */
+}
+
+.light.sidebar_sec {
+  background: var(--bg_white);
+  /* background: red; */
+}
+
+.dark.sidebar_sec {
+  background: var(--bg_dark);
+}
+
+.nav_items {
+  z-index: 100;
+  height: 100%;
+}
+
+.link_wrapper {
+  display: block;
+  position: relative;
+}
+
+.sub_link,
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  font-size: var(--FS_sm);
+  text-decoration: none;
+  font-weight: var(--FW_medium);
+  text-transform: uppercase;
+  transition: all var(--transition);
+  cursor: pointer;
+  background: red;
+  margin-bottom: 10px;
+}
+
+.dropdown_icon {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-size: var(--FS_sm);
+  transform: rotate(-90deg);
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  border-radius: 50%;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.dropdown_icon:hover {
+  background: #fff;
+}
+
+.dropdown_icon.rotate {
+  transform: rotate(90deg);
+}
+
+.sub_link {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  top: 100%;
+  left: 100%;
+  width: 100%;
+  transform: translateY(-10px);
+  z-index: -1;
+  transition: all 0.3s ease 0s, visibility 0s linear 0.3s,
+    z-index 0s linear 0.3s;
+  /* width: 0px;
+  opacity: 0;
+  overflow: hidden;
+  height: 0px;
+  padding-left: 30px;
+  font-size: var(--FS_xs);
+  transition: all var(--transition);
+  text-transform: capitalize; */
+}
+
+.sub_link.open {
+  left: 100%;
+  height: 100%;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-delay: 0s, 0s 0.3s;
+}
+
+.light .sub_link,
+.light .link {
+  color: var(--text_dark);
+}
+
+.dark .sub-link,
+.dark .link {
+  color: var(--light_text);
+}

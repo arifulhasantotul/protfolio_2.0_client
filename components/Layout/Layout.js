@@ -1,11 +1,14 @@
 import { useStateContext } from "@/context/ContextProvider";
+import { useRouter } from "next/router";
 import DarkToggleButton from "../DarkToggleButton/DarkToggleButton";
 import LowerNavbar from "../Navbar/LowerNavbar/LowerNavbar";
 import UpperNavbar from "../Navbar/UpperNavbar/UpperNavbar";
+import Sidebar from "../Sidebar/Sidebar";
 import ThemeSettings from "../ThemeSettings/ThemeSettings";
 
 const Layout = ({ children }) => {
   const { darkTheme, screenSize } = useStateContext();
+  const { pathname } = useRouter();
 
   return (
     <div id={darkTheme ? "dark" : "light"}>
@@ -17,6 +20,7 @@ const Layout = ({ children }) => {
       )}
       <DarkToggleButton />
       <ThemeSettings />
+      {pathname.includes("/dashboard") && <Sidebar />}
 
       <main>{children}</main>
 

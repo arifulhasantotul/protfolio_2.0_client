@@ -1,0 +1,18 @@
+.dash_page {
+  margin: 0;
+  padding: 20px 0;
+  width: 100%;
+  z-index: -1;
+  position: relative;
+}
+.dash_page.light {
+  background: var(--bg_white);
+}
+
+.dash_page.dark {
+  background: var(--bg_dark);
+}
+
+.break_line {
+  margin: 40px 0;
+}
