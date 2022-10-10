@@ -4,6 +4,10 @@ export const adminRoutes = [
     path: "/dashboard/projects",
     sub: [
       {
+        name: "Projects",
+        path: "/dashboard/addProject",
+      },
+      {
         name: "Add Project",
         path: "/dashboard/addProject",
       },

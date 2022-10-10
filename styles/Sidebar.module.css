@@ -29,7 +29,6 @@
 }
 
 .link_wrapper {
-  display: block;
   position: relative;
 }
 
@@ -43,10 +42,9 @@
   text-decoration: none;
   font-weight: var(--FW_medium);
   text-transform: uppercase;
-  transition: all var(--transition);
   cursor: pointer;
-  background: red;
   margin-bottom: 10px;
+  transition: all var(--transition);
 }
 
 .dropdown_icon {
@@ -63,42 +61,50 @@
   cursor: pointer;
 }
 
-.dropdown_icon:hover {
+.light .link:hover,
+.light .sub_link:hover {
+  color: var(--offdark_text);
+}
+
+.light .dropdown_icon:hover {
   background: #fff;
+  color: var(--text_dark);
+}
+
+.dark .link:hover,
+.dark .sub_link:hover {
+  color: var(--offwhite);
+}
+
+.dark .dropdown_icon:hover {
+  background: var(--light_text);
+  color: var(--offwhite);
 }
 
 .dropdown_icon.rotate {
   transform: rotate(90deg);
 }
 
+.light .dropdown_icon {
+  color: var(--offdark_text);
+}
+
+.dark .dropdown_icon {
+  color: var(--light_text);
+}
+
 .sub_link {
-  position: absolute;
-  visibility: hidden;
-  opacity: 0;
-  top: 100%;
-  left: 100%;
-  width: 100%;
-  transform: translateY(-10px);
-  z-index: -1;
-  transition: all 0.3s ease 0s, visibility 0s linear 0.3s,
-    z-index 0s linear 0.3s;
-  /* width: 0px;
-  opacity: 0;
+  display: none;
+  margin-top: -7px;
   overflow: hidden;
-  height: 0px;
   padding-left: 30px;
   font-size: var(--FS_xs);
   transition: all var(--transition);
-  text-transform: capitalize; */
+  text-transform: capitalize;
 }
 
 .sub_link.open {
-  left: 100%;
-  height: 100%;
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(0px);
-  transition-delay: 0s, 0s 0.3s;
+  display: block;
 }
 
 .light .sub_link,
@@ -106,7 +112,7 @@
   color: var(--text_dark);
 }
 
-.dark .sub-link,
+.dark .sub_link,
 .dark .link {
   color: var(--light_text);
 }
