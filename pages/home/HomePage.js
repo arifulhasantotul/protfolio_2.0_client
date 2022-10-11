@@ -1,11 +1,11 @@
+import HomeBannerLeft from "@/components/HomeComp/HomeBannerLeft/HomeBannerLeft";
+import HomeBannerRight from "@/components/HomeComp/HomeBannerRight/HomeBannerRight";
+import HomeProjects from "@/components/HomeComp/HomeProjects/HomeProjects";
+import HomeSkills from "@/components/HomeComp/HomeSkills/HomeSkills";
+import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/HomePage.module.css";
 import { Container, Grid } from "@mui/material";
-import HomeBannerLeft from "../../components/HomeComp/HomeBannerLeft/HomeBannerLeft";
-import HomeBannerRight from "../../components/HomeComp/HomeBannerRight/HomeBannerRight";
-import HomeProjects from "../../components/HomeComp/HomeProjects/HomeProjects";
-import HomeSkills from "../../components/HomeComp/HomeSkills/HomeSkills";
-import PageHeader from "../../components/PageHeader/PageHeader";
 
 const HomePage = () => {
   const { currentColor, darkTheme } = useStateContext();

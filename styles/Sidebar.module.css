@@ -82,14 +82,16 @@
   transition: all var(--transition);
 }
 
+.light .sub_link.sub_active,
 .light .link.active_link,
 .light .link:hover,
 .light .sub_link:hover {
   color: var(--offdark_text);
-  border-radius: 5px;
-  border: 1px dotted var(--light_text);
+  border-radius: 15px;
+  border: 1px solid var(--light_text);
 }
 
+.dark .sub_link.sub_active,
 .dark .link.active_link,
 .dark .link:hover,
 .dark .sub_link:hover {
@@ -138,10 +140,14 @@
   display: none;
   margin-top: -7px;
   overflow: hidden;
-  padding-left: 30px;
+  margin-left: 15px;
+  margin-right: 10px;
+  padding-left: 20px;
+  height: 30px;
   font-size: 13px;
   transition: all var(--transition);
   text-transform: capitalize;
+  cursor: pointer;
 }
 
 .sub_link.open {
