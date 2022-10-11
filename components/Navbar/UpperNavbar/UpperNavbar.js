@@ -6,6 +6,7 @@ import { useStateContext } from "@/context/ContextProvider";
 import logo from "../../../public/logo.jpg";
 import routes from "../../../routes/routes";
 
+import DashboardIcon from "@/components/CustomIcons/DashboardIcon";
 import styles from "@/styles/UpperNavbar.module.css";
 
 const UpperNavbar = () => {
@@ -23,6 +24,25 @@ const UpperNavbar = () => {
           </div>
 
           <div className={`${styles.nav_links}`}>
+            <Link href="/dashboard">
+              <span
+                className={
+                  pageURL.includes("/dashboard")
+                    ? styles.activeLink
+                    : styles.link
+                }
+                style={{
+                  color: pageURL.includes("/dashboard") ? currentColor : "",
+                  fill: pageURL.includes("/dashboard") ? currentColor : "",
+                }}
+                title={`Go to: /dashboard`}
+              >
+                <span title="Dashboard" className={styles.link_icon}>
+                  <DashboardIcon />
+                </span>
+                <span className={styles.link_name}>Dashboard</span>
+              </span>
+            </Link>
             {routes.map((path, idx) => (
               <Link key={idx} href={path.to}>
                 <span

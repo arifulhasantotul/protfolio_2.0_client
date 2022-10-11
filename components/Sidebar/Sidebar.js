@@ -10,7 +10,7 @@ import { adminRoutes } from "./adminRoutes";
 
 const Sidebar = () => {
   const { pathname } = useRouter();
-  console.log(pathname);
+
   const { darkTheme, currentColor, adminSidebar, setAdminSidebar, setColor } =
     useStateContext();
   const [subnav, setSubnav] = useState(false);
