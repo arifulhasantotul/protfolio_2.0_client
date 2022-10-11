@@ -3,7 +3,7 @@ import styles from "@/styles/DashboardPage.module.css";
 import { Container } from "@mui/material";
 
 const DashboardPage = () => {
-  const { currentColor, darkTheme } = useStateContext();
+  const {darkTheme } = useStateContext();
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
