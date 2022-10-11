@@ -9,6 +9,8 @@ const ContextProvider = ({ children }) => {
 
   const [sidebar, setSidebar] = useState(false);
 
+  const [adminSidebar, setAdminSidebar] = useState(false);
+
   const [darkTheme, setDarkTheme] = useState(false);
 
   const [currentColor, setCurrentColor] = useState("#FD4520");
@@ -51,6 +53,7 @@ const ContextProvider = ({ children }) => {
 
     if (screenSize <= 900) {
       setSidebar(false);
+      setAdminSidebar(false);
     }
 
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -68,6 +71,8 @@ const ContextProvider = ({ children }) => {
         setScreenSize,
         sidebar,
         setSidebar,
+        adminSidebar,
+        setAdminSidebar,
         darkTheme,
         setDarkTheme,
         toggleDarkTheme,

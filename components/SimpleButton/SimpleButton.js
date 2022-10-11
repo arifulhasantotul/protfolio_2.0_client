@@ -1,6 +1,6 @@
 import { useStateContext } from "@/context/ContextProvider";
-import { useEffect, useState } from "react";
 import styles from "@/styles/SimpleButton.module.css";
+import { useEffect, useState } from "react";
 
 const SimpleButton = ({ name, type, onClick, children, tooltip }) => {
   const { currentColor, darkTheme } = useStateContext();
@@ -22,6 +22,7 @@ const SimpleButton = ({ name, type, onClick, children, tooltip }) => {
   useEffect(() => {
     setBackground(bgColor);
     setFontColor(currentColor);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentColor, darkTheme]);
 
   return (
