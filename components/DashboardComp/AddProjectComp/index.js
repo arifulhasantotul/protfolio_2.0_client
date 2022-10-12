@@ -22,7 +22,7 @@ const AddProjectComponent = () => {
 
   return (
     <div className={`${conditionalMode} ${styles.project_form}`}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <div className={styles.block_tabs}>
           <SimpleButton
             className={

@@ -50,10 +50,14 @@ const Basic = (props) => {
             >{`(Unique name required!)`}</span>
           </label>
           <input
+            style={{
+              color: currentColor,
+            }}
             type="text"
             id="name"
             name="name"
-            onClick={handleInput}
+            value={basicData.name}
+            onChange={handleInput}
             onBlur={createSlug}
           />
         </div>
@@ -61,17 +65,30 @@ const Basic = (props) => {
         <div className={styles.input_field}>
           <label htmlFor="slug">Slug Id</label>
           <input
+            style={{
+              color: currentColor,
+            }}
             type="text"
             id="slug"
             name="slug"
-            onClick={handleInput}
+            value={basicData.slug}
+            onChange={handleInput}
             disabled
           />
         </div>
         {/* slug field */}
         <div className={styles.input_field}>
           <label htmlFor="rank">Rank</label>
-          <input type="number" id="rank" name="rank" onClick={handleInput} />
+          <input
+            style={{
+              color: currentColor,
+            }}
+            type="number"
+            id="rank"
+            name="rank"
+            value={basicData.rank}
+            onChange={handleInput}
+          />
         </div>
       </form>
     </div>

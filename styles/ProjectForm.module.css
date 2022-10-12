@@ -67,6 +67,9 @@
 
 /* form style start */
 .form {
+  margin: 10px 0;
+  margin-top: 30px;
+  margin-right: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   place-items: center;
@@ -76,17 +79,19 @@
 }
 
 .light .form {
+  color: var(--dark_text);
   background: var(--bg_form_white);
   box-shadow: var(--bg_form_white_shadow);
 }
 
 .dark .form {
+  color: var(--light_text);
   background: var(--bg_dark_btn);
   box-shadow: var(--bg_dark_btn_shadow);
 }
 
 .input_field {
-  /* height: 50px; */
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -116,6 +121,16 @@
 }
 
 .dark .input_field input {
+  box-shadow: var(--dark_field_shadow);
+  -webkit-box-shadow: var(--dark_field_shadow);
+  -moz-box-shadow: var(--dark_field_shadow);
+  background: linear-gradient(315deg, #222222, #292929);
+}
+.dark .input_field input:focus,
+.dark .input_field input:hover {
+  box-shadow: var(--dark_field_hover_shadow);
+  -webkit-box-shadow: var(--dark_field_hover_shadow);
+  -moz-box-shadow: var(--dark_field_hover_shadow);
 }
 
 .input_field input:focus ~ label {

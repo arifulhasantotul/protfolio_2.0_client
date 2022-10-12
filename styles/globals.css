@@ -30,6 +30,10 @@
   --gradient-red-hover: linear-gradient(145deg, #f95230, #fb2c02);
   --bg_form_white_shadow: -3px -3px 7px #ffffff73,
     2px 2px 5px rgba(94, 104, 121, 0.288);
+    --dark_field_shadow: -6px -6px 12px #0f0f0f, 6px 6px 12px #3d3d3d;
+  --dark_field_hover_shadow: inset -6px -6px 12px #0f0f0f, inset 6px 6px 12px #3d3d3d;
+  --dark_register_btn_shadow: -9px -9px 18px #0f0f0f, 9px 9px 18px #3d3d3d;
+  --dark_register_hover_btn_shadow: inset -9px -9px 18px #0f0f0f,
 
   --light_page_head: #c4cfde;
   --dark_page_head: #3c3e41;
