@@ -33,6 +33,11 @@ const Basic = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      console.log(basicData);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // css conditionalMode for dark mode

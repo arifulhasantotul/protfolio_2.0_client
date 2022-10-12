@@ -115,9 +115,16 @@
 }
 
 .light .input_field input {
-  color: #595959;
   background: var(--bg_form_white);
+  box-shadow: 2px 2px 5px #babecc, -5px -5px 10px #ffffff73;
+}
+
+.light .input_field input:focus,
+.light .input_field input:hover {
+  color: #595959;
   box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
+  -webkit-box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
+  -moz-box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
 }
 
 .dark .input_field input {
@@ -131,10 +138,6 @@
   box-shadow: var(--dark_field_hover_shadow);
   -webkit-box-shadow: var(--dark_field_hover_shadow);
   -moz-box-shadow: var(--dark_field_hover_shadow);
-}
-
-.input_field input:focus ~ label {
-  box-shadow: inset 2px 2px 5px #babecc, inset -1px -1px 2px #ffffff73;
 }
 
 .input_field label {
