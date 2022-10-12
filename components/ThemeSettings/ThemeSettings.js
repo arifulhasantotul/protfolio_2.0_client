@@ -1,8 +1,8 @@
 import { useStateContext } from "@/context/ContextProvider";
+import styles from "@/styles/ThemeSettings.module.css";
 import { BsCheck } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { themeColors } from "./themeColor";
-import styles from "@/styles/ThemeSettings.module.css";
 
 const ThemeSettings = () => {
   const { darkTheme, currentColor, sidebar, setSidebar, setColor } =

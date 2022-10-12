@@ -1,15 +1,15 @@
-.dash_page {
+.project_form {
   margin: 0;
   padding: 20px 0;
   width: 100%;
   z-index: -1;
-  position: relative;
 }
-.dash_page.light {
+
+.light.project_form {
   background: var(--bg_white);
 }
 
-.dash_page.dark {
+.dark.project_form {
   background: var(--bg_dark);
 }
 
@@ -19,12 +19,21 @@
   justify-content: space-around;
 }
 
+.tabs {
+  display: none;
+}
+
+.active_tabs {
+  display: block;
+}
+
 .tab_link {
   display: block;
   width: 100%;
   height: 5px;
   margin-right: 20px;
   margin-top: 20px;
+  border-radius: 15px;
   position: relative;
 }
 
@@ -54,4 +63,68 @@
 
 .dark .done_icon {
   background: var(--bg_dark);
+} /* tab style done */
+
+/* form style start */
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  grid-gap: 20px;
+  border-radius: 10px;
+  padding: 40px 30px;
+}
+
+.light .form {
+  background: var(--bg_form_white);
+  box-shadow: var(--bg_form_white_shadow);
+}
+
+.dark .form {
+  background: var(--bg_dark_btn);
+  box-shadow: var(--bg_dark_btn_shadow);
+}
+
+.input_field {
+  /* height: 50px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.input_field input {
+  display: block;
+  width: 100%;
+  height: 45px;
+  padding-left: 20px;
+  font-size: var(--FS_sm);
+  outline: none;
+  border: none;
+  border-radius: 25px;
+  margin-top: 5px;
+}
+
+.red_color {
+  color: red;
+}
+
+.light .input_field input {
+  color: #595959;
+  background: var(--bg_form_white);
+  box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
+}
+
+.dark .input_field input {
+}
+
+.input_field input:focus ~ label {
+  box-shadow: inset 2px 2px 5px #babecc, inset -1px -1px 2px #ffffff73;
+}
+
+.input_field label {
+  display: block;
+  padding-left: 20px;
+  font-size: var(--FS_sm);
+  font-weight: var(--FW_medium);
 }
