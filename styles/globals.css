@@ -90,6 +90,19 @@
   box-sizing: border-box;
 }
 
+
+/* Chrome, Safari, Edge, Opera */
+.hide_numbers_arrow::-webkit-outer-spin-button,
+.hide_numbers_arrow::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.hide_numbers_arrow {
+  -moz-appearance: textfield;
+}
+
 a {
   color: inherit;
   text-decoration: none;
