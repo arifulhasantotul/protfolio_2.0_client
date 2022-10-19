@@ -1,7 +1,13 @@
 import AddProjectComponent from "@/components/DashboardComp/AddProjectComp";
+import {
+  ALL_CATEGORIES_NAME,
+  ALL_TAGS_NAME,
+  ALL_USERS_NAME,
+} from "@/services/graphql/queries";
+import client from "apollo-client";
 import Head from "next/head";
 
-export default function AddProject() {
+export default function AddProject({ tags, categories, clients }) {
   return (
     <div className="page_wrapper">
       <Head>
@@ -11,8 +17,35 @@ export default function AddProject() {
       </Head>
 
       <main>
-        <AddProjectComponent />
+        <AddProjectComponent
+          tags={tags}
+          categories={categories}
+          clients={clients}
+        />
       </main>
     </div>
   );
+}
+
+// to get new added categories and tags from the database we should use getServerSideProps
+export async function getServerSideProps() {
+  const tagData = await client.query({
+    query: ALL_TAGS_NAME,
+  });
+
+  const categoryData = await client.query({
+    query: ALL_CATEGORIES_NAME,
+  });
+
+  const clientData = await client.query({
+    query: ALL_USERS_NAME,
+  });
+
+  return {
+    props: {
+      tags: tagData?.data?.listTags || [],
+      categories: categoryData?.data?.listCategories || [],
+      clients: clientData?.data?.listUsers || [],
+    },
+  };
 }

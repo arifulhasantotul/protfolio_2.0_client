@@ -1,5 +1,7 @@
 import { useStateContext } from "@/context/ContextProvider";
+// import { ALL_TAGS_NAME } from "@/services/graphql/queries";
 import styles from "@/styles/ProjectForm.module.css";
+// import { useQuery } from "@apollo/client";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 
@@ -7,33 +9,10 @@ const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
   ssr: false,
 });
 
-const Basic = (props) => {
+const Basic = ({ categories, tags, clients, sendData }) => {
   const { currentColor, darkTheme } = useStateContext();
 
   const [richTextValue, setRichTextValue] = useState("");
-
-  const selectOptions = [
-    {
-      value: "Web Development",
-      label: "Web Development",
-    },
-    {
-      value: "Mobile Development",
-      label: "Mobile Development",
-    },
-    {
-      value: "Desktop Development",
-      label: "Desktop Development",
-    },
-    {
-      value: "Game Development",
-      label: "Game Development",
-    },
-    {
-      value: "Machine Learning",
-      label: "Machine Learning",
-    },
-  ];
 
   const statusOptions = [
     {
@@ -58,7 +37,7 @@ const Basic = (props) => {
     categoriesId: [],
     tagsId: [],
     ratings: 0,
-    status: "",
+    status: "Not_Started",
     clientId: "",
   });
 
@@ -73,6 +52,14 @@ const Basic = (props) => {
       setBasicData((prevState) => ({ ...prevState, slug }));
     } else {
       setBasicData((prevState) => ({ ...prevState, slug: "" }));
+    }
+  };
+
+  const handleRichText = (value) => {
+    if (value) {
+      setBasicData((prevState) => ({ ...prevState, des: value }));
+    } else {
+      setBasicData((prevState) => ({ ...prevState, des: "" }));
     }
   };
 
@@ -171,9 +158,9 @@ const Basic = (props) => {
               onChange={handleInput}
             >
               <option value="">--Select Categories--</option>
-              {selectOptions.map((opt, idx) => (
-                <option key={idx} value={opt.value}>
-                  {opt.label}
+              {categories?.map((opt, idx) => (
+                <option key={idx} value={opt?.id}>
+                  {opt?.name}
                 </option>
               ))}
             </select>
@@ -190,9 +177,9 @@ const Basic = (props) => {
               onChange={handleInput}
             >
               <option value="">--Select Tags--</option>
-              {selectOptions.map((opt, idx) => (
-                <option key={idx} value={opt.value}>
-                  {opt.label}
+              {tags?.map((opt, idx) => (
+                <option key={idx} value={opt?.id}>
+                  {opt?.name}
                 </option>
               ))}
             </select>
@@ -221,19 +208,19 @@ const Basic = (props) => {
           </div>
           {/* Client */}
           <div className={styles.input_field}>
-            <label htmlFor="ClientId">Client</label>
+            <label htmlFor="clientId">Client</label>
             <select
               style={{
                 color: currentColor,
               }}
-              id="ClientId"
-              name="ClientId"
+              id="clientId"
+              name="clientId"
               onChange={handleInput}
             >
               <option value="">--Select A Client--</option>
-              {selectOptions.map((opt, idx) => (
-                <option key={idx} value={opt.value}>
-                  {opt.label}
+              {clients?.map((opt, idx) => (
+                <option key={idx} value={opt?.id}>
+                  {opt?.name}
                 </option>
               ))}
             </select>
@@ -243,11 +230,16 @@ const Basic = (props) => {
         <div className={styles.input_field}>
           <label htmlFor="des">Description</label>
           <QuillEditor
+            id="des"
+            name="des"
             className={styles.input}
             value={richTextValue}
             setValue={setRichTextValue}
+            onBlur={() => handleRichText(richTextValue)}
           />
         </div>
+        {/* Submit button */}
+        <input type="submit" value="Next" />
       </form>
     </div>
   );

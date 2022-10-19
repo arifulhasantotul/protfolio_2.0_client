@@ -3,7 +3,7 @@ import styles from "@/styles/QuillEditor.module.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const QuillEditor = ({ value, setValue }) => {
+const QuillEditor = ({ value, setValue, onBlur }) => {
   const { currentColor, darkTheme } = useStateContext();
 
   const conditionalMode = darkTheme ? styles.dark : styles.light;
@@ -18,6 +18,7 @@ const QuillEditor = ({ value, setValue }) => {
         }}
         value={value}
         onChange={setValue}
+        onBlur={onBlur}
       />
     </div>
   );

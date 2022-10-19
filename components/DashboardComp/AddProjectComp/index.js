@@ -8,7 +8,7 @@ import Basic from "./Basic";
 import Finish from "./Finish";
 import Media from "./Media";
 
-const AddProjectComponent = () => {
+const AddProjectComponent = ({ tags, categories, clients }) => {
   const { currentColor, darkTheme } = useStateContext();
 
   // css conditionalMode for dark mode
@@ -89,7 +89,12 @@ const AddProjectComponent = () => {
                   : styles.content
               }
             >
-              <Basic sendData={changeTab} />
+              <Basic
+                sendData={changeTab}
+                tags={tags}
+                categories={categories}
+                clients={clients}
+              />
             </div>
           )}
           {toggleState === 2 && (
