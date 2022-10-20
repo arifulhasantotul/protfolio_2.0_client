@@ -1,3 +1,4 @@
+.form_btn,
 .btn {
   font-size: var(--FS_sm);
   border-radius: 6px;
@@ -15,6 +16,16 @@
   transition: var(--transition);
 }
 
+.form_btn {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 25px;
+  padding: 10px 20px;
+  margin-right: 0px;
+}
+
+.form_btn:hover,
 .btn:hover {
   transform: translateY(-3px);
 }

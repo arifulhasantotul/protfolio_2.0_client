@@ -1,4 +1,6 @@
+import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
+import { saveToLocalStorage } from "@/services/utils/temporarySave";
 // import { ALL_TAGS_NAME } from "@/services/graphql/queries";
 import styles from "@/styles/ProjectForm.module.css";
 // import { useQuery } from "@apollo/client";
@@ -13,6 +15,9 @@ const Basic = ({ categories, tags, clients, sendData }) => {
   const { currentColor, darkTheme } = useStateContext();
 
   const [richTextValue, setRichTextValue] = useState("");
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const statusOptions = [
     {
@@ -29,6 +34,17 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     },
   ];
 
+  const addToArray = (setArrayFunc, value) => {
+    const data = value;
+    setArrayFunc((prev) => [...prev, data]);
+  };
+
+  const removeFromArray = (setArrayFunc, value) => {
+    const data = value;
+    setArrayFunc((prev) => prev.filter((item) => item !== data));
+  };
+
+  console.log(selectedCategories);
   const [basicData, setBasicData] = useState({
     name: "",
     slug: "",
@@ -43,30 +59,60 @@ const Basic = ({ categories, tags, clients, sendData }) => {
 
   const handleInput = (e) => {
     const { name, value } = e.target;
-    setBasicData((prevState) => ({ ...prevState, [name]: value }));
+
+    if (name === "categoriesId") {
+      addToArray(setSelectedCategories, value);
+      setBasicData((prevState) => ({
+        ...prevState,
+        [name]: selectedCategories,
+      }));
+    } else if (name === "tagsId") {
+      addToArray(setSelectedTags, value);
+      setBasicData((prevState) => ({
+        ...prevState,
+        [name]: selectedTags,
+      }));
+    } else {
+      setBasicData((prevState) => ({ ...prevState, [name]: value }));
+    }
+
+    saveToLocalStorage("portfolioAddProjectBasic", basicData);
   };
+
+  console.log(basicData);
 
   const createSlug = () => {
     if (basicData.name) {
       const slug = basicData?.name.toLowerCase().replace(/ /g, "-");
       setBasicData((prevState) => ({ ...prevState, slug }));
+      saveToLocalStorage("portfolioAddProjectBasic", basicData);
     } else {
       setBasicData((prevState) => ({ ...prevState, slug: "" }));
+      saveToLocalStorage("portfolioAddProjectBasic", basicData);
     }
   };
 
   const handleRichText = (value) => {
     if (value) {
       setBasicData((prevState) => ({ ...prevState, des: value }));
+      saveToLocalStorage("portfolioAddProjectBasic", basicData);
     } else {
       setBasicData((prevState) => ({ ...prevState, des: "" }));
+      saveToLocalStorage("portfolioAddProjectBasic", basicData);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      console.log(basicData);
+      const dataObj = {
+        ...basicData,
+        des: richTextValue || "",
+      };
+      saveToLocalStorage("portfolioAddProjectBasic", basicData);
+
+      console.log(dataObj);
     } catch (err) {
       console.log(err);
     }
@@ -149,6 +195,9 @@ const Basic = ({ categories, tags, clients, sendData }) => {
           {/* Categories field */}
           <div className={styles.input_field}>
             <label htmlFor="categoriesId">Categories</label>
+            {selectedCategories?.map((item, idx) => (
+              <span key={idx}>{item}</span>
+            ))}
             <select
               style={{
                 color: currentColor,
@@ -239,7 +288,15 @@ const Basic = ({ categories, tags, clients, sendData }) => {
           />
         </div>
         {/* Submit button */}
-        <input type="submit" value="Next" />
+        <div className={styles.submit_btn_wrapper}>
+          <SimpleFormButton name="Previous" disabled={true} />
+          <SimpleFormButton
+            name="Next"
+            type="submit"
+            onClick={handleSubmit}
+            tooltip="Save & Go to next page"
+          ></SimpleFormButton>
+        </div>
       </form>
     </div>
   );
