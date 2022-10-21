@@ -1,9 +1,7 @@
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { saveToLocalStorage } from "@/services/utils/temporarySave";
-// import { ALL_TAGS_NAME } from "@/services/graphql/queries";
 import styles from "@/styles/ProjectForm.module.css";
-// import { useQuery } from "@apollo/client";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 
@@ -17,7 +15,10 @@ const Basic = ({ categories, tags, clients, sendData }) => {
   const [richTextValue, setRichTextValue] = useState("");
 
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategoriesId, setSelectedCategoriesId] = useState([]);
+
   const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTagsId, setSelectedTagsId] = useState([]);
 
   const statusOptions = [
     {
@@ -34,9 +35,11 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     },
   ];
 
-  const addToArray = (setArrayFunc, value) => {
+  const addToArray = (arrayOfId, setArrayFunc, value) => {
     const data = value;
-    setArrayFunc((prev) => [...prev, data]);
+    if (!arrayOfId.includes(data)) {
+      setArrayFunc((prev) => [...prev, data]);
+    }
   };
 
   const removeFromArray = (setArrayFunc, value) => {
@@ -44,7 +47,18 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     setArrayFunc((prev) => prev.filter((item) => item !== data));
   };
 
-  console.log(selectedCategories);
+  const getMatch = (arrayOfObj, arrayOfId, setArrayFunc) => {
+    const matchedArr = [];
+    for (let i = 0; i < arrayOfObj.length; i++) {
+      for (let j = 0; j < arrayOfId.length; j++) {
+        if (arrayOfObj[i].id === arrayOfId[j]) {
+          matchedArr.push(arrayOfObj[i]);
+        }
+      }
+    }
+    setArrayFunc(matchedArr);
+  };
+
   const [basicData, setBasicData] = useState({
     name: "",
     slug: "",
@@ -61,17 +75,19 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     const { name, value } = e.target;
 
     if (name === "categoriesId") {
-      addToArray(setSelectedCategories, value);
+      addToArray(selectedCategoriesId, setSelectedCategoriesId, value);
       setBasicData((prevState) => ({
         ...prevState,
-        [name]: selectedCategories,
+        [name]: selectedCategoriesId,
       }));
+      getMatch(categories, selectedCategoriesId, setSelectedCategories);
     } else if (name === "tagsId") {
-      addToArray(setSelectedTags, value);
+      addToArray(selectedCategoriesId, setSelectedTagsId, value);
       setBasicData((prevState) => ({
         ...prevState,
-        [name]: selectedTags,
+        [name]: selectedTagsId,
       }));
+      getMatch(tags, selectedTagsId, setSelectedTags);
     } else {
       setBasicData((prevState) => ({ ...prevState, [name]: value }));
     }
@@ -79,7 +95,7 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     saveToLocalStorage("portfolioAddProjectBasic", basicData);
   };
 
-  console.log(basicData);
+  // console.log(basicData);
 
   const createSlug = () => {
     if (basicData.name) {
@@ -127,7 +143,7 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     <div className={conditionalMode}>
       <form className={styles.form_wrapper} onSubmit={handleSubmit}>
         {/* name field */}
-        <div className={styles.form}>
+        <div className={styles.half_width_inputs}>
           <div className={styles.input_field}>
             <label htmlFor="name">
               Name{" "}
@@ -192,47 +208,7 @@ const Basic = ({ categories, tags, clients, sendData }) => {
               onChange={handleInput}
             />
           </div>
-          {/* Categories field */}
-          <div className={styles.input_field}>
-            <label htmlFor="categoriesId">Categories</label>
-            {selectedCategories?.map((item, idx) => (
-              <span key={idx}>{item}</span>
-            ))}
-            <select
-              style={{
-                color: currentColor,
-              }}
-              id="categoriesId"
-              name="categoriesId"
-              onChange={handleInput}
-            >
-              <option value="">--Select Categories--</option>
-              {categories?.map((opt, idx) => (
-                <option key={idx} value={opt?.id}>
-                  {opt?.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* Tags field */}
-          <div className={styles.input_field}>
-            <label htmlFor="tagsId">Tags</label>
-            <select
-              style={{
-                color: currentColor,
-              }}
-              id="tagsId"
-              name="tagsId"
-              onChange={handleInput}
-            >
-              <option value="">--Select Tags--</option>
-              {tags?.map((opt, idx) => (
-                <option key={idx} value={opt?.id}>
-                  {opt?.name}
-                </option>
-              ))}
-            </select>
-          </div>
+
           {/* Status */}
           <div className={styles.input_field}>
             <label htmlFor="status">Status</label>
@@ -275,27 +251,114 @@ const Basic = ({ categories, tags, clients, sendData }) => {
             </select>
           </div>
         </div>
-        {/* Rich text editor */}
-        <div className={styles.input_field}>
-          <label htmlFor="des">Description</label>
-          <QuillEditor
-            id="des"
-            name="des"
-            className={styles.input}
-            value={richTextValue}
-            setValue={setRichTextValue}
-            onBlur={() => handleRichText(richTextValue)}
-          />
-        </div>
-        {/* Submit button */}
-        <div className={styles.submit_btn_wrapper}>
-          <SimpleFormButton name="Previous" disabled={true} />
-          <SimpleFormButton
-            name="Next"
-            type="submit"
-            onClick={handleSubmit}
-            tooltip="Save & Go to next page"
-          ></SimpleFormButton>
+        {/* Categories field */}
+        <div className={styles.full_width_inputs}>
+          <div className={styles.input_field}>
+            <label htmlFor="categoriesId">Categories</label>
+            {/* showing selected categories */}
+            {selectedCategories.length > 0 && (
+              <div className={styles.selected_array}>
+                {selectedCategories?.map((item, idx) => (
+                  <span
+                    style={{
+                      background: currentColor,
+                    }}
+                    className={styles.selected_items}
+                    key={idx}
+                  >
+                    {item.name}
+                  </span>
+                ))}
+              </div>
+            )}
+            <select
+              style={{
+                color: currentColor,
+              }}
+              id="categoriesId"
+              name="categoriesId"
+              onChange={handleInput}
+              onBlur={() =>
+                getMatch(
+                  categories,
+                  selectedCategoriesId,
+                  setSelectedCategories
+                )
+              }
+            >
+              <option value="">--Select Categories--</option>
+              {categories?.map((opt, idx) => (
+                <option key={idx} value={opt?.id}>
+                  {opt?.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* Tags field */}
+          <div className={styles.input_field}>
+            <label htmlFor="tagsId">Tags</label>
+            {/* showing selected categories */}
+            {selectedTags.length > 0 && (
+              <div className={styles.selected_array}>
+                {selectedTags?.map((item, idx) => (
+                  <span
+                    style={{
+                      background: currentColor,
+                    }}
+                    className={styles.selected_items}
+                    key={idx}
+                  >
+                    {item.name}
+                  </span>
+                ))}
+              </div>
+            )}
+            <select
+              style={{
+                color: currentColor,
+              }}
+              id="tagsId"
+              name="tagsId"
+              onChange={handleInput}
+              onBlur={() => getMatch(tags, selectedTagsId, setSelectedTags)}
+            >
+              <option value="">--Select Tags--</option>
+              {tags?.map((opt, idx) => (
+                <option key={idx} value={opt?.id}>
+                  {opt?.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* Rich text editor */}
+          <div className={styles.input_field}>
+            <label
+              style={{
+                marginBottom: "10px",
+              }}
+              htmlFor="des"
+            >
+              Description
+            </label>
+            <QuillEditor
+              id="des"
+              name="des"
+              className={styles.input}
+              value={richTextValue}
+              setValue={setRichTextValue}
+              onBlur={() => handleRichText(richTextValue)}
+            />
+          </div>
+          {/* Submit button */}
+          <div className={styles.submit_btn_wrapper}>
+            <SimpleFormButton name="Previous" disabled={true} />
+            <SimpleFormButton
+              name="Next"
+              type="submit"
+              onClick={handleSubmit}
+              tooltip="Save & Go to next page"
+            ></SimpleFormButton>
+          </div>
         </div>
       </form>
     </div>
