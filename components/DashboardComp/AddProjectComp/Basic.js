@@ -4,6 +4,7 @@ import { saveToLocalStorage } from "@/services/utils/temporarySave";
 import styles from "@/styles/ProjectForm.module.css";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
   ssr: false,
@@ -20,6 +21,20 @@ const Basic = ({ categories, tags, clients, sendData }) => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedTagsId, setSelectedTagsId] = useState([]);
 
+  // formData to store changed values
+  const [basicData, setBasicData] = useState({
+    name: "",
+    slug: "",
+    des: "",
+    rank: 0,
+    categoriesId: [],
+    tagsId: [],
+    ratings: 0,
+    status: "Not_Started",
+    clientId: "",
+  });
+
+  // project status options
   const statusOptions = [
     {
       value: "Not_Started",
@@ -35,6 +50,7 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     },
   ];
 
+  // handling new items to array
   const addToArray = (arrayOfId, setArrayFunc, value) => {
     const data = value;
     if (!arrayOfId.includes(data)) {
@@ -42,11 +58,25 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     }
   };
 
-  const removeFromArray = (setArrayFunc, value) => {
-    const data = value;
-    setArrayFunc((prev) => prev.filter((item) => item !== data));
+  // handling remove items by id from array
+  const removeFromArray = (
+    showingArray,
+    showingArrayId,
+    setShowingArray,
+    setShowingArrayId,
+    id
+  ) => {
+    const copyArray = [...showingArray];
+    const copyIdArray = [...showingArrayId];
+    const foundIdIdx = copyIdArray.findIndex((item) => item === id);
+    const foundArrayIdx = copyArray.findIndex((item) => item.id === id);
+    copyIdArray.splice(foundIdIdx, 1);
+    copyArray.splice(foundArrayIdx, 1);
+    setShowingArray(copyArray);
+    setShowingArrayId(copyIdArray);
   };
 
+  // matching two arrays for showing selected items
   const getMatch = (arrayOfObj, arrayOfId, setArrayFunc) => {
     const matchedArr = [];
     for (let i = 0; i < arrayOfObj.length; i++) {
@@ -58,18 +88,6 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     }
     setArrayFunc(matchedArr);
   };
-
-  const [basicData, setBasicData] = useState({
-    name: "",
-    slug: "",
-    des: "",
-    rank: 0,
-    categoriesId: [],
-    tagsId: [],
-    ratings: 0,
-    status: "Not_Started",
-    clientId: "",
-  });
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -263,10 +281,26 @@ const Basic = ({ categories, tags, clients, sendData }) => {
                     style={{
                       background: currentColor,
                     }}
-                    className={styles.selected_items}
+                    className={styles.selected_item}
                     key={idx}
                   >
-                    {item.name}
+                    {item.name}{" "}
+                    <IoMdCloseCircle
+                      title="Remove category"
+                      style={{
+                        color: currentColor,
+                      }}
+                      className={styles.delete}
+                      onClick={() =>
+                        removeFromArray(
+                          selectedCategories,
+                          selectedCategoriesId,
+                          setSelectedCategories,
+                          setSelectedCategoriesId,
+                          item.id
+                        )
+                      }
+                    />
                   </span>
                 ))}
               </div>
@@ -305,10 +339,26 @@ const Basic = ({ categories, tags, clients, sendData }) => {
                     style={{
                       background: currentColor,
                     }}
-                    className={styles.selected_items}
+                    className={styles.selected_item}
                     key={idx}
                   >
                     {item.name}
+                    <IoMdCloseCircle
+                      title="Remove category"
+                      style={{
+                        color: currentColor,
+                      }}
+                      className={styles.delete}
+                      onClick={() =>
+                        removeFromArray(
+                          selectedTags,
+                          selectedTagsId,
+                          setSelectedTags,
+                          setSelectedTagsId,
+                          item.id
+                        )
+                      }
+                    />
                   </span>
                 ))}
               </div>
