@@ -3,7 +3,7 @@ import { useStateContext } from "@/context/ContextProvider";
 import { saveToLocalStorage } from "@/services/utils/temporarySave";
 import styles from "@/styles/ProjectForm.module.css";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 
 const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
@@ -20,6 +20,8 @@ const Basic = ({ categories, tags, clients, sendData }) => {
 
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedTagsId, setSelectedTagsId] = useState([]);
+
+  const [basicLoading, setBasicLoading] = useState(true);
 
   // formData to store changed values
   const [basicData, setBasicData] = useState({
@@ -55,7 +57,9 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     const data = value;
     if (!arrayOfId.includes(data)) {
       setArrayFunc((prev) => [...prev, data]);
+      saveToLocalStorage("portfolioAddProjectBasic", basicData);
     }
+    console.log("addToArray", basicData);
   };
 
   // handling remove items by id from array
@@ -98,6 +102,11 @@ const Basic = ({ categories, tags, clients, sendData }) => {
         ...prevState,
         [name]: selectedCategoriesId,
       }));
+      const changedObj = {
+        ...basicData,
+        [name]: selectedCategoriesId,
+      };
+      saveToLocalStorage("portfolioAddProjectBasic", changedObj);
       getMatch(categories, selectedCategoriesId, setSelectedCategories);
     } else if (name === "tagsId") {
       addToArray(selectedCategoriesId, setSelectedTagsId, value);
@@ -105,12 +114,16 @@ const Basic = ({ categories, tags, clients, sendData }) => {
         ...prevState,
         [name]: selectedTagsId,
       }));
+      const changedObj = {
+        ...basicData,
+        [name]: selectedTagsId,
+      };
+      saveToLocalStorage("portfolioAddProjectBasic", changedObj);
       getMatch(tags, selectedTagsId, setSelectedTags);
     } else {
       setBasicData((prevState) => ({ ...prevState, [name]: value }));
+      saveToLocalStorage("portfolioAddProjectBasic", basicData);
     }
-
-    saveToLocalStorage("portfolioAddProjectBasic", basicData);
   };
 
   // console.log(basicData);
@@ -142,9 +155,11 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     try {
       const dataObj = {
         ...basicData,
+        categoriesId: selectedCategoriesId,
+        tagsId: selectedTagsId,
         des: richTextValue || "",
       };
-      saveToLocalStorage("portfolioAddProjectBasic", basicData);
+      saveToLocalStorage("portfolioAddProjectBasic", dataObj);
 
       console.log(dataObj);
     } catch (err) {
@@ -156,6 +171,38 @@ const Basic = ({ categories, tags, clients, sendData }) => {
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
+
+  useEffect(() => {
+    setBasicLoading(true);
+    const storedContent = localStorage.getItem("portfolioAddProjectBasic");
+    if (storedContent == null) return;
+    const parsedContent = JSON.parse(storedContent);
+    console.log(parsedContent);
+
+    setBasicData({
+      name: parsedContent?.name,
+      slug: parsedContent?.slug,
+      des: parsedContent?.des,
+      rank: parsedContent?.rank,
+      categoriesId: parsedContent?.categoriesId,
+      tagsId: parsedContent?.tagsId,
+      ratings: parsedContent?.ratings,
+      status: parsedContent?.status,
+      clientId: parsedContent?.clientId,
+    });
+
+    setSelectedCategoriesId(parsedContent?.categoriesId);
+    setSelectedTagsId(parsedContent?.tagsId);
+    setRichTextValue(parsedContent?.des);
+    setBasicLoading(false);
+    if (selectedCategoriesId.length > 0) {
+      getMatch(categories, selectedCategoriesId, setSelectedCategories);
+    }
+    if (parsedContent?.tagsId?.length > 0) {
+      getMatch(tags, selectedTagsId, setSelectedTags);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [!basicLoading]);
 
   return (
     <div className={conditionalMode}>
@@ -237,6 +284,7 @@ const Basic = ({ categories, tags, clients, sendData }) => {
               id="status"
               name="status"
               onChange={handleInput}
+              value={basicData.status}
             >
               {statusOptions.map((opt, idx) => (
                 <option
@@ -259,6 +307,7 @@ const Basic = ({ categories, tags, clients, sendData }) => {
               id="clientId"
               name="clientId"
               onChange={handleInput}
+              value={basicData?.clientId || ""}
             >
               <option value="">--Select A Client--</option>
               {clients?.map((opt, idx) => (

@@ -190,7 +190,7 @@
   display: flex;
   align-items: center;
   width: max-content;
-  padding: 5px 10px;
+  padding: 5px 6px 5px 10px;
   margin: 5px;
   border-radius: 20px;
   font-size: var(--FS_xs);
