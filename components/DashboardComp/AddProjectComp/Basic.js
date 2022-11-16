@@ -1,7 +1,9 @@
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
+import { ADD_PROJECT } from "@/services/graphql/mutation";
 import { saveToLocalStorage } from "@/services/utils/temporarySave";
 import styles from "@/styles/ProjectForm.module.css";
+import { useMutation } from "@apollo/client";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -10,10 +12,23 @@ const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
   ssr: false,
 });
 
+// api to create project
+// const createProject = async (payload) => {
+//   const { data } = await client.mutate({
+//     mutation: ADD_PROJECT,
+//     variables: {
+//       input: payload,
+//     },
+//   });
+//   return data;
+// };
+
 const Basic = ({ categories, tags, clients, sendData }) => {
   const { currentColor, darkTheme } = useStateContext();
 
   const [richTextValue, setRichTextValue] = useState("");
+
+  const [createProject, { data, loading, error }] = useMutation(ADD_PROJECT);
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCategoriesId, setSelectedCategoriesId] = useState([]);
@@ -160,8 +175,15 @@ const Basic = ({ categories, tags, clients, sendData }) => {
         des: richTextValue || "",
       };
       saveToLocalStorage("portfolioAddProjectBasic", dataObj);
-
-      console.log(dataObj);
+      // const stringifyData = JSON.stringify(dataObj);
+      console.log("dataObj", dataObj);
+      createProject({
+        variables: {
+          input: dataObj,
+        },
+      });
+      console.log(data);
+      // createProject(JSON.stringify(dataObj));
     } catch (err) {
       console.log(err);
     }
