@@ -1,0 +1,225 @@
+.project_form {
+  margin: 0;
+  padding: 20px 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.light.project_form {
+  background: var(--bg_white);
+}
+
+.dark.project_form {
+  background: var(--bg_dark);
+}
+
+.block_tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.tabs {
+  display: none;
+}
+
+.active_tabs {
+  display: block;
+}
+
+.tab_link {
+  display: block;
+  width: 100%;
+  height: 5px;
+  margin-right: 20px;
+  margin-top: 20px;
+  border-radius: 15px;
+  position: relative;
+}
+
+.light .tab_link {
+  background: var(--light_text);
+}
+
+.dark .tab_link {
+  background: var(--dark_text);
+}
+
+.done_icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  color: var(--green);
+  border-radius: 50%;
+}
+
+.light .done_icon {
+  background: var(--bg_white);
+}
+
+.dark .done_icon {
+  background: var(--bg_dark);
+} /* tab style done */
+
+/* form style start */
+.form_wrapper {
+  margin: 10px 0;
+  margin-top: 30px;
+  margin-right: 20px;
+  border-radius: 10px;
+  padding: 40px 30px;
+}
+
+.light .form_wrapper {
+  color: var(--dark_text);
+  background: var(--bg_form_white);
+  box-shadow: var(--bg_form_white_shadow);
+}
+
+.dark .form_wrapper {
+  color: var(--light_text);
+  background: var(--bg_dark_btn);
+  box-shadow: var(--bg_dark_btn_shadow);
+}
+
+.half_width_inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  grid-gap: 20px;
+  margin-bottom: 20px;
+}
+
+.input_field {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.input_field select,
+.input_field .input,
+.input_field input {
+  display: block;
+  width: 100%;
+  height: 45px;
+  padding-left: 20px;
+  font-size: var(--FS_sm);
+  font-weight: var(--FW_bold);
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+  border-radius: 25px;
+  margin-top: 5px;
+}
+
+.input_field select {
+  cursor: pointer;
+}
+
+.red_color {
+  color: red;
+}
+
+.light .input_field select,
+.light .input_field .input,
+.light .input_field input {
+  background: var(--bg_form_white);
+  box-shadow: 2px 2px 5px #babecc, -5px -5px 10px #ffffff73;
+}
+
+.light .input_field select:focus,
+.light .input_field input:focus,
+.light .input_field input:hover,
+.light .input_field .input:focus,
+.light .input_field .input:hover {
+  color: #595959;
+  box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
+  -webkit-box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
+  -moz-box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
+}
+
+.dark .input_field select,
+.dark .input_field input,
+.dark .input_field .input {
+  box-shadow: var(--dark_field_shadow);
+  -webkit-box-shadow: var(--dark_field_shadow);
+  -moz-box-shadow: var(--dark_field_shadow);
+  background: linear-gradient(315deg, #222222, #292929);
+}
+.dark .input_field select:focus,
+.dark .input_field input:focus,
+.dark .input_field input:hover,
+.dark .input_field .input:focus,
+.dark .input_field .input:hover {
+  box-shadow: var(--dark_field_hover_shadow);
+  -webkit-box-shadow: var(--dark_field_hover_shadow);
+  -moz-box-shadow: var(--dark_field_hover_shadow);
+}
+
+.input_field label {
+  display: block;
+  padding-left: 20px;
+  font-size: var(--FS_sm);
+  font-weight: var(--FW_medium);
+}
+
+.submit_btn_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.full_width_inputs {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+}
+
+.selected_array {
+  display: flex;
+  align-items: center;
+}
+
+.selected_item {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  padding: 5px 6px 5px 10px;
+  margin: 5px;
+  border-radius: 20px;
+  font-size: var(--FS_xs);
+  font-weight: var(--FW_medium);
+}
+
+.light .selected_item {
+  color: var(--dark_text);
+  box-shadow: var(--bg_form_white_shadow);
+}
+
+.dark .selected_item {
+  color: #fff;
+}
+
+.delete {
+  display: inline-block;
+  text-align: center;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin-left: 5px;
+  border-radius: 50%;
+}
+
+.light .delete {
+  background: var(--dark_text);
+}
+
+.dark .delete {
+  background: var(--dark_text);
+}
