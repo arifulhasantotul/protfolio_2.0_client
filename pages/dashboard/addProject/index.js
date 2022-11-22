@@ -43,9 +43,9 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      tags: tagData?.data?.listTags || [],
-      categories: categoryData?.data?.listCategories || [],
-      clients: clientData?.data?.listUsers || [],
+      tags: tagData?.data?.listTag || [],
+      categories: categoryData?.data?.listCategory || [],
+      clients: clientData?.data?.listUser || [],
     },
   };
 }

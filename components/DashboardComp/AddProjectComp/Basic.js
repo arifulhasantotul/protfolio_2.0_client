@@ -3,7 +3,7 @@ import { useStateContext } from "@/context/ContextProvider";
 import { ADD_PROJECT } from "@/services/graphql/mutation";
 import { saveToLocalStorage } from "@/services/utils/temporarySave";
 import styles from "@/styles/ProjectForm.module.css";
-import { useMutation } from "@apollo/client";
+import client from "apollo-client";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -13,22 +13,20 @@ const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
 });
 
 // api to create project
-// const createProject = async (payload) => {
-//   const { data } = await client.mutate({
-//     mutation: ADD_PROJECT,
-//     variables: {
-//       input: payload,
-//     },
-//   });
-//   return data;
-// };
+const createProject = async (payload) => {
+  const { data } = await client.mutate({
+    mutation: ADD_PROJECT,
+    variables: {
+      input: payload,
+    },
+  });
+  return data;
+};
 
 const Basic = ({ categories, tags, clients, sendData }) => {
   const { currentColor, darkTheme } = useStateContext();
 
   const [richTextValue, setRichTextValue] = useState("");
-
-  const [createProject, { data, loading, error }] = useMutation(ADD_PROJECT);
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCategoriesId, setSelectedCategoriesId] = useState([]);
@@ -168,28 +166,25 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     e.preventDefault();
 
     try {
-      const dataObj = {
-        ...basicData,
+      const newData = {
+        name: basicData?.name,
+        slug: basicData?.slug,
+        des: richTextValue || "",
+        rank: basicData?.rank ? parseFloat(basicData?.rank) : 0.0,
+        ratings: basicData?.ratings ? parseFloat(basicData?.ratings) : 0.0,
+        status: basicData?.status,
         categoriesId: selectedCategoriesId,
         tagsId: selectedTagsId,
-        des: richTextValue || "",
+        clientId: basicData?.clientId,
       };
-      saveToLocalStorage("portfolioAddProjectBasic", dataObj);
-      // const stringifyData = JSON.stringify(dataObj);
-      console.log("dataObj", dataObj);
-      createProject({
-        variables: {
-          input: dataObj,
-        },
-      });
+
+      saveToLocalStorage("portfolioAddProjectBasic", newData);
+      const data = await createProject(newData);
       console.log(data);
-      // createProject(JSON.stringify(dataObj));
     } catch (err) {
-      console.log(err);
+      console.log("❌ Error in AddProjectComp/Basic.js line 187", err);
     }
   };
-
-  // console.log(basicData);
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;

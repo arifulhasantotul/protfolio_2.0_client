@@ -1,5 +1,6 @@
 import { useStateContext } from "@/context/ContextProvider";
 import { ADD_CATEGORY } from "@/services/graphql/mutation";
+import { ALL_CATEGORIES_NAME } from "@/services/graphql/queries";
 import styles from "@/styles/DashboardPage.module.css";
 // import { useMutation } from "@apollo/client";
 import { Container } from "@mui/material";
@@ -16,7 +17,8 @@ const createCategory = async (payload) => {
   return data;
 };
 
-const DashboardPage = () => {
+const DashboardPage = ({ categories }) => {
+  console.log("categories", categories);
   const { darkTheme } = useStateContext();
   const [val, setVal] = useState("");
 

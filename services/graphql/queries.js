@@ -3,8 +3,8 @@ const { gql } = require("@apollo/client");
 // -------------- TAG --------------------------
 
 const ALL_TAGS_NAME = gql`
-  query ListTags {
-    listTags {
+  query ListTag {
+    listTag {
       id
       name
     }
@@ -14,8 +14,8 @@ const ALL_TAGS_NAME = gql`
 // -------------- CATEGORY --------------------------
 
 const ALL_CATEGORIES_NAME = gql`
-  query ListCategories {
-    listCategories {
+  query ListCategory {
+    listCategory {
       id
       name
     }
@@ -25,8 +25,8 @@ const ALL_CATEGORIES_NAME = gql`
 // -------------- CATEGORY --------------------------
 
 const ALL_PROJECTS_NAME = gql`
-  query ListProjects {
-    listProjects {
+  query ListProject {
+    listProject {
       id
       name
     }
@@ -34,8 +34,8 @@ const ALL_PROJECTS_NAME = gql`
 `;
 
 const ALL_PROJECTS = gql`
-  query ListProjects {
-    listProjects {
+  query ListProject {
+    listProject {
       id
       name
       slug
@@ -66,8 +66,8 @@ const ALL_PROJECTS = gql`
 // -------------- USER --------------------------
 
 const ALL_USERS_NAME = gql`
-  query ListUsers {
-    listUsers {
+  query ListUser {
+    listUser {
       id
       name
       email

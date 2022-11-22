@@ -1,7 +1,9 @@
+import { ALL_CATEGORIES_NAME } from "@/services/graphql/queries";
+import client from "apollo-client";
 import Head from "next/head";
 import DashboardPage from "./DashboardPage";
 
-export default function Dashboard() {
+export default function Dashboard({ categories }) {
   return (
     <div className="page_wrapper">
       <Head>
@@ -11,8 +13,20 @@ export default function Dashboard() {
       </Head>
 
       <main>
-        <DashboardPage />
+        <DashboardPage categories={categories} />
       </main>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const { data } = await client.query({
+    query: ALL_CATEGORIES_NAME,
+  });
+
+  return {
+    props: {
+      categories: data?.listCategory || [],
+    },
+  };
 }
