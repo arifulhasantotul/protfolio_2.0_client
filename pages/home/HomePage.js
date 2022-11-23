@@ -3,6 +3,7 @@ import HomeBannerRight from "@/components/HomeComp/HomeBannerRight/HomeBannerRig
 import HomeProjects from "@/components/HomeComp/HomeProjects/HomeProjects";
 import HomeSkills from "@/components/HomeComp/HomeSkills/HomeSkills";
 import PageHeader from "@/components/PageHeader/PageHeader";
+import Review from "@/components/Review/Review";
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/HomePage.module.css";
 import { Container, Grid } from "@mui/material";
@@ -35,6 +36,14 @@ const HomePage = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <HomeProjects />
+          </Grid>
+        </Grid>
+
+        <hr className={styles.break_line} />
+        <PageHeader title="Testimonial" />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Review />
           </Grid>
         </Grid>
       </Container>
