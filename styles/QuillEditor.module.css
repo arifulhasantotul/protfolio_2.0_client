@@ -1,0 +1,23 @@
+.editor {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  border: none;
+  outline: none;
+}
+
+.light.editor {
+  background: var(--bg_form_white);
+  box-shadow: 2px 2px 5px #babecc, -5px -5px 10px #ffffff73;
+  -webkit-box-shadow: 2px 2px 5px #babecc, -5px -5px 10px #ffffff73;
+  -moz-box-shadow: 2px 2px 5px #babecc, -5px -5px 10px #ffffff73;
+}
+
+.dark.editor {
+  box-shadow: var(--dark_field_shadow);
+  -webkit-box-shadow: var(--dark_field_shadow);
+  -moz-box-shadow: var(--dark_field_shadow);
+  background: linear-gradient(315deg, #222222, #292929);
+}

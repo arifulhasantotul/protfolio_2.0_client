@@ -1,4 +1,5 @@
 import ContextProvider from "@/context/ContextProvider";
+import { activeURI } from "@/services/utils/devVarExport";
 import "@/styles/globals.css";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { AnimatePresence, motion } from "framer-motion";
@@ -7,7 +8,7 @@ import Layout from "../components/Layout/Layout";
 
 function MyApp({ Component, pageProps, router }) {
   const client = new ApolloClient({
-    uri: "http://localhost:4000/",
+    uri: `${activeURI}/graphql`,
     cache: new InMemoryCache(),
   });
   return (

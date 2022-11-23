@@ -10,6 +10,7 @@ import { adminRoutes } from "./adminRoutes";
 
 const Sidebar = () => {
   const { pathname } = useRouter();
+
   const { darkTheme, currentColor, adminSidebar, setAdminSidebar, setColor } =
     useStateContext();
   const [subnav, setSubnav] = useState(false);
@@ -52,8 +53,9 @@ const Sidebar = () => {
                 <Link href={item.path}>
                   <span
                     className={`${styles.link} ${
-                      pathname === item.path ? styles.active : ""
+                      pathname === item.path ? styles.active_link : ""
                     }`}
+                    onClick={toggleSidebar}
                   >
                     <span className={styles.link_icon}>{item.icon}</span>{" "}
                     {item.name}{" "}
@@ -78,6 +80,7 @@ const Sidebar = () => {
                         } ${
                           pathname === sub_link.path ? styles.sub_active : ""
                         }`}
+                        onClick={toggleSidebar}
                       >
                         <span className={styles.sub_link_icon}>
                           {sub_link.icon}

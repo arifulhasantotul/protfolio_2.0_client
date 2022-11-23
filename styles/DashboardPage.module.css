@@ -3,7 +3,7 @@
   padding: 20px 0;
   width: 100%;
   z-index: -1;
-  position: relative;
+  /* position: relative; */
 }
 .dash_page.light {
   background: var(--bg_white);
