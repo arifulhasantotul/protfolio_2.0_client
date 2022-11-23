@@ -22,7 +22,7 @@ const ALL_CATEGORIES_NAME = gql`
   }
 `;
 
-// -------------- CATEGORY --------------------------
+// -------------- PROJECT --------------------------
 
 const ALL_PROJECTS_NAME = gql`
   query ListProject {

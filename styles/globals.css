@@ -35,8 +35,8 @@
   --dark_register_btn_shadow: -9px -9px 18px #0f0f0f, 9px 9px 18px #3d3d3d;
   --dark_register_hover_btn_shadow: inset -9px -9px 18px #0f0f0f,
 
-  --light_page_head: #c4cfde;
-  --dark_page_head: #3c3e41;
+  --dark_page_head: #ced0d4;
+  --light_page_head: #3c3e41;
   --color_light: #e4e6ea;
   --color_lighter: #ced0d4;
   --color_lightest: #f0f2f5;

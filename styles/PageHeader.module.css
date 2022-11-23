@@ -2,16 +2,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: var(--FS_xxl);
+  font-size: var(--FS_xl);
   font-family: var(--FF_mont);
 }
 
 .light.header_div {
-  color: var(--dark_page_head);
+  color: var(--light_page_head); /*#3c3e41*/
 }
 
 .dark.header_div {
-  color: var(--light_page_head);
+  color: var(--color_lighter); /*#ced0d4*/
 }
 
 @media (max-width: 1200px) {

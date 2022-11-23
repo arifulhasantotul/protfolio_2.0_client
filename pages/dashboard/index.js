@@ -19,7 +19,7 @@ export default function Dashboard({ categories }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data } = await client.query({
     query: ALL_CATEGORIES_NAME,
   });

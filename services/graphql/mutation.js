@@ -9,14 +9,6 @@ const ADD_CATEGORY = gql`
     }
   }
 `;
-// const ADD_CATEGORY = gql`
-//   mutation CreateCategory($input: CreateCategoryInput!) {
-//     createCategory(input: $input) {
-//       id
-//       name
-//     }
-//   }
-// `;
 
 // -------------- PROJECT --------------------------
 const ADD_PROJECT = gql`
