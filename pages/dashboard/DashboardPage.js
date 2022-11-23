@@ -1,6 +1,5 @@
 import { useStateContext } from "@/context/ContextProvider";
 import { ADD_CATEGORY } from "@/services/graphql/mutation";
-import { ALL_CATEGORIES_NAME } from "@/services/graphql/queries";
 import styles from "@/styles/DashboardPage.module.css";
 // import { useMutation } from "@apollo/client";
 import { Container } from "@mui/material";
@@ -22,11 +21,6 @@ const DashboardPage = ({ categories }) => {
   const { darkTheme } = useStateContext();
   const [val, setVal] = useState("");
 
-  // const [createCategory, { data, loading, error }] = useMutation(ADD_CATEGORY);
-
-  // if (loading) return "Submitting...";
-  // if (error) return `Submission error! ${error.message}`;
-
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
   const handleChange = (e) => {
@@ -39,11 +33,6 @@ const DashboardPage = ({ categories }) => {
       name: val,
     };
     const data = await createCategory(dataSet);
-    // createCategory({
-    //   variables: {
-    //     input: dataSet,
-    //   },
-    // });
     console.log(data);
   };
 
