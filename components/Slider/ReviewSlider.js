@@ -1,33 +1,11 @@
-import SimpleButton from "@/components/SimpleButton/SimpleButton";
+import Review from "@/components/Review/Review";
 import styles from "@/styles/ReviewSlider.module.css";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Review from "../Review/Review";
 
 const ReviewSlider = ({ data }) => {
   return (
     <div className={styles.slider_wrapper}>
-      <div className={styles.btn}>
-        <SimpleButton tooltip="Previous review" swiperClassName="custom_prev">
-          {" "}
-          <AiOutlineArrowLeft
-            style={{
-              width: "25px",
-              height: "25px",
-            }}
-          />{" "}
-        </SimpleButton>
-        <SimpleButton tooltip="Next review" swiperClassName="custom_next">
-          {" "}
-          <AiOutlineArrowRight
-            style={{
-              width: "25px",
-              height: "25px",
-            }}
-          />{" "}
-        </SimpleButton>
-      </div>
       <Swiper
         cssMode={true}
         navigation={{

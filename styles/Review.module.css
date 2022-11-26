@@ -111,12 +111,13 @@
   font-size: 16px !important;
 }
 
+.light .lower_div p,
 .light.caption p,
 .light .upper_div p,
 .light .head p {
   color: var(--dark_text);
 }
-
+.dark .lower_div p,
 .dark .caption p,
 .dark .upper_div p,
 .dark .head p {
@@ -137,6 +138,13 @@
   background-color: #1a1d23;
 }
 
-.upper_div p {
+.lower_div {
+  padding: 20px;
+  height: calc(450px - 150px);
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.lower_div p {
   font-size: var(--FS_md);
 }
