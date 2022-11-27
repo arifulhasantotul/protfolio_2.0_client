@@ -21,7 +21,7 @@
     "react-icons": "^4.4.0",
     "react-quill": "^2.0.0",
     "react-switch": "^7.0.0",
-    "swiper": "^8.3.2",
+    "swiper": "^8.4.5",
     "typewriter-effect": "^2.19.0"
   },
   "devDependencies": {
