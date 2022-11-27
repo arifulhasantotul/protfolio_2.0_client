@@ -88,8 +88,12 @@ const Review = ({ review }) => {
             </div>
 
             <div className={styles.rating_div}>
-              <SkillPaper tooltip="Rating">
-                <Rating name="size-medium" defaultValue={5} />
+              <SkillPaper mt={0} mr={0} tooltip="Rating">
+                {screenSize > 400 ? (
+                  <Rating name="size-medium" defaultValue={5} />
+                ) : (
+                  <Rating name="size-small" defaultValue={5} size="small" />
+                )}
               </SkillPaper>
             </div>
           </div>
