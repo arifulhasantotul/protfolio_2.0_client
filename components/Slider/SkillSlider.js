@@ -10,7 +10,7 @@ const ReviewSlider = ({ data }) => {
         cssMode={true}
         autoplay={{
           delay: 800,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
         }}
         spaceBetween={20}
         mousewheel={true}
