@@ -1,7 +1,7 @@
 import styles from "@/styles/ReviewSlider.module.css";
 import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Review from "@/components/Review/Review";
+import Review from "@/components/ReviewComp/Review";
 
 const ReviewSlider = ({ data }) => {
   return (

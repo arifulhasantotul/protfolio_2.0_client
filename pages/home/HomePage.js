@@ -3,6 +3,7 @@ import HomeBannerRight from "@/components/HomeComp/HomeBannerRight/HomeBannerRig
 import HomeProjects from "@/components/HomeComp/HomeProjects/HomeProjects";
 import HomeSkills from "@/components/HomeComp/HomeSkills/HomeSkills";
 import PageHeader from "@/components/PageHeader/PageHeader";
+import AddReview from "@/components/ReviewComp/AddReview";
 import ReviewSlider from "@/components/Slider/ReviewSlider";
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/HomePage.module.css";
@@ -45,6 +46,9 @@ const HomePage = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <ReviewSlider data={fakeData} />
+          </Grid>
+          <Grid item xs={12}>
+            <AddReview />
           </Grid>
         </Grid>
       </Container>
