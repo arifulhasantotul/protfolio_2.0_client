@@ -1,21 +1,26 @@
+import SkillPaper from "@/components/SkillPaper/SkillPaper";
+import SkillSlider from "@/components/Slider/SkillSlider";
 import { useStateContext } from "@/context/ContextProvider";
-import { skillData } from "../../SkillPaper/skillData";
-import SkillPaper from "../../SkillPaper/SkillPaper";
 import styles from "@/styles/HomeSkills.module.css";
+import { skillData } from "../../SkillPaper/skillData";
 
 const HomeSkills = () => {
-  const { darkTheme } = useStateContext();
+  const { darkTheme, screenSize } = useStateContext();
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
   return (
     <div className={conditionalMode}>
       <p className={styles.skill_head}>SOME SKILLS</p>
-      {skillData.map((item, idx) => (
-        <SkillPaper key={idx} tooltip={item?.name}>
-          {item?.icon}
-        </SkillPaper>
-      ))}
+      {screenSize > 1520 ? (
+        skillData.map((item, idx) => (
+          <SkillPaper key={idx} tooltip={item?.name}>
+            {item?.icon}
+          </SkillPaper>
+        ))
+      ) : (
+        <SkillSlider data={skillData} />
+      )}
     </div>
   );
 };
