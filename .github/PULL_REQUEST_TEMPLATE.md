@@ -36,11 +36,16 @@ Optional Changes: (provide file path)
 
 # 🧪 5. Done any extra testing ?\*
 
-Describe if you do any additional tests.
+- [ ] No
+- [ ] Yes
+      Describe if you do any additional tests.
 
 ---
 
 # 📦 6. Added any new package?\*
+
+- [ ] No
+- [ ] Yes
 
 | Package Name | Package Version | Why?  |
 | :----------: | :-------------: | :---: |
@@ -50,6 +55,9 @@ Describe if you do any additional tests.
 
 # 🚩 7. Design
 
+- [ ] No
+- [ ] Yes
+
 | Given UI Design SS | Your Coded UI SS |
 | :----------------: | :--------------: |
 |       Header       |      Title       |
@@ -58,6 +66,9 @@ Describe if you do any additional tests.
 
 # 🗺️ 8. Required Environment variables
 
+- [ ] No
+- [ ] Yes
+
 | Environment variables Key | Default value |  Why?   |
 | :-----------------------: | :-----------: | :-----: |
 |           Name            |     Value     | reasons |
@@ -65,6 +76,9 @@ Describe if you do any additional tests.
 ---
 
 # 🆕 9. Other info (If needed)
+
+- [ ] No
+- [ ] Yes
 
 ---
 

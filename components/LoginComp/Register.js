@@ -1,9 +1,10 @@
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
+import { saveToLocalStorage } from "@/services/utils/temporarySave";
 import styles from "@/styles/Register.module.css";
 import { Container } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 const Register = () => {
@@ -20,9 +21,20 @@ const Register = () => {
   };
   const [registerData, setRegisterData] = useState(initialState);
 
+  const handleBlur = () => {
+    saveToLocalStorage("portfolioRegisterData", {
+      name: registerData?.name || "",
+      email: registerData?.email || "",
+    });
+  };
+
   const handleInput = (e) => {
     const { name, value } = e.target;
     setRegisterData((prevState) => ({ ...prevState, [name]: value }));
+    saveToLocalStorage("portfolioRegisterData", {
+      name: registerData?.name || "",
+      email: registerData?.email || "",
+    });
   };
 
   const handleShowPass = (pass) => {
@@ -41,6 +53,16 @@ const Register = () => {
   const handleReset = async () => {
     setRegisterData(initialState);
   };
+
+  useEffect(() => {
+    const data = localStorage.getItem("portfolioRegisterData");
+    const parsedData = data !== null ? JSON.parse(data) : null;
+    if (!parsedData) return;
+    setRegisterData({
+      name: parsedData?.name || "",
+      email: parsedData?.email || "",
+    });
+  }, []);
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
@@ -65,8 +87,9 @@ const Register = () => {
                 type="text"
                 id="name"
                 name="name"
-                value={registerData?.name}
+                value={registerData?.name || ""}
                 onChange={handleInput}
+                onBlur={handleBlur}
               />
             </div>
             <div className={styles.input_field}>
@@ -78,8 +101,9 @@ const Register = () => {
                 type="text"
                 id="email"
                 name="email"
-                value={registerData?.email}
+                value={registerData?.email || ""}
                 onChange={handleInput}
+                onBlur={handleBlur}
               />
             </div>
             <div className={styles.input_field}>
@@ -91,7 +115,7 @@ const Register = () => {
                 type={showPass?.pass1 ? "text" : "password"}
                 id="password"
                 name="password"
-                value={registerData?.password}
+                value={registerData?.password || ""}
                 onChange={handleInput}
               />
               <span className={styles.show_pass}>
@@ -111,7 +135,7 @@ const Register = () => {
                 type={showPass?.pass2 ? "text" : "password"}
                 id="check_pass"
                 name="check_pass"
-                value={registerData?.check_pass}
+                value={registerData?.check_pass || ""}
                 onChange={handleInput}
               />
               <span className={styles.show_pass}>
