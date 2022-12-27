@@ -1,8 +1,9 @@
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
-import { ADD_USER, GET_OTP } from "@/services/graphql/mutation";
-import { VERIFY_OTP } from "@/services/graphql/queries";
-import { saveToLocalStorage } from "@/services/utils/temporarySave";
+import {
+  removeFromLocalStorage,
+  saveToLocalStorage,
+} from "@/services/utils/temporarySave";
 import {
   failedToast,
   infoToast,
@@ -11,49 +12,14 @@ import {
 } from "@/services/utils/toasts";
 import styles from "@/styles/Register.module.css";
 import { CircularProgress, Container } from "@mui/material";
-import client from "apollo-client";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-
-const verifyOTP = async (otp, email) => {
-  const { data } = await client.query({
-    query: VERIFY_OTP,
-    variables: {
-      otp: otp,
-      email: email,
-    },
-  });
-  return data.verifyOTP;
-};
-
-// api to generate otp
-const getOtp = async (email) => {
-  const { data } = await client.mutate({
-    mutation: GET_OTP,
-    variables: {
-      email: email,
-    },
-  });
-  return data.getOtp;
-};
-
-// api to register user
-const addUser = async (payload) => {
-  const { data } = await client.mutate({
-    mutation: ADD_USER,
-    variables: {
-      input: {
-        name: payload.name || payload.email,
-        email: payload.email,
-        password: payload.password,
-      },
-    },
-  });
-  return data.createUser;
-};
+import { addUser, getOtp, verifyOTP } from "./api-calls";
 
 const Register = () => {
+  const router = useRouter();
   const { currentColor, darkTheme, screenSize } = useStateContext();
   const [sendingReq, setSendingReq] = useState(false);
   const [showPass, setShowPass] = useState({
@@ -92,9 +58,9 @@ const Register = () => {
     try {
       const otp = await otpModal(darkTheme, registerData?.email);
       if (!otp) return failedToast(darkTheme, "Invalid OTP");
-      // console.log(otp);
+
       const matchedOTP = await verifyOTP(otp, registerData?.email);
-      // console.log(matchedOTP);
+
       if (!matchedOTP) {
         failedToast(darkTheme, "Invalid OTP, Registration failed!");
         setTimeout(() => {
@@ -118,6 +84,8 @@ const Register = () => {
         console.log("✅ register user data", res);
         successToast(darkTheme, "Success!", "User registered successfully!");
         setRegisterData(initialState);
+        router.push("/login");
+        removeFromLocalStorage("portfolioRegisterData");
       }
     } catch (err) {
       console.log("❌ Error while registering user", err);
@@ -158,6 +126,11 @@ const Register = () => {
 
   const handleReset = async () => {
     setRegisterData(initialState);
+    removeFromLocalStorage("portfolioRegisterData");
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("check_pass").value = "";
   };
 
   useEffect(() => {
