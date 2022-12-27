@@ -75,10 +75,17 @@ const ALL_USERS_NAME = gql`
   }
 `;
 
+const VERIFY_OTP = gql`
+  query VerifyOtp($otp: String!, $email: String!) {
+    verifyOTP(otp: $otp, email: $email)
+  }
+`;
+
 export {
   ALL_TAGS_NAME,
   ALL_CATEGORIES_NAME,
   ALL_PROJECTS_NAME,
   ALL_PROJECTS,
   ALL_USERS_NAME,
+  VERIFY_OTP,
 };

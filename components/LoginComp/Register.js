@@ -1,14 +1,61 @@
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
+import { ADD_USER, GET_OTP } from "@/services/graphql/mutation";
+import { VERIFY_OTP } from "@/services/graphql/queries";
 import { saveToLocalStorage } from "@/services/utils/temporarySave";
+import {
+  failedToast,
+  infoToast,
+  otpModal,
+  successToast,
+} from "@/services/utils/toasts";
 import styles from "@/styles/Register.module.css";
-import { Container } from "@mui/material";
+import { CircularProgress, Container } from "@mui/material";
+import client from "apollo-client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
+const verifyOTP = async (otp, email) => {
+  const { data } = await client.query({
+    query: VERIFY_OTP,
+    variables: {
+      otp: otp,
+      email: email,
+    },
+  });
+  return data.verifyOTP;
+};
+
+// api to generate otp
+const getOtp = async (email) => {
+  const { data } = await client.mutate({
+    mutation: GET_OTP,
+    variables: {
+      email: email,
+    },
+  });
+  return data.getOtp;
+};
+
+// api to register user
+const addUser = async (payload) => {
+  const { data } = await client.mutate({
+    mutation: ADD_USER,
+    variables: {
+      input: {
+        name: payload.name || payload.email,
+        email: payload.email,
+        password: payload.password,
+      },
+    },
+  });
+  return data.createUser;
+};
+
 const Register = () => {
   const { currentColor, darkTheme, screenSize } = useStateContext();
+  const [sendingReq, setSendingReq] = useState(false);
   const [showPass, setShowPass] = useState({
     pass1: false,
     pass2: false,
@@ -41,12 +88,71 @@ const Register = () => {
     setShowPass((prevState) => ({ ...prevState, [pass]: !prevState[pass] }));
   };
 
+  const registerUser = async () => {
+    try {
+      const otp = await otpModal(darkTheme, registerData?.email);
+      if (!otp) return failedToast(darkTheme, "Invalid OTP");
+      // console.log(otp);
+      const matchedOTP = await verifyOTP(otp, registerData?.email);
+      // console.log(matchedOTP);
+      if (!matchedOTP) {
+        failedToast(darkTheme, "Invalid OTP, Registration failed!");
+        setTimeout(() => {
+          infoToast(
+            darkTheme,
+            "Remember",
+            "Wait 5 minutes and try again with valid OTP"
+          );
+        }, 4500);
+        return;
+      }
+
+      // register user
+      const res = await addUser({
+        name: registerData?.name,
+        email: registerData?.email,
+        password: registerData?.password,
+      });
+
+      if (res) {
+        console.log("✅ register user data", res);
+        successToast(darkTheme, "Success!", "User registered successfully!");
+        setRegisterData(initialState);
+      }
+    } catch (err) {
+      console.log("❌ Error while registering user", err);
+      failedToast(darkTheme, err?.message);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("register data", registerData);
+    setSendingReq(true);
+    const { email, password, check_pass } = registerData;
     try {
+      if (!email || !password || !check_pass)
+        return failedToast(darkTheme, "Please fill all the fields");
+      if (password !== check_pass)
+        return failedToast(darkTheme, "Passwords do not match");
+
+      if (password.length < 6)
+        return failedToast(
+          darkTheme,
+          "Password must be at least 6 characters long"
+        );
+
+      // send otp to email
+      const res = await getOtp(email);
+      if (res) {
+        successToast(darkTheme, "Success!", res);
+        registerUser();
+      }
     } catch (err) {
-      console.log("Error in Register page", err);
+      console.log("❌ Error in Register page", err);
+      failedToast(darkTheme, err?.message);
+      console.log("❌ Error in Register page", err?.message);
+    } finally {
+      setSendingReq(false);
     }
   };
 
@@ -74,6 +180,7 @@ const Register = () => {
           display: "grid",
           placeItems: "center",
         }}
+        className={styles.p0}
       >
         <form onSubmit={handleSubmit} className={styles.form_wrapper}>
           <h2 className={styles.form_heading}>Create Account</h2>
@@ -162,21 +269,30 @@ const Register = () => {
               page{" "}
             </p>
           </div>
-          <div className={styles.btn_div}>
-            <SimpleFormButton
-              name="❌ Reset"
-              type="button"
-              onClick={handleReset}
-              tooltip="Reset form data"
-            />
-            {screenSize > 450 && <div></div>}
-            <SimpleFormButton
-              name="Get OTP 🚀"
-              type="submit"
-              // onClick={handleSubmit}
-              tooltip="You'll get an OTP to your email"
-            />
-          </div>
+          {!sendingReq ? (
+            <div className={styles.btn_div}>
+              <SimpleFormButton
+                name="❌ Reset"
+                type="button"
+                onClick={handleReset}
+                tooltip="Reset form data"
+              />
+              {screenSize > 450 && <div></div>}
+              <SimpleFormButton
+                name="Get OTP 🚀"
+                type="submit"
+                tooltip="You'll get an OTP to your email"
+              />
+            </div>
+          ) : (
+            <div className={styles.btn_div}>
+              <CircularProgress
+                style={{
+                  color: currentColor,
+                }}
+              />
+            </div>
+          )}
         </form>
       </Container>
     </div>

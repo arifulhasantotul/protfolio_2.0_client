@@ -152,6 +152,9 @@
 }
 
 @media (max-width: 360px) {
+  .p0 {
+    padding: 0;
+  }
   .form_wrapper {
     padding: 10px;
   }
