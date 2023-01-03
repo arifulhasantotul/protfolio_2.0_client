@@ -1,5 +1,6 @@
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
+import { failedToast } from "@/services/utils/toasts";
 import styles from "@/styles/Login.module.css";
 import { Container } from "@mui/material";
 import Link from "next/link";
@@ -7,7 +8,8 @@ import { useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 const Login = () => {
-  const { currentColor, darkTheme, screenSize } = useStateContext();
+  const { currentColor, darkTheme, screenSize, currentUser, setLoginUserData } =
+    useStateContext();
   const [showPass, setShowPass] = useState(false);
   const initialState = {
     email: "",
@@ -26,7 +28,23 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("register data", registerData);
+    try {
+      const user = await currentUser(
+        registerData?.email,
+        registerData?.password
+      );
+
+      console.log("user", user);
+      setLoginUserData((prevState) => ({
+        ...prevState,
+        token: user?.token,
+        userId: user?.userId,
+        expired: user?.tokenExpiration,
+      }));
+    } catch (err) {
+      console.log("❌ Error while login user", err);
+      failedToast(darkTheme, err.message);
+    }
   };
 
   const handleReset = async () => {

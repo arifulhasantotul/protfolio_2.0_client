@@ -74,6 +74,18 @@ const ALL_USERS_NAME = gql`
     }
   }
 `;
+// -------------- AUTH --------------------------
+
+const LOGIN_USER = gql`
+  query LoginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      userId
+      token
+      tokenExpiration
+    }
+  }
+`;
+// -------------- OTP --------------------------
 
 const VERIFY_OTP = gql`
   query VerifyOtp($otp: String!, $email: String!) {
@@ -88,4 +100,5 @@ export {
   ALL_PROJECTS,
   ALL_USERS_NAME,
   VERIFY_OTP,
+  LOGIN_USER,
 };

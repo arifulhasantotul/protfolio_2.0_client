@@ -1,5 +1,5 @@
 import { ADD_USER, GET_OTP } from "@/services/graphql/mutation";
-import { VERIFY_OTP } from "@/services/graphql/queries";
+import { LOGIN_USER, VERIFY_OTP } from "@/services/graphql/queries";
 import client from "apollo-client";
 
 export const verifyOTP = async (otp, email) => {
@@ -37,4 +37,17 @@ export const addUser = async (payload) => {
     },
   });
   return data.createUser;
+};
+
+export const loginUser = async (email, password) => {
+  if (!email || !password) return;
+
+  const { data } = await client.query({
+    query: LOGIN_USER,
+    variables: {
+      email: email,
+      password: password,
+    },
+  });
+  return data.loginUser;
 };

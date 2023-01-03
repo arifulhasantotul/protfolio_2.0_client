@@ -1,8 +1,23 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-
+import { LOGIN_USER } from "@/services/graphql/queries";
+import { failedToast } from "@/services/utils/toasts";
+import client from "apollo-client";
 import { useRouter } from "next/router";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const StateContext = createContext();
+
+const getUser = async (email, password) => {
+  if (!email || !password) return;
+
+  const { data } = await client.query({
+    query: LOGIN_USER,
+    variables: {
+      email: email,
+      password: password,
+    },
+  });
+  return data.loginUser;
+};
 
 const ContextProvider = ({ children }) => {
   const [screenSize, setScreenSize] = useState(undefined);
@@ -23,6 +38,12 @@ const ContextProvider = ({ children }) => {
 
   const [pageURL, setPageURL] = useState("");
 
+  const [loginUserData, setLoginUserData] = useState({
+    token: null,
+    userId: null,
+    expired: null,
+  });
+
   const toggleDarkTheme = (prevState) => {
     setDarkTheme(!prevState);
 
@@ -35,6 +56,15 @@ const ContextProvider = ({ children }) => {
 
     localStorage.setItem("portfolioThemeColor", color);
     localStorage.setItem("portfolioThemeColorName", name);
+  };
+
+  const currentUser = (email, password) => {
+    if (!email || !password)
+      return failedToast(darkTheme, "Please fill all fields");
+
+    const foundUser = getUser(email, password);
+    if (!foundUser) return;
+    return foundUser;
   };
 
   useEffect(() => {
@@ -84,6 +114,9 @@ const ContextProvider = ({ children }) => {
         setColor,
         currentColorName,
         setCurrentColorName,
+        currentUser,
+        loginUserData,
+        setLoginUserData,
       }}
     >
       {children}
