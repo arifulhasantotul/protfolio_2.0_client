@@ -8,8 +8,13 @@ import { useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 const Login = () => {
-  const { currentColor, darkTheme, screenSize, currentUser, setLoginUserData } =
-    useStateContext();
+  const {
+    currentColor,
+    darkTheme,
+    screenSize,
+    customLoginUser,
+    setLoginUserData,
+  } = useStateContext();
   const [showPass, setShowPass] = useState(false);
   const initialState = {
     email: "",
@@ -29,12 +34,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = await currentUser(
+      const user = await customLoginUser(
         registerData?.email,
         registerData?.password
       );
 
-      console.log("user", user);
+      // console.log("user", user);
       setLoginUserData((prevState) => ({
         ...prevState,
         token: user?.token,

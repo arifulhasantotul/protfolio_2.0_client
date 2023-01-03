@@ -58,7 +58,7 @@ const ContextProvider = ({ children }) => {
     localStorage.setItem("portfolioThemeColorName", name);
   };
 
-  const currentUser = (email, password) => {
+  const customLoginUser = (email, password) => {
     if (!email || !password)
       return failedToast(darkTheme, "Please fill all fields");
 
@@ -114,7 +114,7 @@ const ContextProvider = ({ children }) => {
         setColor,
         currentColorName,
         setCurrentColorName,
-        currentUser,
+        customLoginUser,
         loginUserData,
         setLoginUserData,
       }}
