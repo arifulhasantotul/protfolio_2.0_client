@@ -5,9 +5,11 @@ import styles from "@/styles/Login.module.css";
 import { Container } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 const Login = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
   const {
     currentColor,
     darkTheme,
@@ -46,7 +48,16 @@ const Login = () => {
         userId: user?.userId,
         expired: user?.tokenExpiration,
       }));
+      if (user) {
+        setCookie("portfolio_2_0", user?.token, {
+          path: "/",
+          maxAge: user?.tokenExpiration,
+          secure: process.env.NEXT_PUBLIC_RUNNING !== "dev",
+          httpOnly: process.env.NEXT_PUBLIC_RUNNING !== "dev",
+        });
+      }
     } catch (err) {
+      removeCookie("portfolio_2_0", { path: "/" });
       console.log("❌ Error while login user", err);
       failedToast(darkTheme, err.message);
     }
