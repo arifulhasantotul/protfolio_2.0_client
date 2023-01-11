@@ -1,11 +1,12 @@
 import ContextProvider from "@/context/ContextProvider";
+import { extractJWT, getCookie } from "@/services/utils/cookieExtract";
 import { activeURI } from "@/services/utils/devVarExport";
 import "@/styles/globals.css";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { AnimatePresence, motion } from "framer-motion";
+import { CookiesProvider } from "react-cookie";
 import "swiper/css/bundle";
 import Layout from "../components/Layout/Layout";
-import { CookiesProvider } from "react-cookie";
 
 function MyApp({ Component, pageProps, router }) {
   const client = new ApolloClient({
@@ -17,9 +18,9 @@ function MyApp({ Component, pageProps, router }) {
       {/*Apollo/graphql wrapper */}
       <ApolloProvider client={client}>
         {/* context api wrapper */}
-        <ContextProvider>
-          {/* page layout  */}
-          <CookiesProvider>
+        <CookiesProvider>
+          <ContextProvider>
+            {/* page layout  */}
             <Layout>
               {/* page transition */}
               <AnimatePresence mode="wait">
@@ -51,8 +52,8 @@ function MyApp({ Component, pageProps, router }) {
                 </motion.div>
               </AnimatePresence>
             </Layout>
-          </CookiesProvider>
-        </ContextProvider>
+          </ContextProvider>
+        </CookiesProvider>
       </ApolloProvider>
     </>
   );

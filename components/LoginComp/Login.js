@@ -4,11 +4,13 @@ import { failedToast } from "@/services/utils/toasts";
 import styles from "@/styles/Login.module.css";
 import { Container } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 const Login = () => {
+  const router = useRouter();
   const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
   const {
     currentColor,
@@ -41,7 +43,6 @@ const Login = () => {
         registerData?.password
       );
 
-      // console.log("user", user);
       setLoginUserData((prevState) => ({
         ...prevState,
         token: user?.token,
@@ -55,6 +56,7 @@ const Login = () => {
           secure: process.env.NEXT_PUBLIC_RUNNING !== "dev",
           httpOnly: process.env.NEXT_PUBLIC_RUNNING !== "dev",
         });
+        router.push("/dashboard");
       }
     } catch (err) {
       removeCookie("portfolio_2_0", { path: "/" });

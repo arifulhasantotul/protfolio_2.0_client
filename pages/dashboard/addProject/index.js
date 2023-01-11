@@ -4,10 +4,11 @@ import {
   ALL_TAGS_NAME,
   ALL_USERS_NAME,
 } from "@/services/graphql/queries";
+import { currentUserData } from "@/services/utils/cookieExtract";
 import client from "apollo-client";
 import Head from "next/head";
 
-export default function AddProject({ tags, categories, clients }) {
+export default function AddProject({ tags, categories, clients, accessToken }) {
   return (
     <div className="page_wrapper">
       <Head>
@@ -21,6 +22,7 @@ export default function AddProject({ tags, categories, clients }) {
           tags={tags}
           categories={categories}
           clients={clients}
+          accessToken={accessToken}
         />
       </main>
     </div>
@@ -28,7 +30,20 @@ export default function AddProject({ tags, categories, clients }) {
 }
 
 // to get new added categories and tags from the database we should use getServerSideProps
-export async function getServerSideProps() {
+export async function getServerSideProps({ req, res }) {
+  const { cookie } = req.headers;
+  const accessToken = currentUserData("portfolio_2_0", cookie);
+
+  // setting private route
+  if (!accessToken) {
+    res.setHeader("Set-Cookie", "portfolio_2_0=; path=/; max-age=0");
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
   const tagData = await client.query({
     query: ALL_TAGS_NAME,
   });
@@ -46,6 +61,7 @@ export async function getServerSideProps() {
       tags: tagData?.data?.listTag || [],
       categories: categoryData?.data?.listCategory || [],
       clients: clientData?.data?.listUser || [],
+      accessToken: accessToken,
     },
   };
 }

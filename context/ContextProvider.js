@@ -1,4 +1,4 @@
-import { LOGIN_USER } from "@/services/graphql/queries";
+import { CURRENT_USER, LOGIN_USER } from "@/services/graphql/queries";
 import { failedToast } from "@/services/utils/toasts";
 import client from "apollo-client";
 import { useRouter } from "next/router";
@@ -17,6 +17,13 @@ const getUser = async (email, password) => {
     },
   });
   return data.loginUser;
+};
+
+const me = async () => {
+  const { data } = await client.query({
+    query: CURRENT_USER,
+  });
+  return data.currentUser;
 };
 
 const ContextProvider = ({ children }) => {
@@ -38,11 +45,9 @@ const ContextProvider = ({ children }) => {
 
   const [pageURL, setPageURL] = useState("");
 
-  const [loginUserData, setLoginUserData] = useState({
-    token: null,
-    userId: null,
-    expired: null,
-  });
+  const [loginUserData, setLoginUserData] = useState(null);
+
+  const [isUserLoading, setIsUserLoading] = useState(true);
 
   const toggleDarkTheme = (prevState) => {
     setDarkTheme(!prevState);
@@ -117,6 +122,8 @@ const ContextProvider = ({ children }) => {
         customLoginUser,
         loginUserData,
         setLoginUserData,
+        isUserLoading,
+        setIsUserLoading,
       }}
     >
       {children}

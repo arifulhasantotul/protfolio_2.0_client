@@ -23,7 +23,7 @@ const createProject = async (payload) => {
   return data;
 };
 
-const Basic = ({ categories, tags, clients, sendData }) => {
+const Basic = ({ categories, tags, clients, sendData, accessToken }) => {
   const { currentColor, darkTheme } = useStateContext();
 
   const [richTextValue, setRichTextValue] = useState("");
@@ -72,7 +72,6 @@ const Basic = ({ categories, tags, clients, sendData }) => {
       setArrayFunc((prev) => [...prev, data]);
       saveToLocalStorage("portfolioAddProjectBasic", basicData);
     }
-    console.log("addToArray", basicData);
   };
 
   // handling remove items by id from array
@@ -139,8 +138,6 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     }
   };
 
-  // console.log(basicData);
-
   const createSlug = () => {
     if (basicData.name) {
       const slug = basicData?.name.toLowerCase().replace(/ /g, "-");
@@ -180,7 +177,6 @@ const Basic = ({ categories, tags, clients, sendData }) => {
 
       saveToLocalStorage("portfolioAddProjectBasic", newData);
       const data = await createProject(newData);
-      console.log(data);
     } catch (err) {
       console.log("❌ Error in AddProjectComp/Basic.js line 187", err);
     }
@@ -194,7 +190,6 @@ const Basic = ({ categories, tags, clients, sendData }) => {
     const storedContent = localStorage.getItem("portfolioAddProjectBasic");
     if (storedContent == null) return;
     const parsedContent = JSON.parse(storedContent);
-    console.log(parsedContent);
 
     setBasicData({
       name: parsedContent?.name,

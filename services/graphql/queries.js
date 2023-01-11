@@ -74,6 +74,18 @@ const ALL_USERS_NAME = gql`
     }
   }
 `;
+
+const CURRENT_USER = gql`
+  query Me {
+    currentUser {
+      id
+      name
+      email
+      password
+      role
+    }
+  }
+`;
 // -------------- AUTH --------------------------
 
 const LOGIN_USER = gql`
@@ -101,4 +113,5 @@ export {
   ALL_USERS_NAME,
   VERIFY_OTP,
   LOGIN_USER,
+  CURRENT_USER,
 };
