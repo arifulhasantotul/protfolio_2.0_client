@@ -81,7 +81,7 @@ const Register = () => {
       });
 
       if (res) {
-        console.log("✅ register user data", res);
+        // console.log("✅ register user data", res);
         successToast(darkTheme, "Success!", "User registered successfully!");
         setRegisterData(initialState);
         router.push("/login");
@@ -118,7 +118,7 @@ const Register = () => {
     } catch (err) {
       console.log("❌ Error in Register page", err);
       failedToast(darkTheme, err?.message);
-      console.log("❌ Error in Register page", err?.message);
+      // console.log("❌ Error in Register page", err?.message);
     } finally {
       setSendingReq(false);
     }

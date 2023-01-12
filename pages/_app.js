@@ -1,17 +1,36 @@
 import ContextProvider from "@/context/ContextProvider";
-import { extractJWT, getCookie } from "@/services/utils/cookieExtract";
 import { activeURI } from "@/services/utils/devVarExport";
 import "@/styles/globals.css";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloLink,
+  ApolloProvider,
+  concat,
+  HttpLink,
+  InMemoryCache,
+} from "@apollo/client";
 import { AnimatePresence, motion } from "framer-motion";
-import { CookiesProvider } from "react-cookie";
+import { CookiesProvider, useCookies } from "react-cookie";
 import "swiper/css/bundle";
 import Layout from "../components/Layout/Layout";
 
 function MyApp({ Component, pageProps, router }) {
+  const [cookies] = useCookies(["portfolio_2_0"]);
+  const accessToken = cookies["portfolio_2_0"];
+
+  const httpLink = new HttpLink({ uri: `${activeURI}/graphql` });
+  const authMiddleware = new ApolloLink((operation, forward) => {
+    operation.setContext(({ headers = {} }) => ({
+      headers: {
+        ...headers,
+        authorization: `Bearer ${accessToken}` || "",
+      },
+    }));
+    return forward(operation);
+  });
   const client = new ApolloClient({
-    uri: `${activeURI}/graphql`,
     cache: new InMemoryCache(),
+    link: concat(authMiddleware, httpLink),
   });
   return (
     <>

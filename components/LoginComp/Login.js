@@ -56,10 +56,12 @@ const Login = () => {
           secure: process.env.NEXT_PUBLIC_RUNNING !== "dev",
           httpOnly: process.env.NEXT_PUBLIC_RUNNING !== "dev",
         });
+        localStorage.setItem("portfolioIdToken", user?.userId);
         router.push("/dashboard");
       }
     } catch (err) {
       removeCookie("portfolio_2_0", { path: "/" });
+      localStorage.removeItem("portfolioIdToken");
       console.log("❌ Error while login user", err);
       failedToast(darkTheme, err.message);
     }

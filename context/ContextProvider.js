@@ -3,6 +3,7 @@ import { failedToast } from "@/services/utils/toasts";
 import client from "apollo-client";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 const StateContext = createContext();
 
@@ -27,6 +28,9 @@ const me = async () => {
 };
 
 const ContextProvider = ({ children }) => {
+  const [cookies] = useCookies(["portfolio_2_0"]);
+  const accessToken = cookies["portfolio_2_0"];
+
   const [screenSize, setScreenSize] = useState(undefined);
 
   const [sidebar, setSidebar] = useState(false);
@@ -48,6 +52,11 @@ const ContextProvider = ({ children }) => {
   const [loginUserData, setLoginUserData] = useState(null);
 
   const [isUserLoading, setIsUserLoading] = useState(true);
+
+  const backend_url =
+    process.env.NEXT_PUBLIC_RUNNING === "dev"
+      ? process.env.NEXT_PUBLIC_DEV_SERVER
+      : process.env.NEXT_PUBLIC_PROD_SERVER;
 
   const toggleDarkTheme = (prevState) => {
     setDarkTheme(!prevState);
@@ -86,6 +95,8 @@ const ContextProvider = ({ children }) => {
 
     setPageURL(pathname);
 
+    if (!accessToken) localStorage.removeItem("portfolioIdToken");
+
     if (screenSize <= 900) {
       setSidebar(false);
       setAdminSidebar(false);
@@ -97,6 +108,7 @@ const ContextProvider = ({ children }) => {
     handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screenSize, setScreenSize, pathname]);
 
   return (
@@ -124,6 +136,8 @@ const ContextProvider = ({ children }) => {
         setLoginUserData,
         isUserLoading,
         setIsUserLoading,
+        accessToken,
+        backend_url,
       }}
     >
       {children}

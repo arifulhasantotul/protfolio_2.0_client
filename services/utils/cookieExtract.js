@@ -19,7 +19,6 @@ export function currentUserData(cookieName, cookie) {
   let userData = null;
   try {
     const token = getCookie(cookieName || "portfolio_2_0", cookie);
-    console.log(token);
     const decodedToken = extractJWT(token);
     userData = decodedToken;
   } catch (err) {

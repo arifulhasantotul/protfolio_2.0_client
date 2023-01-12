@@ -2,8 +2,9 @@ import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { ADD_PROJECT } from "@/services/graphql/mutation";
 import { saveToLocalStorage } from "@/services/utils/temporarySave";
+import { failedToast, successToast } from "@/services/utils/toasts";
 import styles from "@/styles/ProjectForm.module.css";
-import client from "apollo-client";
+import { useMutation } from "@apollo/client";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -12,21 +13,23 @@ const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
   ssr: false,
 });
 
-// api to create project
-const createProject = async (payload) => {
-  const { data } = await client.mutate({
-    mutation: ADD_PROJECT,
-    variables: {
-      input: payload,
-    },
-  });
-  return data;
-};
+// NOTE: this a demo api to create project outside of react components
+// const createProject = async (payload) => {
+//   const { data } = await client.mutate({
+//     mutation: ADD_PROJECT,
+//     variables: {
+//       input: payload,
+//     },
+//   });
+//   return data;
+// };
 
-const Basic = ({ categories, tags, clients, sendData, accessToken }) => {
-  const { currentColor, darkTheme } = useStateContext();
+const Basic = ({ categories, tags, clients, sendData, accessToken, user }) => {
+  const { currentColor, darkTheme, backend_url } = useStateContext();
 
   const [richTextValue, setRichTextValue] = useState("");
+
+  const [createProject, { data, loading, error }] = useMutation(ADD_PROJECT);
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCategoriesId, setSelectedCategoriesId] = useState([]);
@@ -164,20 +167,27 @@ const Basic = ({ categories, tags, clients, sendData, accessToken }) => {
 
     try {
       const newData = {
-        name: basicData?.name,
-        slug: basicData?.slug,
+        name: basicData?.name.trim(),
+        slug: basicData?.slug.trim(),
         des: richTextValue || "",
         rank: basicData?.rank ? parseFloat(basicData?.rank) : 0.0,
         ratings: basicData?.ratings ? parseFloat(basicData?.ratings) : 0.0,
         status: basicData?.status,
         categoriesId: selectedCategoriesId,
         tagsId: selectedTagsId,
-        clientId: basicData?.clientId,
+        clientId: basicData?.clientId || user?.userId,
       };
 
       saveToLocalStorage("portfolioAddProjectBasic", newData);
-      const data = await createProject(newData);
+      const { data } = await createProject({
+        variables: {
+          input: newData,
+        },
+      });
+      if (data?.createProject?.id)
+        successToast(darkTheme, "Project created successfully. 😊");
     } catch (err) {
+      failedToast(darkTheme, err.message);
       console.log("❌ Error in AddProjectComp/Basic.js line 187", err);
     }
   };

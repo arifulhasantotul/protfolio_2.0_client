@@ -13,3 +13,6 @@ const client = new ApolloClient({
 });
 
 export default client;
+
+// https://www.youtube.com/watch?v=A3WwR_TxNyQ&list=PL55RiY5tL51rG1x02Yyj93iypUuHYXcB_&index=16
+// 17:07

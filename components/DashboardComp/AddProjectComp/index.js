@@ -8,7 +8,13 @@ import Basic from "./Basic";
 import Finish from "./Finish";
 import Media from "./Media";
 
-const AddProjectComponent = ({ tags, categories, clients, accessToken }) => {
+const AddProjectComponent = ({
+  tags,
+  categories,
+  clients,
+  accessToken,
+  user,
+}) => {
   const { currentColor, darkTheme } = useStateContext();
 
   // css conditionalMode for dark mode
@@ -95,6 +101,7 @@ const AddProjectComponent = ({ tags, categories, clients, accessToken }) => {
                 categories={categories}
                 clients={clients}
                 accessToken={accessToken}
+                user={user}
               />
             </div>
           )}
