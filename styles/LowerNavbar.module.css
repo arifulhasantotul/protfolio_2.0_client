@@ -18,11 +18,13 @@
 }
 
 .light .nav_wrapper {
-  background: var(--bg_white);
+  background: var(--bg_form_white);
+  box-shadow: var(--bg_form_white_shadow);
 }
 
 .dark .nav_wrapper {
-  background: var(--bg_dark);
+  background: var(--bg_dark_btn);
+  box-shadow: var(--bg_dark_btn_shadow);
 }
 
 .nav_links {

@@ -9,14 +9,6 @@ const ADD_CATEGORY = gql`
     }
   }
 `;
-// const ADD_CATEGORY = gql`
-//   mutation CreateCategory($input: CreateCategoryInput!) {
-//     createCategory(input: $input) {
-//       id
-//       name
-//     }
-//   }
-// `;
 
 // -------------- PROJECT --------------------------
 const ADD_PROJECT = gql`
@@ -28,4 +20,23 @@ const ADD_PROJECT = gql`
   }
 `;
 
-export { ADD_CATEGORY, ADD_PROJECT };
+// -------------- USER --------------------------
+const ADD_USER = gql`
+  mutation CreateUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+      id
+      name
+      email
+      phone
+    }
+  }
+`;
+
+// -------------- OTP --------------------------
+const GET_OTP = gql`
+  mutation GetOtp($email: String!) {
+    getOtp(email: $email)
+  }
+`;
+
+export { ADD_CATEGORY, ADD_PROJECT, GET_OTP, ADD_USER };

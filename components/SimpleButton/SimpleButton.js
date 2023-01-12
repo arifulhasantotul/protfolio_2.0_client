@@ -2,7 +2,14 @@ import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/SimpleButton.module.css";
 import { useEffect, useState } from "react";
 
-const SimpleButton = ({ name, type, onClick, children, tooltip }) => {
+const SimpleButton = ({
+  name,
+  type,
+  onClick,
+  children,
+  tooltip,
+  swiperClassName,
+}) => {
   const { currentColor, darkTheme } = useStateContext();
 
   const bgColor = darkTheme ? "#212428" : "#ecf0f3";
@@ -28,7 +35,7 @@ const SimpleButton = ({ name, type, onClick, children, tooltip }) => {
   return (
     <button
       title={tooltip}
-      className={`${conditionalMode} ${styles.btn}`}
+      className={`${conditionalMode} ${styles.btn} ${swiperClassName}`}
       style={{
         color: fontColor,
         background: background,

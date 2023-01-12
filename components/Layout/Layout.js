@@ -10,6 +10,8 @@ const Layout = ({ children }) => {
   const { darkTheme, screenSize } = useStateContext();
   const { pathname } = useRouter();
 
+  // css conditionalMode for dark mode
+  const conditionalMode = darkTheme ? "dark" : "light";
   return (
     <div id={darkTheme ? "dark" : "light"}>
       {screenSize >= 900 && (
@@ -25,8 +27,10 @@ const Layout = ({ children }) => {
       <main>{children}</main>
 
       <footer>
-        <div className="empty_div"></div>
-        {/* {screenSize < 900 && <div className="empty_div"></div>} */}
+        {screenSize < 900 && (
+          <div className={`${conditionalMode} empty_div`}></div>
+        )}
+
         {screenSize < 900 && <LowerNavbar />}
       </footer>
     </div>
