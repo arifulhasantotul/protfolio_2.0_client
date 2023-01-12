@@ -16,8 +16,7 @@ const createCategory = async (payload) => {
   return data;
 };
 
-const DashboardPage = ({ categories }) => {
-  console.log("categories", categories);
+const DashboardPage = ({ categories, accessToken }) => {
   const { darkTheme } = useStateContext();
   const [val, setVal] = useState("");
 
@@ -26,14 +25,12 @@ const DashboardPage = ({ categories }) => {
   const handleChange = (e) => {
     setVal(e.target.value);
   };
-  console.log(val);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const dataSet = {
       name: val,
     };
     const data = await createCategory(dataSet);
-    console.log(data);
   };
 
   return (

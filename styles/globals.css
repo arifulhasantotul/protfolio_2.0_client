@@ -126,6 +126,14 @@ body {
   background: transparent;
 }
 
+.light.empty_div{
+  background: var(--bg_white);
+}
+
+.dark.empty_div{
+  background: var(--bg_dark);
+}
+
 .swiper-pagination-bullet.swiper-pagination-bullet-active {
   background-color: #fd4520;
   opacity: 1;

@@ -8,7 +8,7 @@ import ReviewSlider from "@/components/Slider/ReviewSlider";
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/HomePage.module.css";
 import { Container, Grid } from "@mui/material";
-import { fakeData } from "./sliderData";
+import { fakeData } from "../../test-data/sliderData";
 
 const HomePage = () => {
   const { currentColor, darkTheme } = useStateContext();
