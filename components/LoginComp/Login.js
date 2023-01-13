@@ -53,8 +53,8 @@ const Login = () => {
         setCookie("portfolio_2_0", user?.token, {
           path: "/",
           maxAge: user?.tokenExpiration,
-          secure: process.env.NEXT_PUBLIC_RUNNING !== "dev",
-          httpOnly: process.env.NEXT_PUBLIC_RUNNING !== "dev",
+          // secure: process.env.NEXT_PUBLIC_RUNNING !== "dev",
+          // httpOnly: process.env.NEXT_PUBLIC_RUNNING !== "dev",
         });
         localStorage.setItem("portfolioIdToken", user?.userId);
         router.push("/dashboard");
