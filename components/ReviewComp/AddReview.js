@@ -1,9 +1,14 @@
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/AddReview.module.css";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 
+const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
+  ssr: false,
+});
+
 const AddReview = () => {
-  const { darkTheme, currentColor } = useStateContext();
+  const { darkTheme, currentColor, screenSize } = useStateContext();
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
@@ -16,7 +21,20 @@ const AddReview = () => {
     start_date: "",
     end_date: "",
     rating: "",
+    comment: "",
   });
+
+  const [richTextValue, setRichTextValue] = useState("");
+
+  const handleRichText = (value) => {
+    if (value) {
+      setReviewData((prevState) => ({ ...prevState, comment: value }));
+      saveToLocalStorage("portfolioAddReviewData", reviewData);
+    } else {
+      setReviewData((prevState) => ({ ...prevState, comment: "" }));
+      saveToLocalStorage("portfolioAddReviewData", reviewData);
+    }
+  };
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -109,12 +127,19 @@ const AddReview = () => {
             </div>
 
             <div className={styles.input_field}>
-              <label htmlFor="end_date">To</label>
+              <label
+                style={{
+                  marginTop: `${screenSize < 450 ? "20px" : "0px"}`,
+                }}
+                htmlFor="end_date"
+              >
+                To
+              </label>
               <input
                 style={{
                   color: currentColor,
                   width: "calc(100% - 10px)",
-                  marginLeft: "10px",
+                  marginLeft: `${screenSize < 450 ? "0px" : "10px"}`,
                   cursor: "pointer",
                 }}
                 type="date"
@@ -142,10 +167,29 @@ const AddReview = () => {
                 onChange={handleInput}
               />
             </div>
-
-            <div className={styles.input_field}></div>
           </div>
         </div>
+        {/* Rich text editor */}
+        <div className={styles.input_field}>
+          <label
+            style={{
+              marginBottom: "10px",
+            }}
+            htmlFor="comment"
+          >
+            Comment
+          </label>
+          <QuillEditor
+            id="comment"
+            name="comment"
+            className={styles.input}
+            value={richTextValue}
+            setValue={setRichTextValue}
+            onBlur={() => handleRichText(richTextValue)}
+          />
+        </div>
+
+        <div className={styles.input_field}></div>
       </div>
     </div>
   );

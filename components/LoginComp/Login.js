@@ -1,3 +1,4 @@
+import DataLoading from "@/components/FetchingResult/DataLoading";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { failedToast } from "@/services/utils/toasts";
@@ -20,6 +21,7 @@ const Login = () => {
     setLoginUserData,
   } = useStateContext();
   const [showPass, setShowPass] = useState(false);
+  const { isSendingReq, setIsSendingReq } = useStateContext(false);
   const initialState = {
     email: "",
     password: "",
@@ -37,6 +39,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSendingReq(true);
     try {
       const user = await customLoginUser(
         registerData?.email,
@@ -59,11 +62,13 @@ const Login = () => {
         localStorage.setItem("portfolioIdToken", user?.userId);
         router.push("/dashboard");
       }
+      setIsSendingReq(false);
     } catch (err) {
       removeCookie("portfolio_2_0", { path: "/" });
       localStorage.removeItem("portfolioIdToken");
       console.log("❌ Error while login user", err);
       failedToast(darkTheme, err.message);
+      setIsSendingReq(false);
     }
   };
 
@@ -135,21 +140,25 @@ const Login = () => {
               page{" "}
             </p>
           </div>
-          <div className={styles.btn_div}>
-            <SimpleFormButton
-              name="❌ Reset"
-              type="button"
-              onClick={handleReset}
-              tooltip="Reset form data"
-            />
-            {screenSize > 450 && <div></div>}
-            <SimpleFormButton
-              name="Login 🚀"
-              type="submit"
-              // onClick={handleSubmit}
-              tooltip="You'll get an OTP to your email"
-            />
-          </div>
+          {!isSendingReq ? (
+            <div className={styles.btn_div}>
+              <SimpleFormButton
+                name="❌ Reset"
+                type="button"
+                onClick={handleReset}
+                tooltip="Reset form data"
+              />
+              {screenSize > 450 && <div></div>}
+              <SimpleFormButton
+                name="Login 🚀"
+                type="submit"
+                // onClick={handleSubmit}
+                tooltip="You'll get an OTP to your email"
+              />
+            </div>
+          ) : (
+            <DataLoading />
+          )}
         </form>
       </Container>
     </div>

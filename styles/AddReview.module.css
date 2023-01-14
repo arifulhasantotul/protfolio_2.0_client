@@ -2,9 +2,10 @@
 .form_wrapper {
   margin: 10px 0;
   margin-top: 30px;
-  margin-right: 20px;
   border-radius: 10px;
   padding: 40px 30px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
 .light .form_wrapper {
@@ -107,4 +108,31 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .form_wrapper {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
+@media (max-width: 768px) {
+  .half_width_inputs {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 450px) {
+  .form_wrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .date_range {
+    flex-direction: column;
+  }
+}
+@media (max-width: 0px) {
+}
+@media (max-width: 0px) {
 }
