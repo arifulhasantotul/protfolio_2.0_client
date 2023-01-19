@@ -2,9 +2,10 @@
 .form_wrapper {
   margin: 10px 0;
   margin-top: 30px;
-  margin-right: 20px;
   border-radius: 10px;
   padding: 40px 30px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
 .light .form_wrapper {
@@ -59,6 +60,7 @@
   color: red;
 }
 
+.light .rating_div,
 .light .input_field select,
 .light .input_field .input,
 .light .input_field input {
@@ -77,6 +79,7 @@
   -moz-box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
 }
 
+.dark .rating_div,
 .dark .input_field select,
 .dark .input_field input,
 .dark .input_field .input {
@@ -108,3 +111,52 @@
   justify-content: space-between;
   width: 100%;
 }
+
+.rating_div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 25px;
+  height: 45px;
+  width: max-content;
+  padding: 0 20px;
+  border-radius: 25px;
+}
+
+.rating {
+  font-size: var(--FS_lg);
+}
+
+.btn_div {
+  display: flex;
+  flex: wrap;
+  justify-content: space-between;
+  align-content: center;
+}
+
+@media (max-width: 1200px) {
+  .form_wrapper {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
+@media (max-width: 768px) {
+  .half_width_inputs {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 450px) {
+  .form_wrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .date_range {
+    flex-direction: column;
+  }
+}
+/* @media (max-width: 0px) {
+}
+@media (max-width: 0px) {
+} */

@@ -17,7 +17,6 @@ import Layout from "../components/Layout/Layout";
 function MyApp({ Component, pageProps, router }) {
   const [cookies] = useCookies(["portfolio_2_0"]);
   const accessToken = cookies["portfolio_2_0"];
-
   const httpLink = new HttpLink({ uri: `${activeURI}/graphql` });
   const authMiddleware = new ApolloLink((operation, forward) => {
     operation.setContext(({ headers = {} }) => ({

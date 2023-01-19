@@ -32,6 +32,21 @@ const ADD_USER = gql`
   }
 `;
 
+// -------------- REVIEW --------------------------
+const ADD_REVIEW = gql`
+  mutation CreateReview($input: CreateReviewInput!) {
+    createReview(input: $input) {
+      id
+      title
+      reviewerId
+      projectStartDate
+      projectEndDate
+      rating
+      comment
+    }
+  }
+`;
+
 // -------------- OTP --------------------------
 const GET_OTP = gql`
   mutation GetOtp($email: String!) {
@@ -39,4 +54,4 @@ const GET_OTP = gql`
   }
 `;
 
-export { ADD_CATEGORY, ADD_PROJECT, GET_OTP, ADD_USER };
+export { ADD_CATEGORY, ADD_PROJECT, GET_OTP, ADD_USER, ADD_REVIEW };

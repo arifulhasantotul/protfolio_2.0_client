@@ -184,6 +184,7 @@ const Basic = ({ categories, tags, clients, sendData, accessToken, user }) => {
           input: newData,
         },
       });
+      console.log(data);
       if (data?.createProject?.id)
         successToast(darkTheme, "Project created successfully. 😊");
     } catch (err) {

@@ -28,7 +28,7 @@ const me = async () => {
 };
 
 const ContextProvider = ({ children }) => {
-  const [cookies] = useCookies(["portfolio_2_0"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
   const accessToken = cookies["portfolio_2_0"];
 
   const [screenSize, setScreenSize] = useState(undefined);
@@ -79,6 +79,12 @@ const ContextProvider = ({ children }) => {
     const foundUser = getUser(email, password);
     if (!foundUser) return;
     return foundUser;
+  };
+
+  const handleLogout = () => {
+    removeCookie("portfolio_2_0");
+    localStorage.removeItem("portfolioIdToken");
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -138,6 +144,7 @@ const ContextProvider = ({ children }) => {
         setIsUserLoading,
         accessToken,
         backend_url,
+        handleLogout,
       }}
     >
       {children}

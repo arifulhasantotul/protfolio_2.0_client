@@ -1,3 +1,4 @@
+import DataLoading from "@/components/FetchingResult/DataLoading";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { failedToast } from "@/services/utils/toasts";
@@ -5,11 +6,11 @@ import styles from "@/styles/Login.module.css";
 import { Container } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
-const Login = () => {
+const Login = ({ accessToken }) => {
   const router = useRouter();
   const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
   const {
@@ -20,6 +21,7 @@ const Login = () => {
     setLoginUserData,
   } = useStateContext();
   const [showPass, setShowPass] = useState(false);
+  const [isSendingReq, setIsSendingReq] = useState(false);
   const initialState = {
     email: "",
     password: "",
@@ -37,6 +39,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSendingReq(true);
     try {
       const user = await customLoginUser(
         registerData?.email,
@@ -57,13 +60,15 @@ const Login = () => {
           // httpOnly: process.env.NEXT_PUBLIC_RUNNING !== "dev",
         });
         localStorage.setItem("portfolioIdToken", user?.userId);
-        router.push("/dashboard");
+        window.location.replace("/dashboard");
       }
+      setIsSendingReq(false);
     } catch (err) {
       removeCookie("portfolio_2_0", { path: "/" });
       localStorage.removeItem("portfolioIdToken");
       console.log("❌ Error while login user", err);
       failedToast(darkTheme, err.message);
+      setIsSendingReq(false);
     }
   };
 
@@ -73,6 +78,10 @@ const Login = () => {
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
+
+  useEffect(() => {
+    if (!accessToken) localStorage.removeItem("portfolioIdToken");
+  }, [accessToken]);
   return (
     <div className={`${styles.register_page} ${conditionalMode}`}>
       <Container
@@ -135,21 +144,25 @@ const Login = () => {
               page{" "}
             </p>
           </div>
-          <div className={styles.btn_div}>
-            <SimpleFormButton
-              name="❌ Reset"
-              type="button"
-              onClick={handleReset}
-              tooltip="Reset form data"
-            />
-            {screenSize > 450 && <div></div>}
-            <SimpleFormButton
-              name="Login 🚀"
-              type="submit"
-              // onClick={handleSubmit}
-              tooltip="You'll get an OTP to your email"
-            />
-          </div>
+          {!isSendingReq ? (
+            <div className={styles.btn_div}>
+              <SimpleFormButton
+                name="❌ Reset"
+                type="button"
+                onClick={handleReset}
+                tooltip="Reset form data"
+              />
+              {screenSize > 450 && <div></div>}
+              <SimpleFormButton
+                name="Login 🚀"
+                type="submit"
+                // onClick={handleSubmit}
+                tooltip="You'll get an OTP to your email"
+              />
+            </div>
+          ) : (
+            <DataLoading />
+          )}
         </form>
       </Container>
     </div>

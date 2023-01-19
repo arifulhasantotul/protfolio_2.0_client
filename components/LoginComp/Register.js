@@ -1,3 +1,4 @@
+import DataLoading from "@/components/FetchingResult/DataLoading";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import {
@@ -11,7 +12,7 @@ import {
   successToast,
 } from "@/services/utils/toasts";
 import styles from "@/styles/Register.module.css";
-import { CircularProgress, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -258,13 +259,7 @@ const Register = () => {
               />
             </div>
           ) : (
-            <div className={styles.btn_div}>
-              <CircularProgress
-                style={{
-                  color: currentColor,
-                }}
-              />
-            </div>
+            <DataLoading />
           )}
         </form>
       </Container>
