@@ -1,7 +1,8 @@
 import Login from "@/components/LoginComp/Login";
+import { getCookie } from "@/services/utils/cookieExtract";
 import Head from "next/head";
 
-export default function LoginPage() {
+export default function LoginPage({ accessToken }) {
   return (
     <div className="page_wrapper">
       <Head>
@@ -11,8 +12,33 @@ export default function LoginPage() {
       </Head>
 
       <main>
-        <Login />
+        <Login accessToken={accessToken} />
       </main>
     </div>
   );
+}
+
+export async function getServerSideProps(ctx) {
+  const { cookie } = ctx.req.headers;
+  let accessToken = null;
+  try {
+    const token = getCookie("portfolio_2_0", cookie);
+    accessToken = token;
+  } catch (err) {
+    accessToken = null;
+  }
+  // setting private route
+  if (accessToken) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      accessToken: accessToken,
+    },
+  };
 }
