@@ -41,7 +41,7 @@ export async function getServerSideProps({ req, res }) {
   const { cookie } = req.headers;
   const accessToken = getCookie("portfolio_2_0", cookie);
   const visitor = currentUserData("portfolio_2_0", cookie);
-  console.log("visitor", visitor);
+  // console.log("visitor", visitor);
 
   // setting private route
   if (!accessToken) {

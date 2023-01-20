@@ -1,7 +1,8 @@
+import { getCookie } from "@/services/utils/cookieExtract";
 import Head from "next/head";
 import HomePage from "./home/HomePage";
 
-export default function Home() {
+export default function DefaultPage({ accessToken }) {
   return (
     <div className="page_wrapper">
       <Head>
@@ -11,8 +12,25 @@ export default function Home() {
       </Head>
 
       <main>
-        <HomePage />
+        <HomePage accessToken={accessToken} />
       </main>
     </div>
   );
+}
+
+export async function getServerSideProps(ctx) {
+  const { cookie } = ctx.req.headers;
+  let accessToken = null;
+  try {
+    const token = getCookie("portfolio_2_0", cookie);
+    accessToken = token;
+  } catch (err) {
+    accessToken = null;
+  }
+
+  return {
+    props: {
+      accessToken: accessToken,
+    },
+  };
 }

@@ -6,6 +6,10 @@ const saveToSessionStorage = (keyName = "", objName = {}) => {
   if (keyName) sessionStorage.setItem(keyName, JSON.stringify(objName));
 };
 
+const getFromStorage = (storage, keyName) => {
+  if (storage && keyName) return JSON.parse(storage.getItem(keyName));
+};
+
 const removeFromLocalStorage = (keyName) => {
   if (keyName) localStorage.removeItem(keyName);
 };
@@ -19,4 +23,5 @@ export {
   saveToSessionStorage,
   removeFromLocalStorage,
   removeFromSessionStorage,
+  getFromStorage,
 };
