@@ -26,7 +26,7 @@ const HomePage = ({ accessToken }) => {
   const { darkTheme } = useStateContext();
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
-  const [addedReview, setAddedReview] = useState(false);
+  // const [addedReview, setAddedReview] = useState(false);
   const [allReview, setAllReview] = useState([]);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const HomePage = ({ accessToken }) => {
           <Grid item xs={12}>
             <ReviewSlider
               allReview={allReview}
-              addedReview={addedReview}
+              // addedReview={addedReview}
               data={fakeData}
             />
           </Grid>
@@ -101,7 +101,7 @@ const HomePage = ({ accessToken }) => {
           <Grid item xs={12}>
             {accessToken && showForm ? (
               <AddReview
-                setAddedReview={setAddedReview}
+                // setAddedReview={setAddedReview}
                 allReview={allReview}
                 setAllReview={setAllReview}
                 accessToken={accessToken}

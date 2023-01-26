@@ -36,6 +36,10 @@ const ALL_REVIEW = gql`
         id
         email
         name
+        avatar
+        designation
+        dialCode
+        phone
       }
       projectStartDate
       projectEndDate

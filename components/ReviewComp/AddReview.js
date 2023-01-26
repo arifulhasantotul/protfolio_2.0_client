@@ -2,7 +2,6 @@ import DataLoading from "@/components/FetchingResult/DataLoading";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { ADD_REVIEW } from "@/services/graphql/mutation";
-import { htmlToMarkdown } from "@/services/utils/htmlMarkdown";
 import {
   getFromStorage,
   removeFromLocalStorage,
@@ -20,7 +19,7 @@ const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
   ssr: false,
 });
 
-const AddReview = ({ setAddedReview, setAllReview, allReview }) => {
+const AddReview = ({ setAllReview, allReview }) => {
   const { darkTheme, currentColor, screenSize } = useStateContext();
   const [createReview] = useMutation(ADD_REVIEW);
 
@@ -84,12 +83,17 @@ const AddReview = ({ setAddedReview, setAllReview, allReview }) => {
     e.preventDefault();
     setSendingComment(true);
     try {
+      if (reviewData?.rating === 0) {
+        failedToast(darkTheme, "Please give a rating!");
+        setSendingComment(false);
+        return;
+      }
       const payload = {
         title: reviewData?.title || "",
         rating: reviewData?.rating || 0,
         projectStartDate: reviewData?.start_date || "",
         projectEndDate: reviewData?.end_date || "",
-        comment: htmlToMarkdown(richTextValue) || "",
+        comment: richTextValue || "",
       };
       const { data } = await createReview({
         variables: {
@@ -112,8 +116,6 @@ const AddReview = ({ setAddedReview, setAllReview, allReview }) => {
         window.location.href = "/login";
       }
       setSendingComment(false);
-    } finally {
-      setAddedReview(true);
     }
   };
 
