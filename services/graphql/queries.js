@@ -22,6 +22,27 @@ const ALL_CATEGORIES_NAME = gql`
   }
 `;
 
+// -------------- REVIEW --------------------------
+
+const ALL_REVIEW = gql`
+  query ListReview {
+    listReview {
+      id
+      title
+      reviewerId
+      comment
+      rating
+      reviewer {
+        id
+        email
+        name
+      }
+      projectStartDate
+      projectEndDate
+    }
+  }
+`;
+
 // -------------- PROJECT --------------------------
 
 const ALL_PROJECTS_NAME = gql`
@@ -109,6 +130,7 @@ export {
   ALL_TAGS_NAME,
   ALL_CATEGORIES_NAME,
   ALL_PROJECTS_NAME,
+  ALL_REVIEW,
   ALL_PROJECTS,
   ALL_USERS_NAME,
   VERIFY_OTP,

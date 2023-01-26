@@ -2,6 +2,7 @@ import DataLoading from "@/components/FetchingResult/DataLoading";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { ADD_REVIEW } from "@/services/graphql/mutation";
+import { ALL_REVIEW } from "@/services/graphql/queries";
 import {
   getFromStorage,
   removeFromLocalStorage,
@@ -19,7 +20,7 @@ const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
   ssr: false,
 });
 
-const AddReview = () => {
+const AddReview = ({ setAddedReview, setAllReview, allReview }) => {
   const { darkTheme, currentColor, screenSize } = useStateContext();
   const [createReview] = useMutation(ADD_REVIEW);
 
@@ -96,14 +97,23 @@ const AddReview = () => {
         },
       });
 
-      if (data?.createReview?.id)
+      if (data?.createReview?.id) {
+        const newData = [data?.createReview, ...allReview];
+        setAllReview(newData);
         successToast(darkTheme, "Thanks for your valuable comment! 😊");
+      }
+
       setSendingComment(false);
       handleReset();
     } catch (err) {
       failedToast(darkTheme, err.message);
-      console.log("❌ Error in AddReview.js line 81", err);
+      console.log("❌ Error in AddReview.js line 105", err);
+      if (err.message === "Unauthenticated!") {
+        window.location.href = "/login";
+      }
       setSendingComment(false);
+    } finally {
+      setAddedReview(true);
     }
   };
 
@@ -123,7 +133,7 @@ const AddReview = () => {
     const data = getFromStorage(localStorage, "portfolioAddReviewData");
     if (data) {
       setReviewData((prvData) => ({ ...prvData, ...data }));
-      setRatingVal(data?.rating || 0);
+      setRatingVal(data?.rating || "");
       setRichTextValue(data?.comment || "");
     }
   }, []);

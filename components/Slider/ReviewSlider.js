@@ -1,9 +1,11 @@
+import Review from "@/components/ReviewComp/Review";
 import styles from "@/styles/ReviewSlider.module.css";
 import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Review from "@/components/ReviewComp/Review";
 
-const ReviewSlider = ({ data }) => {
+const ReviewSlider = ({ data, addedReview, allReview }) => {
+  console.log(allReview);
+
   return (
     <div className={styles.slider_wrapper}>
       <Swiper

@@ -39,10 +39,15 @@ const ADD_REVIEW = gql`
       id
       title
       reviewerId
-      projectStartDate
-      projectEndDate
       rating
       comment
+      reviewer {
+        id
+        email
+        name
+      }
+      projectStartDate
+      projectEndDate
     }
   }
 `;

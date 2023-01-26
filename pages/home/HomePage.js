@@ -7,16 +7,31 @@ import AddReview from "@/components/ReviewComp/AddReview";
 import SimpleButton from "@/components/SimpleButton/SimpleButton";
 import ReviewSlider from "@/components/Slider/ReviewSlider";
 import { useStateContext } from "@/context/ContextProvider";
+import { ALL_REVIEW } from "@/services/graphql/queries";
 import styles from "@/styles/HomePage.module.css";
 import { Container, Grid } from "@mui/material";
+import client from "apollo-client";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { fakeData } from "../../test-data/sliderData";
 
+export const getAllReview = async () => {
+  const { data } = await client.query({
+    query: ALL_REVIEW,
+  });
+  return data.listReview;
+};
+
 const HomePage = ({ accessToken }) => {
-  const { currentColor, darkTheme } = useStateContext();
+  const { darkTheme } = useStateContext();
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
+  const [addedReview, setAddedReview] = useState(false);
+  const [allReview, setAllReview] = useState([]);
+
+  useEffect(() => {
+    getAllReview().then((res) => setAllReview(res));
+  }, []);
 
   const handleReviewFromShow = () => {
     if (accessToken) {
@@ -59,7 +74,11 @@ const HomePage = ({ accessToken }) => {
         <PageHeader title="Testimonial" />
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <ReviewSlider data={fakeData} />
+            <ReviewSlider
+              allReview={allReview}
+              addedReview={addedReview}
+              data={fakeData}
+            />
           </Grid>
           <Grid
             item
@@ -79,7 +98,12 @@ const HomePage = ({ accessToken }) => {
           </Grid>
           <Grid item xs={12}>
             {accessToken && showForm ? (
-              <AddReview accessToken={accessToken} />
+              <AddReview
+                setAddedReview={setAddedReview}
+                allReview={allReview}
+                setAllReview={setAllReview}
+                accessToken={accessToken}
+              />
             ) : null}
           </Grid>
         </Grid>
