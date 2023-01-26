@@ -30,7 +30,9 @@ const HomePage = ({ accessToken }) => {
   const [allReview, setAllReview] = useState([]);
 
   useEffect(() => {
-    getAllReview().then((res) => setAllReview(res));
+    getAllReview()
+      .then((res) => setAllReview(res))
+      .catch((err) => console.log(err));
   }, []);
 
   const handleReviewFromShow = () => {

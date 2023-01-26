@@ -2,7 +2,7 @@ import DataLoading from "@/components/FetchingResult/DataLoading";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { ADD_REVIEW } from "@/services/graphql/mutation";
-import { ALL_REVIEW } from "@/services/graphql/queries";
+import { htmlToMarkdown } from "@/services/utils/htmlMarkdown";
 import {
   getFromStorage,
   removeFromLocalStorage,
@@ -89,7 +89,7 @@ const AddReview = ({ setAddedReview, setAllReview, allReview }) => {
         rating: reviewData?.rating || 0,
         projectStartDate: reviewData?.start_date || "",
         projectEndDate: reviewData?.end_date || "",
-        comment: reviewData?.comment || richTextValue || "",
+        comment: htmlToMarkdown(richTextValue) || "",
       };
       const { data } = await createReview({
         variables: {
@@ -263,7 +263,6 @@ const AddReview = ({ setAddedReview, setAllReview, allReview }) => {
               <SimpleFormButton
                 name="Done 👍"
                 type="submit"
-                onCl
                 tooltip="Double click to submit"
                 // disabled={isDisabled}
               />
