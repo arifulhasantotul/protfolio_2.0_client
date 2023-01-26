@@ -119,6 +119,8 @@
   font-size: 16px !important;
 }
 
+.light .lower_div h1,
+.light .lower_div li,
 .light .lower_div p,
 .light.caption p,
 .light.caption_sm p,
@@ -126,6 +128,9 @@
 .light .head p {
   color: var(--dark_text);
 }
+
+.dark .lower_div h1,
+.dark .lower_div li,
 .dark .lower_div p,
 .dark .caption p,
 .dark .caption_sm p,
@@ -155,8 +160,13 @@
   overflow-y: scroll;
 }
 
+.lower_div li,
 .lower_div p {
   font-size: var(--FS_md);
+}
+
+.lower_div li {
+  margin-left: 40px;
 }
 
 .arrow_icon {
@@ -217,6 +227,10 @@
     padding: 5px;
   }
 
+  .lower_div li {
+    margin-left: 25px;
+  }
+
   .caption_sm h2,
   .caption h2,
   .head h2 {
@@ -228,6 +242,8 @@
     font-size: 9px !important;
   }
 
+  .lower_div h1,
+  .lower_div li,
   .lower_div p,
   .caption p,
   .upper_div p,

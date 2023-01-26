@@ -19,7 +19,7 @@ const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
   ssr: false,
 });
 
-const AddReview = () => {
+const AddReview = ({ setAllReview, allReview }) => {
   const { darkTheme, currentColor, screenSize } = useStateContext();
   const [createReview] = useMutation(ADD_REVIEW);
 
@@ -83,12 +83,17 @@ const AddReview = () => {
     e.preventDefault();
     setSendingComment(true);
     try {
+      if (reviewData?.rating === 0) {
+        failedToast(darkTheme, "Please give a rating!");
+        setSendingComment(false);
+        return;
+      }
       const payload = {
         title: reviewData?.title || "",
         rating: reviewData?.rating || 0,
         projectStartDate: reviewData?.start_date || "",
         projectEndDate: reviewData?.end_date || "",
-        comment: reviewData?.comment || richTextValue || "",
+        comment: richTextValue || "",
       };
       const { data } = await createReview({
         variables: {
@@ -96,13 +101,20 @@ const AddReview = () => {
         },
       });
 
-      if (data?.createReview?.id)
+      if (data?.createReview?.id) {
+        const newData = [data?.createReview, ...allReview];
+        setAllReview(newData);
         successToast(darkTheme, "Thanks for your valuable comment! 😊");
+      }
+
       setSendingComment(false);
       handleReset();
     } catch (err) {
       failedToast(darkTheme, err.message);
-      console.log("❌ Error in AddReview.js line 81", err);
+      console.log("❌ Error in AddReview.js line 105", err);
+      if (err.message === "Unauthenticated!") {
+        window.location.href = "/login";
+      }
       setSendingComment(false);
     }
   };
@@ -123,7 +135,7 @@ const AddReview = () => {
     const data = getFromStorage(localStorage, "portfolioAddReviewData");
     if (data) {
       setReviewData((prvData) => ({ ...prvData, ...data }));
-      setRatingVal(data?.rating || 0);
+      setRatingVal(data?.rating || "");
       setRichTextValue(data?.comment || "");
     }
   }, []);
@@ -253,7 +265,6 @@ const AddReview = () => {
               <SimpleFormButton
                 name="Done 👍"
                 type="submit"
-                onCl
                 tooltip="Double click to submit"
                 // disabled={isDisabled}
               />
