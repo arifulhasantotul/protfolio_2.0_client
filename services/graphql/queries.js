@@ -100,14 +100,32 @@ const ALL_USERS_NAME = gql`
   }
 `;
 
+const GET_USER = gql`
+  query GetUser($input: ID!) {
+    getUser(id: $input) {
+      id
+      name
+      phone
+      role
+      email
+      dialCode
+      designation
+      avatar
+    }
+  }
+`;
+
 const CURRENT_USER = gql`
   query Me {
     currentUser {
       id
       name
-      email
-      password
+      phone
       role
+      email
+      dialCode
+      designation
+      avatar
     }
   }
 `;
@@ -140,4 +158,5 @@ export {
   VERIFY_OTP,
   LOGIN_USER,
   CURRENT_USER,
+  GET_USER,
 };
