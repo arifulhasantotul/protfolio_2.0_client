@@ -41,6 +41,7 @@ const UPDATE_USER_DETAILS = gql`
       dialCode
       designation
       avatar
+      cloudinary_id
     }
   }
 `;

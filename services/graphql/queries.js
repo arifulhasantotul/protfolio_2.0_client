@@ -96,6 +96,9 @@ const ALL_USERS_NAME = gql`
       id
       name
       email
+      role
+      avatar
+      cloudinary_id
     }
   }
 `;
@@ -111,6 +114,7 @@ const GET_USER = gql`
       dialCode
       designation
       avatar
+      cloudinary_id
     }
   }
 `;
@@ -126,6 +130,7 @@ const CURRENT_USER = gql`
       dialCode
       designation
       avatar
+      cloudinary_id
     }
   }
 `;

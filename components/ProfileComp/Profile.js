@@ -1,9 +1,12 @@
+import { useStateContext } from "@/context/ContextProvider";
 import { UPDATE_USER_DETAILS } from "@/services/graphql/mutation";
+import { failedToast, successToast } from "@/services/utils/toasts";
 import { singleUpload } from "@/services/utils/uploadFunc";
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
 
 const Profile = ({ userData }) => {
+  const { darkTheme } = useStateContext();
   const [avatarFile, setAvatarFile] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -27,45 +30,64 @@ const Profile = ({ userData }) => {
     }
   };
 
+  const handleReset = () => {
+    setFormData({
+      name: "",
+      avatar: "",
+      dialCode: "",
+      designation: "",
+      phone: "",
+      cloudinary_id: "",
+    });
+    setAvatarFile(null);
+    document.getElementById("avatar").value = "";
+  };
+
   const handleImageHandler = async (e) => {
     e.preventDefault();
     try {
-      const uploadedData = await singleUpload(avatarFile);
+      if (avatarFile) {
+        const uploadedData = await singleUpload(avatarFile);
+        successToast(darkTheme, "Image updated successfully");
 
-      setFormData((prev) => ({
-        ...prev,
-        ["avatar"]: uploadedData?.secure_url,
-        ["cloudinary_id"]: uploadedData?.public_id,
-      }));
-
-      console.log("cloud", uploadedData);
-      await updateProfileHandler();
+        await updateProfileHandler(
+          uploadedData?.secure_url,
+          uploadedData?.public_id
+        );
+        successToast(darkTheme, "Profile updated successfully!");
+        handleReset();
+      } else {
+        const data = await updateProfileHandler();
+        console.log("db data", data);
+        successToast(darkTheme, "Profile updated successfully!");
+        handleReset();
+      }
     } catch (err) {
       console.log("Error at handleImageHandler", err);
+      failedToast(darkTheme, err.message);
     }
   };
 
-  console.log(formData);
-  console.log("avatarFile", avatarFile);
-  console.log("userData", userData);
-  const updateProfileHandler = async () => {
+  const updateProfileHandler = async (avatarURL = "", cloudinaryID = "") => {
     // e.preventDefault();
     try {
       const newData = {
         name: formData?.name || userData?.name,
-        avatar: formData?.avatar || userData?.avatar,
+        avatar: avatarURL || formData?.avatar || userData?.avatar,
         dialCode: formData?.dialCode || userData?.dialCode,
         designation: formData?.designation || userData?.designation,
         phone: formData?.phone || userData?.phone,
-        cloudinary_id: formData?.cloudinary_id || userData?.cloudinary_id,
+        cloudinary_id:
+          cloudinaryID || formData?.cloudinary_id || userData?.cloudinary_id,
       };
-      const { data } = updateUser({
+      const { data } = await updateUser({
         variables: {
           id: userData?.id,
           input: newData,
         },
       });
       console.log("update data", data);
+      return data;
     } catch (err) {
       console.log("Error at updateProfileHandler", err);
     }
