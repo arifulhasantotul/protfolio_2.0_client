@@ -1,0 +1,126 @@
+.profile_wrapper {
+  margin: 0;
+  padding: 20px 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: -1;
+  min-height: calc(100vh - 90px);
+}
+
+.light.profile_wrapper {
+  background: var(--bg_white);
+}
+
+.dark.profile_wrapper {
+  background: var(--bg_dark);
+}
+
+/* form style start */
+.form_wrapper {
+  max-width: 450px;
+  margin: 10px 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.light .form_wrapper {
+  color: var(--dark_text);
+  box-shadow: var(--bg_form_white_shadow);
+}
+
+.dark .form_wrapper {
+  color: var(--light_text);
+  box-shadow: var(--bg_dark_btn_shadow);
+}
+
+.upper_div_wrapper {
+  padding: 40px 30px;
+  height: 280px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.light .upper_div_wrapper {
+  background: url("../public/images/waves.svg") no-repeat;
+  background-size: cover;
+}
+.dark .upper_div_wrapper {
+  background: url("../public/images/waves_dark.svg") no-repeat;
+  background-size: cover;
+}
+
+.avatar_div {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.light .avatar_div {
+  background: var(--bg_form_white);
+  border: 4px solid #fff;
+}
+
+.dark .avatar_div {
+  background: var(--bg_dark_btn);
+  border: 4px solid #666;
+}
+
+.input_div_wrapper {
+  padding: 0px 30px;
+  margin-top: -30px;
+  margin-bottom: 30px;
+}
+
+.input_div {
+  display: block;
+  width: 100%;
+  padding: 0 10px;
+  font-size: var(--FS_sm);
+  font-weight: var(--FW_bold);
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.edit_div {
+  font-size: var(--FS_sm);
+  font-weight: var(--FW_medium);
+  display: flex;
+  align-items: center;
+}
+
+.edit_div p {
+  margin-right: 10px;
+}
+
+.edit_icon {
+  display: inline-block;
+  font-size: var(--FS_md);
+  margin-top: 3px;
+  margin-left: 5px;
+}
+
+.light .edit_icon {
+  fill: var(--dark_text);
+}
+.light .edit_icon {
+  fill: var(--light_text);
+}
+
+.light .edit_div,
+.light .input_div {
+  color: var(--dark_text);
+}
+
+.dark .edit_div,
+.dark .input_div {
+  color: var(--light_text);
+}

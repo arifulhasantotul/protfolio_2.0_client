@@ -1,5 +1,6 @@
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/ThemeSettings.module.css";
+import { useRouter } from "next/router";
 import { BsCheck } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import SimpleButton from "../SimpleButton/SimpleButton";
@@ -15,6 +16,8 @@ const ThemeSettings = () => {
     handleLogout,
   } = useStateContext();
 
+  const router = useRouter();
+
   const toggleSidebar = () => {
     setSidebar((prevState) => !prevState);
   };
@@ -23,6 +26,8 @@ const ThemeSettings = () => {
     setColor(name, color);
     toggleSidebar();
   };
+
+  const goToProfile = () => router.push("/profile");
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
@@ -53,9 +58,14 @@ const ThemeSettings = () => {
               </button>
             ))}
           </div>
-          <SimpleButton type="button" onClick={handleLogout}>
-            Logout
-          </SimpleButton>
+          <div className={styles.profile_sec}>
+            <SimpleButton type="button" onClick={handleLogout}>
+              Logout
+            </SimpleButton>
+            <SimpleButton type="button" onClick={goToProfile}>
+              Profile Settings
+            </SimpleButton>
+          </div>
         </div>
       </div>
       <div
