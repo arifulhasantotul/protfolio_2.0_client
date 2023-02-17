@@ -3,12 +3,12 @@ import { useStateContext } from "@/context/ContextProvider";
 import defaultImage from "@/public/images/def_review.png";
 import { UPDATE_USER_DETAILS } from "@/services/graphql/mutation";
 import { failedToast, successToast } from "@/services/utils/toasts";
-import { singleUpload } from "@/services/utils/uploadFunc";
+import { blobToDataURL, singleUpload } from "@/services/utils/uploadFunc";
 import styles from "@/styles/Profile.module.css";
 import { useMutation } from "@apollo/client";
 import Image from "next/image";
 import { useState } from "react";
-import { MdClose, MdEdit } from "react-icons/md";
+import { MdClose, MdEdit, MdUpload } from "react-icons/md";
 import Switch from "react-switch";
 
 const Profile = ({ userData }) => {
@@ -32,10 +32,16 @@ const Profile = ({ userData }) => {
     const { name, value, files } = e.target;
 
     if (name === "avatar" && files) {
-      setAvatarFile(e.target.files[0]);
+      blobToDataURL(files[0], setAvatarFile);
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  const handleClearImg = () => {
+    setFormData((prv) => ({ ...prv, avatar: "" }));
+    setAvatarFile(null);
+    document.getElementById("avatar").value = "";
   };
 
   const handleReset = () => {
@@ -108,7 +114,7 @@ const Profile = ({ userData }) => {
     <div className={`${conditionalMode} ${styles.profile_wrapper}`}>
       {!updateComp ? (
         <>
-          <div className={styles.form_wrapper}>
+          <div className={styles.form_div}>
             <div className={styles.upper_div_wrapper}>
               <div className={styles.avatar_div}>
                 <Image
@@ -141,12 +147,33 @@ const Profile = ({ userData }) => {
         // update profile form
         <>
           <form className={styles.form_wrapper} onSubmit={handleImageHandler}>
+            <div className={styles.avatar_wrapper}>
+              {avatarFile?.file && (
+                <span onClick={handleClearImg} className={styles.close_icon}>
+                  <MdClose />
+                </span>
+              )}
+              <div className={styles.avatar_div}>
+                <Image
+                  src={avatarFile?.file || userData?.avatar || defaultImage}
+                  layout="fill"
+                  alt="Profile Image"
+                />
+              </div>
+            </div>
             <div className={styles.input_field}>
+              <label className={styles.fileLabel} htmlFor="avatar">
+                <MdUpload /> <span>Upload Avatar</span>
+              </label>
               <input
                 onChange={handleChange}
                 type="file"
                 name="avatar"
                 id="avatar"
+                accept="image/*"
+                style={{
+                  display: "none",
+                }}
               />
             </div>
             <div className={styles.input_field}>
