@@ -2,6 +2,7 @@
 import { useStateContext } from "@/context/ContextProvider";
 import defaultImage from "@/public/images/def_review.png";
 import { UPDATE_USER_DETAILS } from "@/services/graphql/mutation";
+// import countryDetails from "@/services/utils/countriesData.json";
 import { failedToast, successToast } from "@/services/utils/toasts";
 import { blobToDataURL, singleUpload } from "@/services/utils/uploadFunc";
 import styles from "@/styles/Profile.module.css";
@@ -16,15 +17,17 @@ const Profile = ({ userData }) => {
   const [avatarFile, setAvatarFile] = useState(null);
   const [updateComp, setUpdateComp] = useState(false);
 
-  const [formData, setFormData] = useState({
-    name: userData?.name,
-    email: userData?.email,
+  const initialData = {
+    name: "",
     avatar: "",
     dialCode: "",
     designation: "",
     phone: "",
     cloudinary_id: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialData);
+  const [errFormData, setErrFormData] = useState(initialData);
 
   const [updateUser] = useMutation(UPDATE_USER_DETAILS);
 
@@ -45,14 +48,7 @@ const Profile = ({ userData }) => {
   };
 
   const handleReset = () => {
-    setFormData({
-      name: "",
-      avatar: "",
-      dialCode: "",
-      designation: "",
-      phone: "",
-      cloudinary_id: "",
-    });
+    setFormData(initialData);
     setAvatarFile(null);
     document.getElementById("avatar").value = "";
   };
@@ -186,7 +182,6 @@ const Profile = ({ userData }) => {
                 id="name"
                 name="name"
                 defaultValue={formData.name}
-                disabled
               />
             </div>
             <div className={styles.input_field}>
@@ -205,6 +200,7 @@ const Profile = ({ userData }) => {
             <div className={styles.input_field}>
               <label htmlFor="phone">Phone</label>
               <input
+                className={styles.phone}
                 style={{
                   color: currentColor,
                 }}
@@ -212,7 +208,6 @@ const Profile = ({ userData }) => {
                 id="phone"
                 name="phone"
                 defaultValue={formData.phone}
-                disabled
               />
             </div>
             <div className={styles.input_field}>
@@ -225,7 +220,6 @@ const Profile = ({ userData }) => {
                 id="designation"
                 name="designation"
                 defaultValue={formData.designation}
-                disabled
               />
             </div>
             <input type="submit" value="Upload" />
