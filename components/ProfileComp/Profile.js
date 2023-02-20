@@ -1,8 +1,9 @@
 // import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
+import NumberDropdown from "@/components/NumberDropdown/NumberDropdown";
 import { useStateContext } from "@/context/ContextProvider";
 import defaultImage from "@/public/images/def_review.png";
 import { UPDATE_USER_DETAILS } from "@/services/graphql/mutation";
-// import countryDetails from "@/services/utils/countriesData.json";
+import countryDetails from "@/services/utils/countriesData.json";
 import { failedToast, successToast } from "@/services/utils/toasts";
 import { blobToDataURL, singleUpload } from "@/services/utils/uploadFunc";
 import styles from "@/styles/Profile.module.css";
@@ -23,7 +24,9 @@ const Profile = ({ userData }) => {
     dialCode: "",
     designation: "",
     phone: "",
+    flag: "",
     cloudinary_id: "",
+    numLen: "",
   };
 
   const [formData, setFormData] = useState(initialData);
@@ -181,7 +184,7 @@ const Profile = ({ userData }) => {
                 type="text"
                 id="name"
                 name="name"
-                defaultValue={formData.name}
+                defaultValue={formData.name || userData?.name}
               />
             </div>
             <div className={styles.input_field}>
@@ -193,22 +196,54 @@ const Profile = ({ userData }) => {
                 type="text"
                 id="email"
                 name="email"
-                defaultValue={formData.email}
+                defaultValue={userData?.email}
                 disabled
               />
             </div>
             <div className={styles.input_field}>
-              <label htmlFor="phone">Phone</label>
-              <input
-                className={styles.phone}
-                style={{
-                  color: currentColor,
-                }}
-                type="text"
-                id="phone"
-                name="phone"
-                defaultValue={formData.phone}
+              <label htmlFor="">Country</label>
+              <NumberDropdown
+                countryData={countryDetails}
+                setFormData={setFormData}
               />
+            </div>
+
+            <div className={styles.input_num_field}>
+              <label htmlFor="phone">Phone</label>
+              <div className={styles.num_div}>
+                <div className={styles.flag_div}>
+                  {formData?.flag && (
+                    <Image
+                      src={formData?.flag}
+                      alt={"flag"}
+                      width={30}
+                      height={20}
+                    />
+                  )}
+                </div>
+                {formData?.dialCode ? (
+                  <div className={styles.input_div}>
+                    <span
+                      className={styles.dialCode}
+                      style={{
+                        color: currentColor,
+                      }}
+                    >
+                      {formData.dialCode}
+                    </span>
+                    <input
+                      className={styles.phone}
+                      style={{
+                        color: currentColor,
+                      }}
+                      type="number"
+                      id="phone"
+                      name="phone"
+                      defaultValue={formData.phone}
+                    />
+                  </div>
+                ) : null}
+              </div>
             </div>
             <div className={styles.input_field}>
               <label htmlFor="designation">Designation</label>

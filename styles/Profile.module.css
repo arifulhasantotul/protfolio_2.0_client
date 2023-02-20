@@ -146,6 +146,7 @@
   position: relative;
 }
 
+.input_num_field .num_div,
 .input_field select,
 .input_field .input,
 .input_field input {
@@ -169,6 +170,8 @@
 .red_color {
   color: red;
 }
+
+.light .input_num_field .num_div,
 .light .fileLabel,
 .light .input_field select,
 .light .input_field .input,
@@ -177,6 +180,7 @@
   box-shadow: 2px 2px 5px #babecc, -5px -5px 10px #ffffff73;
 }
 
+.light .input_num_field .num_div:hover,
 .light .fileLabel:hover,
 .light .input_field select:focus,
 .light .input_field input:focus,
@@ -189,6 +193,7 @@
   -moz-box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
 }
 
+.dark .input_num_field .num_div,
 .dark .fileLabel,
 .dark .input_field select,
 .dark .input_field input,
@@ -199,6 +204,7 @@
   background: linear-gradient(315deg, #222222, #292929);
 }
 
+.dark .input_num_field .num_div:hover,
 .dark .fileLabel:hover,
 .dark .input_field select:focus,
 .dark .input_field input:focus,
@@ -210,11 +216,14 @@
   -moz-box-shadow: var(--dark_field_hover_shadow);
 }
 
+.input_num_field label,
 .input_field label {
   display: block;
   padding-left: 20px;
   font-size: var(--FS_sm);
   font-weight: var(--FW_medium);
+  margin-top: 5px;
+  letter-spacing: 0.7px;
 }
 
 .submit_btn_wrapper {
@@ -273,4 +282,59 @@
 }
 .close_icon svg {
   fill: #333;
+}
+
+.num_div {
+  display: flex !important;
+  align-items: center;
+}
+
+.num_div .flag_div {
+  margin-top: 4px;
+}
+
+.num_div .input_div {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 35px);
+}
+
+.input_div input {
+  display: inline-block;
+  background: transparent;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+  margin-top: -5px;
+  height: 30px;
+}
+
+.input_div .dialCode {
+  font-size: var(--FS_sm);
+  font-weight: var(--FW_bold);
+  width: 50px;
+  border-bottom: 1px solid #666;
+  padding-bottom: 5px;
+  margin-right: 10px;
+}
+
+.input_div .phone {
+  border-bottom: 1px solid #666;
+  font-size: var(--FS_sm);
+  font-weight: var(--FW_bold);
+  width: calc(100% - 85px);
+  letter-spacing: 0.8px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.input_div .phone::-webkit-outer-spin-button,
+.input_div .phone::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media (max-width: 500px) {
+  .form_wrapper {
+    max-width: 100%;
+  }
 }
