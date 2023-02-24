@@ -9,13 +9,14 @@ import { blobToDataURL, singleUpload } from "@/services/utils/uploadFunc";
 import styles from "@/styles/Profile.module.css";
 import { useMutation } from "@apollo/client";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MdClose, MdEdit, MdUpload } from "react-icons/md";
 import Switch from "react-switch";
 import SimpleFormButton from "../SimpleButton/SimpleFormButton";
 
 const Profile = ({ userData }) => {
-  console.log("userData", userData);
+  const router = useRouter();
   const { currentColor, darkTheme } = useStateContext();
   const [avatarFile, setAvatarFile] = useState(null);
   const [updateComp, setUpdateComp] = useState(false);
@@ -35,6 +36,49 @@ const Profile = ({ userData }) => {
   const [errFormData, setErrFormData] = useState(initialData);
 
   const [updateUser] = useMutation(UPDATE_USER_DETAILS);
+
+  const checkValidation = (e) => {
+    const { name, value } = e.target;
+    if (name === "name") {
+      if (!value) {
+        setErrFormData((prv) => ({ ...prv, name: " Name required!" }));
+      } else if (value?.length < 3) {
+        setErrFormData((prv) => ({
+          ...prv,
+          name: "Name should be minimum 3 characters long",
+        }));
+      } else {
+        setErrFormData((prv) => ({ ...prv, name: "" }));
+      }
+    }
+
+    if (name === "phone") {
+      if (value || formData?.country || formData?.dialCode) {
+        if (!value) {
+          setErrFormData((prv) => ({
+            ...prv,
+            phone: "Phone number required!",
+          }));
+        } else if (value?.length < formData?.numLen) {
+          setErrFormData((prv) => ({
+            ...prv,
+            phone: `Phone number should be minimum ${formData?.numLen} characters long`,
+          }));
+        } else {
+          setErrFormData((prv) => ({ ...prv, phone: "" }));
+        }
+
+        if (!formData?.country) {
+          setErrFormData((prv) => ({
+            ...prv,
+            country: "Please select a country!",
+          }));
+        } else {
+          setErrFormData((prv) => ({ ...prv, country: "" }));
+        }
+      }
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -60,6 +104,19 @@ const Profile = ({ userData }) => {
 
   const handleImageHandler = async (e) => {
     e.preventDefault();
+    if (errFormData?.name || errFormData?.phone || errFormData?.country) {
+      failedToast(darkTheme, "Please provide valid data!");
+      return;
+    }
+
+    if (formData.phone && formData?.phone?.length !== formData?.numLen) {
+      setErrFormData((prv) => ({
+        ...prv,
+        phone: "Invalid phone number!",
+      }));
+      failedToast(darkTheme, "Invalid phone number");
+      return;
+    }
     try {
       if (avatarFile) {
         const uploadedData = await singleUpload(avatarFile);
@@ -77,13 +134,12 @@ const Profile = ({ userData }) => {
         successToast(darkTheme, "Profile updated successfully!");
         handleReset();
       }
+      router.replace("/");
     } catch (err) {
       console.log("Error at handleImageHandler", err);
       failedToast(darkTheme, err.message);
     }
   };
-
-  console.log("formData", formData);
 
   const updateProfileHandler = async (avatarURL = "", cloudinaryID = "") => {
     // e.preventDefault();
@@ -96,6 +152,7 @@ const Profile = ({ userData }) => {
         phone: formData?.phone || userData?.phone,
         flag: formData?.flag || userData?.flag,
         country: formData?.country || userData?.country,
+        numLen: formData?.numLen || userData?.numLen,
         cloudinary_id:
           cloudinaryID || formData?.cloudinary_id || userData?.cloudinary_id,
       };
@@ -128,6 +185,7 @@ const Profile = ({ userData }) => {
         cloudinary_id: userData?.cloudinary_id || "",
         flag: userData?.flag || "",
         country: userData?.country || "",
+        numLen: userData?.numLen ? parseInt(userData?.numLen) : "",
       }));
     }
   }, [userData]);
@@ -208,8 +266,12 @@ const Profile = ({ userData }) => {
                 name="name"
                 value={formData?.name || userData?.name}
                 onChange={handleChange}
+                onBlur={checkValidation}
               />
             </div>
+            {errFormData?.name && (
+              <p className={styles.error}> &#9888; {errFormData?.name}</p>
+            )}
             <div className={styles.input_field}>
               <label htmlFor="email">Email</label>
               <input
@@ -231,7 +293,9 @@ const Profile = ({ userData }) => {
                 selectedCountry={formData?.country}
               />
             </div>
-
+            {errFormData?.country && (
+              <p className={styles.error}> &#9888; {errFormData?.country}</p>
+            )}
             <div className={styles.input_num_field}>
               <label htmlFor="phone">Phone</label>
               <div className={styles.num_div}>
@@ -265,11 +329,15 @@ const Profile = ({ userData }) => {
                       name="phone"
                       onChange={handleChange}
                       value={formData.phone}
+                      onBlur={checkValidation}
                     />
                   </div>
                 ) : null}
               </div>
             </div>
+            {errFormData?.phone && (
+              <p className={styles.error}> &#9888; {errFormData?.phone}</p>
+            )}
             <div className={styles.input_field}>
               <label htmlFor="designation">Designation</label>
               <input
@@ -281,6 +349,7 @@ const Profile = ({ userData }) => {
                 name="designation"
                 value={formData.designation}
                 onChange={handleChange}
+                onBlur={checkValidation}
               />
             </div>
             <div className={styles.submit_btn_wrapper}>

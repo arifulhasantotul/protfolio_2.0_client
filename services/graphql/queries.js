@@ -104,6 +104,7 @@ const ALL_USERS_NAME = gql`
       cloudinary_id
       flag
       country
+      numLen
     }
   }
 `;
@@ -122,6 +123,7 @@ const GET_USER = gql`
       cloudinary_id
       flag
       country
+      numLen
     }
   }
 `;
@@ -140,6 +142,7 @@ const CURRENT_USER = gql`
       cloudinary_id
       flag
       country
+      numLen
     }
   }
 `;
