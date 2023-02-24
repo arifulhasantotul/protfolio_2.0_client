@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { MdSearch } from "react-icons/md";
 
-const NumberDropdown = ({ countryData, setFormData }) => {
+const NumberDropdown = ({ countryData, setFormData, selectedCountry }) => {
   const { currentColor, darkTheme } = useStateContext();
   const [selectStr, setSelectStr] = useState("--Select--");
   const [countries, setCountries] = useState([]);
@@ -40,10 +40,15 @@ const NumberDropdown = ({ countryData, setFormData }) => {
       ...prv,
       flag: details?.flags?.svg,
       dialCode: details?.idd?.root + details?.idd?.suffixes,
+      country: details?.name?.common,
       numLen: details?.uniqueLen,
     }));
     handleClose();
   };
+
+  useEffect(() => {
+    setSelectStr(selectedCountry);
+  }, [selectedCountry]);
 
   useEffect(() => {
     if (countryData?.length > 0) {
@@ -95,7 +100,7 @@ const NumberDropdown = ({ countryData, setFormData }) => {
         >
           {selectStr}
         </div>
-        {countries?.length &&
+        {countries?.length > 0 &&
           countries?.map((details, idx) => (
             <div
               key={idx}

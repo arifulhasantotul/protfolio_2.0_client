@@ -333,6 +333,12 @@
   margin: 0;
 }
 
+.submit_btn_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 @media (max-width: 500px) {
   .form_wrapper {
     max-width: 100%;

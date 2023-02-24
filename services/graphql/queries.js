@@ -95,10 +95,15 @@ const ALL_USERS_NAME = gql`
     listUser {
       id
       name
-      email
+      phone
       role
+      email
+      dialCode
+      designation
       avatar
       cloudinary_id
+      flag
+      country
     }
   }
 `;
@@ -115,6 +120,8 @@ const GET_USER = gql`
       designation
       avatar
       cloudinary_id
+      flag
+      country
     }
   }
 `;
@@ -131,6 +138,8 @@ const CURRENT_USER = gql`
       designation
       avatar
       cloudinary_id
+      flag
+      country
     }
   }
 `;

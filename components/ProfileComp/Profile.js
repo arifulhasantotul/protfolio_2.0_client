@@ -9,11 +9,13 @@ import { blobToDataURL, singleUpload } from "@/services/utils/uploadFunc";
 import styles from "@/styles/Profile.module.css";
 import { useMutation } from "@apollo/client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdClose, MdEdit, MdUpload } from "react-icons/md";
 import Switch from "react-switch";
+import SimpleFormButton from "../SimpleButton/SimpleFormButton";
 
 const Profile = ({ userData }) => {
+  console.log("userData", userData);
   const { currentColor, darkTheme } = useStateContext();
   const [avatarFile, setAvatarFile] = useState(null);
   const [updateComp, setUpdateComp] = useState(false);
@@ -81,6 +83,8 @@ const Profile = ({ userData }) => {
     }
   };
 
+  console.log("formData", formData);
+
   const updateProfileHandler = async (avatarURL = "", cloudinaryID = "") => {
     // e.preventDefault();
     try {
@@ -90,6 +94,8 @@ const Profile = ({ userData }) => {
         dialCode: formData?.dialCode || userData?.dialCode,
         designation: formData?.designation || userData?.designation,
         phone: formData?.phone || userData?.phone,
+        flag: formData?.flag || userData?.flag,
+        country: formData?.country || userData?.country,
         cloudinary_id:
           cloudinaryID || formData?.cloudinary_id || userData?.cloudinary_id,
       };
@@ -109,6 +115,22 @@ const Profile = ({ userData }) => {
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
+
+  useEffect(() => {
+    if (userData) {
+      setFormData((prev) => ({
+        ...prev,
+        name: userData?.name || "",
+        avatar: userData?.avatar || "",
+        dialCode: userData?.dialCode || "",
+        designation: userData?.designation || "",
+        phone: userData?.phone || "",
+        cloudinary_id: userData?.cloudinary_id || "",
+        flag: userData?.flag || "",
+        country: userData?.country || "",
+      }));
+    }
+  }, [userData]);
   return (
     <div className={`${conditionalMode} ${styles.profile_wrapper}`}>
       {!updateComp ? (
@@ -184,7 +206,8 @@ const Profile = ({ userData }) => {
                 type="text"
                 id="name"
                 name="name"
-                defaultValue={formData.name || userData?.name}
+                value={formData?.name || userData?.name}
+                onChange={handleChange}
               />
             </div>
             <div className={styles.input_field}>
@@ -205,6 +228,7 @@ const Profile = ({ userData }) => {
               <NumberDropdown
                 countryData={countryDetails}
                 setFormData={setFormData}
+                selectedCountry={formData?.country}
               />
             </div>
 
@@ -239,7 +263,8 @@ const Profile = ({ userData }) => {
                       type="number"
                       id="phone"
                       name="phone"
-                      defaultValue={formData.phone}
+                      onChange={handleChange}
+                      value={formData.phone}
                     />
                   </div>
                 ) : null}
@@ -254,10 +279,23 @@ const Profile = ({ userData }) => {
                 type="text"
                 id="designation"
                 name="designation"
-                defaultValue={formData.designation}
+                value={formData.designation}
+                onChange={handleChange}
               />
             </div>
-            <input type="submit" value="Upload" />
+            <div className={styles.submit_btn_wrapper}>
+              <SimpleFormButton
+                tooltip="Update Profile"
+                type="button"
+                name="Reset"
+                onClick={handleReset}
+              ></SimpleFormButton>
+              <SimpleFormButton
+                tooltip="Update Profile"
+                type="submit"
+                name="Update"
+              ></SimpleFormButton>
+            </div>
           </form>
         </>
       )}

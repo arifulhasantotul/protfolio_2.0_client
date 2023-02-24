@@ -42,6 +42,8 @@ const UPDATE_USER_DETAILS = gql`
       designation
       avatar
       cloudinary_id
+      flag
+      country
     }
   }
 `;
