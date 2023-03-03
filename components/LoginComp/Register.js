@@ -1,4 +1,5 @@
 import DataLoading from "@/components/FetchingResult/DataLoading";
+import PasswordStrengthMeter from "@/components/PasswordStrengthMeter/PasswordStrengthMeter";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import {
@@ -242,6 +243,9 @@ const Register = () => {
               </Link>{" "}
               page{" "}
             </p>
+          </div>
+          <div className={styles.input_field}>
+            <PasswordStrengthMeter pass={registerData?.password} />
           </div>
           {!sendingReq ? (
             <div className={styles.btn_div}>
