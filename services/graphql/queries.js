@@ -95,7 +95,35 @@ const ALL_USERS_NAME = gql`
     listUser {
       id
       name
+      phone
+      role
       email
+      dialCode
+      designation
+      avatar
+      cloudinary_id
+      flag
+      country
+      numLen
+    }
+  }
+`;
+
+const GET_USER = gql`
+  query GetUser($input: ID!) {
+    getUser(id: $input) {
+      id
+      name
+      phone
+      role
+      email
+      dialCode
+      designation
+      avatar
+      cloudinary_id
+      flag
+      country
+      numLen
     }
   }
 `;
@@ -105,9 +133,16 @@ const CURRENT_USER = gql`
     currentUser {
       id
       name
-      email
-      password
+      phone
       role
+      email
+      dialCode
+      designation
+      avatar
+      cloudinary_id
+      flag
+      country
+      numLen
     }
   }
 `;
@@ -140,4 +175,5 @@ export {
   VERIFY_OTP,
   LOGIN_USER,
   CURRENT_USER,
+  GET_USER,
 };

@@ -19,15 +19,28 @@ const Review = ({ review }) => {
     <div className={`${conditionalMode} ${styles.review_wrapper}`}>
       {screenSize > 800 ? (
         <div className={styles.left_side}>
-          <div className={styles.figure}>
-            <Image
-              src={review?.reviewer?.avatar || defaultImage}
-              alt="Reviewer"
-              layout="fill"
-              objectFit="contain"
-              priority
-            />
-          </div>
+          {review?.reviewer?.avatar ? (
+            <div className={styles.fig}>
+              <div className={styles.fig_sm}>
+                <Image
+                  src={review?.reviewer?.avatar}
+                  alt="Reviewer"
+                  layout="fill"
+                  priority
+                />
+              </div>
+            </div>
+          ) : (
+            <div className={styles.figure}>
+              <Image
+                src={defaultImage}
+                alt="Reviewer"
+                layout="fill"
+                objectFit="contain"
+                priority
+              />
+            </div>
+          )}
           <div className={styles.caption}>
             <small
               style={{
@@ -43,15 +56,28 @@ const Review = ({ review }) => {
         </div>
       ) : (
         <div className={styles.left_side_sm}>
-          <div className={styles.figure_sm}>
-            <Image
-              src={review?.img || defaultImage}
-              alt="Reviewer"
-              layout="fill"
-              objectFit="contain"
-              priority
-            />
-          </div>
+          {review?.reviewer?.avatar ? (
+            <div className={styles.fig}>
+              <div className={styles.fig_sm}>
+                <Image
+                  src={review?.reviewer?.avatar}
+                  alt="Reviewer"
+                  layout="fill"
+                  priority
+                />
+              </div>
+            </div>
+          ) : (
+            <div className={styles.figure_sm}>
+              <Image
+                src={defaultImage}
+                alt="Reviewer"
+                layout="fill"
+                objectFit="contain"
+                priority
+              />
+            </div>
+          )}
           <div className={styles.caption_sm}>
             <small
               style={{

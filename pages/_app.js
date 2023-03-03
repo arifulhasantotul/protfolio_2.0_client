@@ -2,15 +2,10 @@ import PageLoading from "@/components/PageLoading/PageLoading";
 import ContextProvider from "@/context/ContextProvider";
 import { activeURI } from "@/services/utils/devVarExport";
 import "@/styles/globals.css";
-import {
-  ApolloClient,
-  ApolloLink,
-  ApolloProvider,
-  concat,
-  HttpLink,
-  InMemoryCache,
-} from "@apollo/client";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
 import { AnimatePresence, motion } from "framer-motion";
+import { headers } from "next.config";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { CookiesProvider, useCookies } from "react-cookie";
@@ -22,19 +17,30 @@ function MyApp({ Component, pageProps, router }) {
   const accessToken = cookies["portfolio_2_0"];
   const nextRouter = useRouter();
   const [ssrRendering, setSsrRendering] = useState(false);
-  const httpLink = new HttpLink({ uri: `${activeURI}/graphql` });
-  const authMiddleware = new ApolloLink((operation, forward) => {
-    operation.setContext(({ headers = {} }) => ({
+  // const httpLink = new HttpLink({ uri: `${activeURI}/graphql` });
+  // const authMiddleware = new ApolloLink((operation, forward) => {
+  //   operation.setContext(({ headers = {} }) => ({
+  //     headers: {
+  //       ...headers,
+  //       authorization: `Bearer ${accessToken}` || "",
+  //     },
+  //   }));
+  //   return forward(operation);
+  // });
+  // const client = new ApolloClient({
+  //   cache: new InMemoryCache(),
+  //   link: concat(authMiddleware, httpLink),
+  // });
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: createUploadLink({
+      uri: `${activeURI}/graphql`,
+      // credentials: "include",
       headers: {
         ...headers,
         authorization: `Bearer ${accessToken}` || "",
       },
-    }));
-    return forward(operation);
-  });
-  const client = new ApolloClient({
-    cache: new InMemoryCache(),
-    link: concat(authMiddleware, httpLink),
+    }),
   });
 
   // this useEffect is for the page transition && page loading
