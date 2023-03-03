@@ -35,6 +35,8 @@ const Login = ({ accessToken }) => {
   const handleInput = (e) => {
     const { name, value } = e.target;
     setRegisterData((prevState) => ({ ...prevState, [name]: value }));
+
+    if (name === "email") localStorage.setItem("userEmail", value);
   };
 
   const handleSubmit = async (e) => {
@@ -78,6 +80,11 @@ const Login = ({ accessToken }) => {
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
+
+  useEffect(() => {
+    const email = localStorage.getItem("userEmail");
+    if (email) setRegisterData((prevState) => ({ ...prevState, email }));
+  }, []);
 
   useEffect(() => {
     if (!accessToken) localStorage.removeItem("portfolioIdToken");
@@ -156,7 +163,6 @@ const Login = ({ accessToken }) => {
               <SimpleFormButton
                 name="Login 🚀"
                 type="submit"
-                // onClick={handleSubmit}
                 tooltip="You'll get an OTP to your email"
               />
             </div>

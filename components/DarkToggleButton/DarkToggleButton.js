@@ -1,8 +1,8 @@
+import MoonIcon from "@/components/CustomIcons/MoonIcon";
+import SunIcon from "@/components/CustomIcons/SunIcon";
 import { useStateContext } from "@/context/ContextProvider";
-import Switch from "react-switch";
-import MoonIcon from "../CustomIcons/MoonIcon";
-import SunIcon from "../CustomIcons/SunIcon";
 import styles from "@/styles/DarkToggleButton.module.css";
+import Switch from "react-switch";
 
 const DarkToggleButton = () => {
   const { darkTheme, currentColor, toggleDarkTheme } = useStateContext();

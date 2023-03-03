@@ -32,6 +32,39 @@ const ADD_USER = gql`
   }
 `;
 
+const UPDATE_USER_DETAILS = gql`
+  mutation UpdateUser($id: ID!, $input: UpdateUserInput!) {
+    updateUser(id: $id, input: $input) {
+      id
+      name
+      phone
+      dialCode
+      designation
+      avatar
+      cloudinary_id
+      flag
+      country
+      numLen
+    }
+  }
+`;
+
+const UPDATE_PROFILE_IMAGE = gql`
+  mutation UploadProfileImg($file: Upload!) {
+    uploadProfileImg(file: $file) {
+      id
+      name
+      email
+      avatar
+      dialCode
+      phone
+      country
+      cloudinary_id
+      designation
+    }
+  }
+`;
+
 // -------------- REVIEW --------------------------
 const ADD_REVIEW = gql`
   mutation CreateReview($input: CreateReviewInput!) {
@@ -63,4 +96,12 @@ const GET_OTP = gql`
   }
 `;
 
-export { ADD_CATEGORY, ADD_PROJECT, GET_OTP, ADD_USER, ADD_REVIEW };
+export {
+  ADD_CATEGORY,
+  ADD_PROJECT,
+  GET_OTP,
+  ADD_USER,
+  ADD_REVIEW,
+  UPDATE_USER_DETAILS,
+  UPDATE_PROFILE_IMAGE,
+};
