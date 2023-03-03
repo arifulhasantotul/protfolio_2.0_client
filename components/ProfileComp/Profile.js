@@ -191,6 +191,7 @@ const Profile = ({ tokenData }) => {
         }));
       }
       setIsFormUploading(false);
+      successToast(darkTheme, "Profile updated successfully!");
     } catch (err) {
       setIsFormUploading(false);
       console.log("❌ Error at Profile.js/updateProfileHandler ❌\n", err);
