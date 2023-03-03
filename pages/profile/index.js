@@ -14,7 +14,7 @@ export default function ProfilePage({ user, accessToken }) {
       </Head>
 
       <main>
-        <Profile userData={user} accessToken={accessToken} />
+        <Profile tokenData={user} accessToken={accessToken} />
       </main>
     </div>
   );
@@ -45,6 +45,9 @@ export async function getServerSideProps(ctx) {
     query: GET_USER,
     variables: {
       input: accessToken?.userId,
+    },
+    update: (cache) => {
+      cache.evict({ fieldName: "avatar" });
     },
   });
 

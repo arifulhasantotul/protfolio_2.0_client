@@ -172,6 +172,7 @@
 }
 
 .light .input_num_field .num_div,
+.light .fileUpload,
 .light .fileLabel,
 .light .input_field select,
 .light .input_field .input,
@@ -182,6 +183,7 @@
 
 .light .input_num_field .num_div:hover,
 .light .fileLabel:hover,
+.light .fileUpload:hover,
 .light .input_field select:focus,
 .light .input_field input:focus,
 .light .input_field input:hover,
@@ -194,6 +196,7 @@
 }
 
 .dark .input_num_field .num_div,
+.dark .fileUpload,
 .dark .fileLabel,
 .dark .input_field select,
 .dark .input_field input,
@@ -205,6 +208,7 @@
 }
 
 .dark .input_num_field .num_div:hover,
+.dark .fileUpload:hover,
 .dark .fileLabel:hover,
 .dark .input_field select:focus,
 .dark .input_field input:focus,
@@ -231,8 +235,24 @@
   align-items: center;
   justify-content: space-between;
 }
-
 .fileLabel {
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  border-radius: 50%;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  cursor: pointer;
+}
+
+.fileLabel svg {
+  font-size: var(--FS_lg);
+}
+
+.fileUpload {
   display: flex;
   align-items: center;
   width: max-content;
@@ -246,13 +266,13 @@
   font-size: var(--FS_sm);
 }
 
-.fileLabel svg {
+.fileUpload svg {
   font-size: var(--FS_md);
-  margin-bottom: -6px;
 }
-.fileLabel span {
+.fileUpload span {
   display: inline-block;
   height: 100%;
+  margin-top: 2px;
 }
 
 .avatar_wrapper {

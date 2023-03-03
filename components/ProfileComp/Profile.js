@@ -1,25 +1,33 @@
-// import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
+import DataLoading from "@/components/FetchingResult/DataLoading";
 import NumberDropdown from "@/components/NumberDropdown/NumberDropdown";
+import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import defaultImage from "@/public/images/def_review.png";
-import { UPDATE_USER_DETAILS } from "@/services/graphql/mutation";
+import {
+  UPDATE_PROFILE_IMAGE,
+  UPDATE_USER_DETAILS,
+} from "@/services/graphql/mutation";
 import countryDetails from "@/services/utils/countriesData.json";
 import { failedToast, successToast } from "@/services/utils/toasts";
-import { blobToDataURL, singleUpload } from "@/services/utils/uploadFunc";
+import { blobToDataURL } from "@/services/utils/uploadFunc";
 import styles from "@/styles/Profile.module.css";
 import { useMutation } from "@apollo/client";
+import { CircularProgress } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { MdClose, MdEdit, MdUpload } from "react-icons/md";
+import { MdCameraEnhance, MdClose, MdEdit, MdUpload } from "react-icons/md";
 import Switch from "react-switch";
-import SimpleFormButton from "../SimpleButton/SimpleFormButton";
 
-const Profile = ({ userData }) => {
+const Profile = ({ tokenData }) => {
   const router = useRouter();
+  const [userData, setUserData] = useState(tokenData);
   const { currentColor, darkTheme } = useStateContext();
+  const [previewImg, setPreviewImg] = useState(null);
   const [avatarFile, setAvatarFile] = useState(null);
   const [updateComp, setUpdateComp] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isFormUploading, setIsFormUploading] = useState(false);
 
   const initialData = {
     name: "",
@@ -36,6 +44,12 @@ const Profile = ({ userData }) => {
   const [errFormData, setErrFormData] = useState(initialData);
 
   const [updateUser] = useMutation(UPDATE_USER_DETAILS);
+  const [uploadProfileImg] = useMutation(UPDATE_PROFILE_IMAGE, {
+    onCompleted: (data) => {
+      successToast(darkTheme, "Profile image updated successfully!");
+      return data?.uploadProfileImg;
+    },
+  });
 
   const checkValidation = (e) => {
     const { name, value } = e.target;
@@ -84,7 +98,8 @@ const Profile = ({ userData }) => {
     const { name, value, files } = e.target;
 
     if (name === "avatar" && files) {
-      blobToDataURL(files[0], setAvatarFile);
+      blobToDataURL(files[0], setPreviewImg);
+      setAvatarFile(files[0]);
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -92,18 +107,48 @@ const Profile = ({ userData }) => {
 
   const handleClearImg = () => {
     setFormData((prv) => ({ ...prv, avatar: "" }));
+    setPreviewImg(null);
     setAvatarFile(null);
     document.getElementById("avatar").value = "";
   };
 
   const handleReset = () => {
     setFormData(initialData);
+    setPreviewImg(null);
     setAvatarFile(null);
     document.getElementById("avatar").value = "";
   };
 
-  const handleImageHandler = async (e) => {
+  const handleImageUpload = async () => {
+    setIsUploading(true);
+    try {
+      if (!avatarFile) return;
+      const { data } = await uploadProfileImg({
+        variables: {
+          file: avatarFile,
+        },
+      });
+      if (data) {
+        setUserData((prv) => ({
+          ...prv,
+          avatar: data?.uploadProfileImg?.avatar,
+          cloudinary_id: data?.uploadProfileImg?.cloudinary_id,
+        }));
+      }
+      setIsUploading(false);
+    } catch (err) {
+      setIsUploading(false);
+      console.log("❌ Error in Profile.js/handleImageUpload ❌\n", err);
+      failedToast(darkTheme, "Image uploading failed!");
+    } finally {
+      handleClearImg();
+      setIsUploading(false);
+    }
+  };
+
+  const updateProfileHandler = async (e) => {
     e.preventDefault();
+    setIsFormUploading(true);
     if (errFormData?.name || errFormData?.phone || errFormData?.country) {
       failedToast(darkTheme, "Please provide valid data!");
       return;
@@ -112,49 +157,20 @@ const Profile = ({ userData }) => {
     if (formData.phone && formData?.phone?.length !== formData?.numLen) {
       setErrFormData((prv) => ({
         ...prv,
-        phone: "Invalid phone number!",
+        phone: `Invalid phone number! (Provide ${formData?.numLen}) characters`,
       }));
       failedToast(darkTheme, "Invalid phone number");
       return;
     }
     try {
-      if (avatarFile) {
-        const uploadedData = await singleUpload(avatarFile);
-        successToast(darkTheme, "Image updated successfully");
-
-        await updateProfileHandler(
-          uploadedData?.secure_url,
-          uploadedData?.public_id
-        );
-        successToast(darkTheme, "Profile updated successfully!");
-        handleReset();
-      } else {
-        const data = await updateProfileHandler();
-        console.log("db data", data);
-        successToast(darkTheme, "Profile updated successfully!");
-        handleReset();
-      }
-      router.replace("/");
-    } catch (err) {
-      console.log("Error at handleImageHandler", err);
-      failedToast(darkTheme, err.message);
-    }
-  };
-
-  const updateProfileHandler = async (avatarURL = "", cloudinaryID = "") => {
-    // e.preventDefault();
-    try {
       const newData = {
         name: formData?.name || userData?.name,
-        avatar: avatarURL || formData?.avatar || userData?.avatar,
         dialCode: formData?.dialCode || userData?.dialCode,
         designation: formData?.designation || userData?.designation,
         phone: formData?.phone || userData?.phone,
         flag: formData?.flag || userData?.flag,
         country: formData?.country || userData?.country,
         numLen: formData?.numLen || userData?.numLen,
-        cloudinary_id:
-          cloudinaryID || formData?.cloudinary_id || userData?.cloudinary_id,
       };
       const { data } = await updateUser({
         variables: {
@@ -162,10 +178,22 @@ const Profile = ({ userData }) => {
           input: newData,
         },
       });
-      console.log("update data", data);
-      return data;
+      if (data) {
+        setUserData((prv) => ({
+          ...prv,
+          name: data?.updateUser?.name,
+          phone: data?.updateUser?.phone,
+          designation: data?.updateUser?.designation,
+          country: data?.updateUser?.country,
+          flag: data?.updateUser?.flag,
+          dialCode: data?.updateUser?.dialCode,
+          numLen: data?.updateUser?.numLen,
+        }));
+      }
+      setIsFormUploading(false);
     } catch (err) {
-      console.log("Error at updateProfileHandler", err);
+      setIsFormUploading(false);
+      console.log("❌ Error at Profile.js/updateProfileHandler ❌\n", err);
       failedToast(darkTheme, err.message);
     }
   };
@@ -188,6 +216,7 @@ const Profile = ({ userData }) => {
         numLen: userData?.numLen ? parseInt(userData?.numLen) : "",
       }));
     }
+    // singleDelete();
   }, [userData]);
   return (
     <div className={`${conditionalMode} ${styles.profile_wrapper}`}>
@@ -225,25 +254,49 @@ const Profile = ({ userData }) => {
       ) : (
         // update profile form
         <>
-          <form className={styles.form_wrapper} onSubmit={handleImageHandler}>
+          <form className={styles.form_wrapper} onSubmit={updateProfileHandler}>
             <div className={styles.avatar_wrapper}>
-              {avatarFile?.file && (
+              {!isUploading && avatarFile?.name && (
                 <span onClick={handleClearImg} className={styles.close_icon}>
                   <MdClose />
                 </span>
               )}
               <div className={styles.avatar_div}>
                 <Image
-                  src={avatarFile?.file || userData?.avatar || defaultImage}
+                  src={previewImg?.file || userData?.avatar || defaultImage}
                   layout="fill"
                   alt="Profile Image"
                 />
               </div>
+              <label
+                className={styles.fileLabel}
+                style={{
+                  border: `2px solid ${currentColor}`,
+                }}
+                htmlFor="avatar"
+              >
+                <MdCameraEnhance
+                  style={{
+                    fill: currentColor,
+                  }}
+                />
+              </label>
             </div>
             <div className={styles.input_field}>
-              <label className={styles.fileLabel} htmlFor="avatar">
-                <MdUpload /> <span>Upload Avatar</span>
-              </label>
+              {avatarFile && !isUploading && !isFormUploading ? (
+                <span onClick={handleImageUpload} className={styles.fileUpload}>
+                  <MdUpload /> <span>Upload Avatar</span>
+                </span>
+              ) : avatarFile && isUploading && !isFormUploading ? (
+                <span onClick={handleImageUpload} className={styles.fileUpload}>
+                  <CircularProgress
+                    size={20}
+                    style={{
+                      color: currentColor,
+                    }}
+                  />
+                </span>
+              ) : null}
               <input
                 onChange={handleChange}
                 type="file"
@@ -352,19 +405,24 @@ const Profile = ({ userData }) => {
                 onBlur={checkValidation}
               />
             </div>
-            <div className={styles.submit_btn_wrapper}>
-              <SimpleFormButton
-                tooltip="Update Profile"
-                type="button"
-                name="Reset"
-                onClick={handleReset}
-              ></SimpleFormButton>
-              <SimpleFormButton
-                tooltip="Update Profile"
-                type="submit"
-                name="Update"
-              ></SimpleFormButton>
-            </div>
+
+            {!isUploading && !isFormUploading ? (
+              <div className={styles.submit_btn_wrapper}>
+                <SimpleFormButton
+                  tooltip="Update Profile"
+                  type="button"
+                  name="Reset"
+                  onClick={handleReset}
+                ></SimpleFormButton>
+                <SimpleFormButton
+                  tooltip="Update Profile"
+                  type="submit"
+                  name="Update"
+                ></SimpleFormButton>
+              </div>
+            ) : !isUploading && isFormUploading ? (
+              <DataLoading />
+            ) : null}
           </form>
         </>
       )}

@@ -49,6 +49,22 @@ const UPDATE_USER_DETAILS = gql`
   }
 `;
 
+const UPDATE_PROFILE_IMAGE = gql`
+  mutation UploadProfileImg($file: Upload!) {
+    uploadProfileImg(file: $file) {
+      id
+      name
+      email
+      avatar
+      dialCode
+      phone
+      country
+      cloudinary_id
+      designation
+    }
+  }
+`;
+
 // -------------- REVIEW --------------------------
 const ADD_REVIEW = gql`
   mutation CreateReview($input: CreateReviewInput!) {
@@ -87,4 +103,5 @@ export {
   ADD_USER,
   ADD_REVIEW,
   UPDATE_USER_DETAILS,
+  UPDATE_PROFILE_IMAGE,
 };

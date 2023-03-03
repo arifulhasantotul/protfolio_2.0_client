@@ -22,13 +22,14 @@ const singleUpload = async (file) => {
   }
 };
 
-const singleDelete = async (public_id) => {
+const singleDelete = async (public_id = "liraaj0yb0pjuwerktt2") => {
   const data = new FormData();
   data.append("public_id", public_id);
   data.append("upload_preset", `${process.env.NEXT_PUBLIC_CLOUDINARY_PRESET}`);
   data.append("cloud_name", `${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}`);
-  // data.append("api_key", `${process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY}`);
-  data.append("public_id", public_id);
+  data.append("api_key", `${process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY}`);
+  data.append("api_secret", `${process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET}`);
+
   try {
     const res = await fetch(
       `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/destroy`,
@@ -38,7 +39,7 @@ const singleDelete = async (public_id) => {
       }
     );
     const file = await res.json();
-    console.log(file);
+    console.log("delete file", file);
     return file;
   } catch (err) {
     console.log("Cloudinary error", err);
