@@ -65,7 +65,7 @@ const HomePage = ({ projects, accessToken }) => {
         </Grid>
 
         <hr className={styles.break_line} />
-        <PageHeader title="Demo Projects" />
+        <PageHeader title="Projects" />
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <HomeProjects projects={projects} />
