@@ -185,6 +185,7 @@
 .selected_array {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .selected_item {
