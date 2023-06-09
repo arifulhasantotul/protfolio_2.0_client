@@ -1,10 +1,8 @@
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
-import { ADD_PROJECT } from "@/services/graphql/mutation";
 import { saveToLocalStorage } from "@/services/utils/temporarySave";
-import { failedToast, successToast } from "@/services/utils/toasts";
+import { failedToast } from "@/services/utils/toasts";
 import styles from "@/styles/ProjectForm.module.css";
-import { useMutation } from "@apollo/client";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -13,23 +11,10 @@ const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
   ssr: false,
 });
 
-// NOTE: this a demo api to create project outside of react components
-// const createProject = async (payload) => {
-//   const { data } = await client.mutate({
-//     mutation: ADD_PROJECT,
-//     variables: {
-//       input: payload,
-//     },
-//   });
-//   return data;
-// };
-
-const Basic = ({ categories, tags, clients, sendData, accessToken, user }) => {
+const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
   const { currentColor, darkTheme, backend_url } = useStateContext();
 
   const [richTextValue, setRichTextValue] = useState("");
-
-  const [createProject, { data, loading, error }] = useMutation(ADD_PROJECT);
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCategoriesId, setSelectedCategoriesId] = useState([]);
@@ -179,14 +164,7 @@ const Basic = ({ categories, tags, clients, sendData, accessToken, user }) => {
       };
 
       saveToLocalStorage("portfolioAddProjectBasic", newData);
-      const { data } = await createProject({
-        variables: {
-          input: newData,
-        },
-      });
-      //console.log(data);
-      if (data?.createProject?.id)
-        successToast(darkTheme, "Project created successfully. 😊");
+      nextTab(2);
     } catch (err) {
       failedToast(darkTheme, err.message);
       console.log("❌ Error in AddProjectComp/Basic.js line 187", err);

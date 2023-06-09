@@ -32,6 +32,23 @@ const ADD_USER = gql`
   }
 `;
 
+const UPDATE_USER_PASS = gql`
+  mutation UpdateUserPassword($email: String!, $password: String!) {
+    updateUserPassword(email: $email, password: $password) {
+      id
+      name
+      phone
+      dialCode
+      designation
+      avatar
+      cloudinary_id
+      flag
+      country
+      numLen
+    }
+  }
+`;
+
 const UPDATE_USER_DETAILS = gql`
   mutation UpdateUser($id: ID!, $input: UpdateUserInput!) {
     updateUser(id: $id, input: $input) {
@@ -104,4 +121,5 @@ export {
   ADD_REVIEW,
   UPDATE_USER_DETAILS,
   UPDATE_PROFILE_IMAGE,
+  UPDATE_USER_PASS,
 };
