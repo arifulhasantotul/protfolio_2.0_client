@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps, router }) {
   const [cookies] = useCookies(["portfolio_2_0"]);
   const accessToken = cookies["portfolio_2_0"];
   const nextRouter = useRouter();
+  const routerPath = nextRouter.asPath;
   const [ssrRendering, setSsrRendering] = useState(false);
   // const httpLink = new HttpLink({ uri: `${activeURI}/graphql` });
   // const authMiddleware = new ApolloLink((operation, forward) => {
@@ -46,9 +47,9 @@ function MyApp({ Component, pageProps, router }) {
   // this useEffect is for the page transition && page loading
   useEffect(() => {
     const handleStart = (url) =>
-      url !== nextRouter.asPath ? setSsrRendering(true) : null;
+      url !== routerPath ? setSsrRendering(true) : setSsrRendering(false);
     const handleComplete = (url) =>
-      url === nextRouter.asPath ? setSsrRendering(false) : null;
+      url === routerPath ? setSsrRendering(false) : setSsrRendering(true);
 
     nextRouter.events.on("routeChangeStart", handleStart);
     nextRouter.events.on("routeChangeComplete", handleComplete);
@@ -60,7 +61,7 @@ function MyApp({ Component, pageProps, router }) {
       nextRouter.events.off("routeChangeError", handleComplete);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nextRouter.asPath]);
+  }, [routerPath]);
   return (
     <>
       {/*Apollo/graphql wrapper */}
