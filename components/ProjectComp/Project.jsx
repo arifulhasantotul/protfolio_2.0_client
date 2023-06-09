@@ -1,8 +1,28 @@
+import { useStateContext } from "@/context/ContextProvider";
+import styles from "@/styles/Project.module.css";
+import { Container } from "@mui/material";
+import DataNotFound from "../FetchingResult/DataNotFound";
+import ProjectCard from "./ProjectCard";
+
 const Project = ({ projects, accessToken }) => {
-  console.log("🚀 ~ file: Project.jsx:3 ~ Project ~ projects:", projects);
+  const { currentColor, darkTheme } = useStateContext();
+  const conditionalMode = darkTheme ? styles.dark : styles.light;
+
   return (
-    <div>
-      <h2>This is project component</h2>
+    <div className={`${styles.project_page} ${conditionalMode}`}>
+      <>
+        <Container maxWidth="xl">
+          <div className={styles.card_wrapper}>
+            {Array.isArray(projects) ? (
+              projects.map((item, idx) => (
+                <ProjectCard key={idx} details={item} />
+              ))
+            ) : (
+              <DataNotFound />
+            )}
+          </div>
+        </Container>
+      </>
     </div>
   );
 };
