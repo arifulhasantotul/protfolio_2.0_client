@@ -74,6 +74,13 @@ const Login = ({ accessToken }) => {
     }
   };
 
+  const handleForgotPass = () => {
+    if (registerData?.email === "")
+      return failedToast(darkTheme, "Please provide your email first!");
+
+    router.push("/change-password");
+  };
+
   const handleReset = async () => {
     setRegisterData(initialState);
   };
@@ -133,6 +140,16 @@ const Login = ({ accessToken }) => {
                 ) : (
                   <BsEyeSlash onClick={handleShowPass} />
                 )}
+              </span>
+            </div>
+            <div className={styles.forgot_link}>
+              <span
+                style={{
+                  color: currentColor,
+                }}
+                onClick={handleForgotPass}
+              >
+                Forget Password ?
               </span>
             </div>
           </div>

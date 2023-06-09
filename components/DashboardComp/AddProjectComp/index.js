@@ -1,8 +1,12 @@
 import SimpleButton from "@/components/SimpleButton/SimpleButton";
 import { useStateContext } from "@/context/ContextProvider";
+import {
+  getFromStorage,
+  saveToLocalStorage,
+} from "@/services/utils/temporarySave";
 import styles from "@/styles/ProjectForm.module.css";
 import { Container } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsCheck2Circle } from "react-icons/bs";
 import Basic from "./Basic";
 import Finish from "./Finish";
@@ -24,7 +28,12 @@ const AddProjectComponent = ({
 
   const changeTab = (val) => {
     setToggleState(val);
+    saveToLocalStorage("portfolioAddProjectTab", val);
   };
+  useEffect(() => {
+    const tab = getFromStorage(localStorage, "portfolioAddProjectTab");
+    tab ? changeTab(tab) : changeTab(1);
+  }, []);
 
   return (
     <div className={`${conditionalMode} ${styles.project_form}`}>
@@ -96,7 +105,7 @@ const AddProjectComponent = ({
               }
             >
               <Basic
-                sendData={changeTab}
+                nextTab={changeTab}
                 tags={tags}
                 categories={categories}
                 clients={clients}
@@ -113,7 +122,11 @@ const AddProjectComponent = ({
                   : styles.content
               }
             >
-              <Media sendData={changeTab} accessToken={accessToken} />
+              <Media
+                nextTab={changeTab}
+                accessToken={accessToken}
+                user={user}
+              />
             </div>
           )}
           {toggleState === 3 && (
@@ -124,7 +137,14 @@ const AddProjectComponent = ({
                   : styles.content
               }
             >
-              <Finish sendData={changeTab} accessToken={accessToken} />
+              <Finish
+                nextTab={changeTab}
+                tags={tags}
+                categories={categories}
+                clients={clients}
+                accessToken={accessToken}
+                user={user}
+              />
             </div>
           )}
         </div>

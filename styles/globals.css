@@ -144,3 +144,8 @@ body {
   background-color: #fd4520 !important;
   opacity: 1;
 }
+
+::placeholder {
+  color: #999;
+  font-size: 11px;
+}

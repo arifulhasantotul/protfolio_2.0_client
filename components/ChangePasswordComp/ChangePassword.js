@@ -1,70 +1,60 @@
 import DataLoading from "@/components/FetchingResult/DataLoading";
+import {
+  changePass,
+  getOtp,
+  verifyOTP,
+} from "@/components/LoginComp/api-calls";
 import PasswordStrengthMeter from "@/components/PasswordStrengthMeter/PasswordStrengthMeter";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
-import {
-  removeFromLocalStorage,
-  saveToLocalStorage,
-} from "@/services/utils/temporarySave";
 import {
   failedToast,
   infoToast,
   otpModal,
   successToast,
 } from "@/services/utils/toasts";
-import styles from "@/styles/Register.module.css";
+import styles from "@/styles/ChangePassword.module.css";
 import { Container } from "@mui/material";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { addUser, getOtp, verifyOTP } from "./api-calls";
 
-const Register = () => {
+const ChangePassword = () => {
   const router = useRouter();
+
   const { currentColor, darkTheme, screenSize } = useStateContext();
   const [sendingReq, setSendingReq] = useState(false);
+
   const [showPass, setShowPass] = useState({
     pass1: false,
     pass2: false,
   });
+
   const initialState = {
-    name: "",
     email: "",
     password: "",
     check_pass: "",
   };
   const [registerData, setRegisterData] = useState(initialState);
 
-  const handleBlur = () => {
-    saveToLocalStorage("portfolioRegisterData", {
-      name: registerData?.name || "",
-      email: registerData?.email || "",
-    });
-  };
-
   const handleInput = (e) => {
     const { name, value } = e.target;
     setRegisterData((prevState) => ({ ...prevState, [name]: value }));
-    saveToLocalStorage("portfolioRegisterData", {
-      name: registerData?.name || "",
-      email: registerData?.email || "",
-    });
   };
 
   const handleShowPass = (pass) => {
     setShowPass((prevState) => ({ ...prevState, [pass]: !prevState[pass] }));
   };
 
-  const registerUser = async () => {
+  const changePassword = async () => {
     try {
       const otp = await otpModal(darkTheme, registerData?.email);
-      if (!otp) return failedToast(darkTheme, "Invalid OTP");
+
+      if (!otp) return failedToast(darkTheme, "OTP not provided");
 
       const matchedOTP = await verifyOTP(otp, registerData?.email);
-
       if (!matchedOTP) {
-        failedToast(darkTheme, "Invalid OTP, Registration failed!");
+        failedToast(darkTheme, "Invalid OTP, Verification failed!");
         setTimeout(() => {
           infoToast(
             darkTheme,
@@ -75,24 +65,35 @@ const Register = () => {
         return;
       }
 
-      // register user
-      const res = await addUser({
-        name: registerData?.name,
+      const obj = {
         email: registerData?.email,
         password: registerData?.password,
-      });
+      };
+
+      const res = await changePass(obj);
 
       if (res) {
-        // console.log("✅ register user data", res);
-        successToast(darkTheme, "Success!", "User registered successfully!");
+        successToast(darkTheme, "Success!", "Password changed successfully!");
         setRegisterData(initialState);
         router.push("/login");
-        removeFromLocalStorage("portfolioRegisterData");
       }
     } catch (err) {
-      console.log("❌ Error while registering user", err);
+      console.log(
+        "🚀 ~ file: ChangePassword.js:84 ~ changePassword ~ err:",
+        err
+      );
       failedToast(darkTheme, err?.message);
     }
+  };
+
+  const handleReset = async () => {
+    setRegisterData({
+      password: "",
+      check_pass: "",
+    });
+
+    document.getElementById("password").value = "";
+    document.getElementById("check_pass").value = "";
   };
 
   const handleSubmit = async (e) => {
@@ -111,40 +112,24 @@ const Register = () => {
           "Password must be at least 6 characters long"
         );
 
-      // send otp to email
-      const res = await getOtp(email);
+      const res = await getOtp(registerData?.email);
       if (res) {
-        successToast(darkTheme, "Success!", res);
-        await registerUser();
+        await changePassword();
       }
     } catch (err) {
-      console.log("❌ ~ file: Register.js:121 ~ handleSubmit ~ err:", err);
+      console.log("❌ ~ file: ChangePassword.js:58 ~ handleSubmit ~ err:", err);
     } finally {
       setSendingReq(false);
     }
   };
 
-  const handleReset = async () => {
-    setRegisterData(initialState);
-    removeFromLocalStorage("portfolioRegisterData");
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
-    document.getElementById("check_pass").value = "";
-  };
-
   useEffect(() => {
-    const data = localStorage.getItem("portfolioRegisterData");
-    const parsedData = data !== null ? JSON.parse(data) : null;
-    if (!parsedData) return;
-    setRegisterData({
-      name: parsedData?.name || "",
-      email: parsedData?.email || "",
-    });
+    const data = localStorage.getItem("userEmail");
+    data && setRegisterData((prevState) => ({ ...prevState, email: data }));
   }, []);
 
-  // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
+
   return (
     <div className={`${styles.register_page} ${conditionalMode}`}>
       <Container
@@ -156,22 +141,8 @@ const Register = () => {
         className={styles.p0}
       >
         <form onSubmit={handleSubmit} className={styles.form_wrapper}>
-          <h2 className={styles.form_heading}>Create Account</h2>
+          <h2 className={styles.form_heading}>Change Password</h2>
           <div className={styles.register_fields}>
-            <div className={styles.input_field}>
-              <label htmlFor="name">&#128374; Name</label>
-              <input
-                style={{
-                  color: currentColor,
-                }}
-                type="text"
-                id="name"
-                name="name"
-                value={registerData?.name || ""}
-                onChange={handleInput}
-                onBlur={handleBlur}
-              />
-            </div>
             <div className={styles.input_field}>
               <label htmlFor="email">&#9993; Email</label>
               <input
@@ -183,7 +154,7 @@ const Register = () => {
                 name="email"
                 value={registerData?.email || ""}
                 onChange={handleInput}
-                onBlur={handleBlur}
+                disabled
               />
             </div>
             <div className={styles.input_field}>
@@ -227,24 +198,11 @@ const Register = () => {
               </span>
             </div>
           </div>
-          <div className={styles.redirect_div}>
-            <p>
-              Already have an account? Go to{" "}
-              <Link href="/login">
-                <span
-                  style={{
-                    color: currentColor,
-                  }}
-                >
-                  login
-                </span>
-              </Link>{" "}
-              page{" "}
-            </p>
-          </div>
+
           <div className={styles.input_field}>
             <PasswordStrengthMeter pass={registerData?.password} />
           </div>
+
           {!sendingReq ? (
             <div className={styles.btn_div}>
               <SimpleFormButton
@@ -269,4 +227,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ChangePassword;
