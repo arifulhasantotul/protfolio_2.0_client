@@ -1,5 +1,6 @@
 import HomeBannerLeft from "@/components/HomeComp/HomeBannerLeft/HomeBannerLeft";
 import HomeBannerRight from "@/components/HomeComp/HomeBannerRight/HomeBannerRight";
+import HomeBlogs from "@/components/HomeComp/HomeBlogs/HomeBlogs";
 import HomeProjects from "@/components/HomeComp/HomeProjects/HomeProjects";
 import HomeSkills from "@/components/HomeComp/HomeSkills/HomeSkills";
 import PageHeader from "@/components/PageHeader/PageHeader";
@@ -7,7 +8,7 @@ import AddReview from "@/components/ReviewComp/AddReview";
 import SimpleButton from "@/components/SimpleButton/SimpleButton";
 import ReviewSlider from "@/components/Slider/ReviewSlider";
 import { useStateContext } from "@/context/ContextProvider";
-import { ALL_REVIEW } from "@/services/graphql/queries";
+import { ALL_REVIEWS } from "@/services/graphql/queries";
 import styles from "@/styles/HomePage.module.css";
 import { Container, Grid } from "@mui/material";
 import client from "apollo-client";
@@ -17,12 +18,12 @@ import { fakeData } from "../../test-data/sliderData";
 
 export const getAllReview = async () => {
   const { data } = await client.query({
-    query: ALL_REVIEW,
+    query: ALL_REVIEWS,
   });
   return data.listReview;
 };
 
-const HomePage = ({ projects, accessToken }) => {
+const HomePage = ({ projects, blogs, accessToken }) => {
   const { darkTheme } = useStateContext();
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
@@ -69,6 +70,14 @@ const HomePage = ({ projects, accessToken }) => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <HomeProjects projects={projects} />
+          </Grid>
+        </Grid>
+
+        <hr className={styles.break_line} />
+        <PageHeader title="Blogs" />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <HomeBlogs blogs={blogs} />
           </Grid>
         </Grid>
 

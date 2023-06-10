@@ -1,0 +1,94 @@
+.blogs_table_wrapper {
+  margin: 0;
+  padding: 20px 0;
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  z-index: -1;
+}
+
+.light.blogs_table_wrapper {
+  background: var(--bg_white);
+}
+
+.dark.blogs_table_wrapper {
+  background: var(--bg_dark);
+}
+
+.table_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow-x: auto;
+  font-size: var(--FS_md);
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.light .table_container {
+  color: var(--dark_text);
+  background: var(--bg_form_white);
+  box-shadow: var(--bg_light_btn_shadow);
+}
+
+.light .table_container {
+  color: var(--dark_text);
+  background: var(--bg_white);
+  box-shadow: var(--bg_card_white_shadow);
+}
+
+.dark .table_container {
+  color: var(--light_text);
+  background: var(--bg_dark_btn);
+  box-shadow: var(--bg_dark_btn_shadow);
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 8px 16px;
+}
+.table th,
+.table tr {
+  border-bottom: 1px solid var(--offdark_text);
+}
+
+.table td {
+  font-size: var(--FS_sm);
+}
+
+.table tr:last-child {
+  border-bottom: none;
+}
+
+.light .table tr:hover {
+  background: var(--bg_form_white);
+}
+
+.dark .table tr:hover {
+  background: var(--dark_text);
+}
+
+.light .table th {
+  background: var(--offwhite);
+}
+
+.dark .table th {
+  background: var(--dark_text);
+}
+
+.t_data_center {
+  text-align: center !important;
+  padding: auto 8px !important;
+}
+
+.icon {
+  margin: 0 10px;
+  cursor: pointer;
+}
