@@ -3,7 +3,7 @@ import styles from "@/styles/ReviewSlider.module.css";
 import { Autoplay, Keyboard, Mousewheel, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const ReviewSlider = ({ data }) => {
+const SkillSlider = ({ data }) => {
   return (
     <div className={styles.slider_wrapper}>
       <Swiper
@@ -64,4 +64,4 @@ const ReviewSlider = ({ data }) => {
   );
 };
 
-export default ReviewSlider;
+export default SkillSlider;

@@ -84,8 +84,11 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
         },
       });
 
-      if (data?.createProject?.id)
+      if (data?.createProject?.id) {
         successToast(darkTheme, "Project created successfully. 😊");
+        localStorage.removeItem("portfolioAddProjectBasic");
+        nextTab(1);
+      }
     } catch (err) {
       failedToast(darkTheme, err.message);
       console.log("❌ Error in AddProjectComp/Basic.js line 187", err);
@@ -128,10 +131,10 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
     setSelectedTagsId(parsedContent?.tagsId);
     setRichTextValue(parsedContent?.des);
     setFinishLoading(false);
-    if (selectedCategoriesId.length > 0) {
+    if (Array.isArray(selectedCategoriesId)) {
       getMatch(categories, selectedCategoriesId, setSelectedCategories);
     }
-    if (parsedContent?.tagsId?.length > 0) {
+    if (Array.isArray(parsedContent?.tagsId)) {
       getMatch(tags, selectedTagsId, setSelectedTags);
     }
 
@@ -238,7 +241,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
           <div className={styles.input_field}>
             <label htmlFor="categoriesId">Categories</label>
             {/* showing selected categories */}
-            {selectedCategories.length > 0 && (
+            {Array.isArray(selectedCategories) && (
               <div className={styles.selected_array}>
                 {selectedCategories?.map((item, idx) => (
                   <span
@@ -257,7 +260,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
           <div className={styles.input_field}>
             <label htmlFor="tagsId">Tags</label>
             {/* showing selected categories */}
-            {selectedTags.length > 0 && (
+            {Array.isArray(selectedTags) && (
               <div className={styles.selected_array}>
                 {selectedTags?.map((item, idx) => (
                   <span
@@ -267,7 +270,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
                     className={styles.selected_item}
                     key={idx}
                   >
-                    {item.name}
+                    #{item.name}
                   </span>
                 ))}
               </div>
@@ -287,7 +290,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
             {finishData.thumb_img}
           </span>
         </div>
-        {imagesURL.length > 0 ? (
+        {Array.isArray(imagesURL) ? (
           <div className={styles.input_field}>
             <label>Sub Images List</label>
             <div className={styles.selected_array}>

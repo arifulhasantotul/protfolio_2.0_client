@@ -196,10 +196,10 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
     setSelectedTagsId(parsedContent?.tagsId);
     setRichTextValue(parsedContent?.des);
     setBasicLoading(false);
-    if (selectedCategoriesId.length > 0) {
+    if (Array.isArray(selectedCategoriesId)) {
       getMatch(categories, selectedCategoriesId, setSelectedCategories);
     }
-    if (parsedContent?.tagsId?.length > 0) {
+    if (Array.isArray(parsedContent?.tagsId)) {
       getMatch(tags, selectedTagsId, setSelectedTags);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -324,7 +324,7 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
           <div className={styles.input_field}>
             <label htmlFor="categoriesId">Categories</label>
             {/* showing selected categories */}
-            {selectedCategories.length > 0 && (
+            {Array.isArray(selectedCategories) && (
               <div className={styles.selected_array}>
                 {selectedCategories?.map((item, idx) => (
                   <span
@@ -382,7 +382,7 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
           <div className={styles.input_field}>
             <label htmlFor="tagsId">Tags</label>
             {/* showing selected categories */}
-            {selectedTags.length > 0 && (
+            {Array.isArray(selectedTags) && (
               <div className={styles.selected_array}>
                 {selectedTags?.map((item, idx) => (
                   <span

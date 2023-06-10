@@ -1,3 +1,4 @@
+import PageHeader from "@/components/PageHeader/PageHeader";
 import SimpleButton from "@/components/SimpleButton/SimpleButton";
 import { useStateContext } from "@/context/ContextProvider";
 import {
@@ -38,6 +39,7 @@ const AddProjectComponent = ({
   return (
     <div className={`${conditionalMode} ${styles.project_form}`}>
       <Container maxWidth="lg">
+        <PageHeader title="Add Project" />
         <div className={styles.block_tabs}>
           <SimpleButton
             className={

@@ -141,34 +141,6 @@ const Media = ({ nextTab, accessToken, user }) => {
       setImagesURL(mediaData?.sub_images);
     }
   }, []);
-  /**
-  0   
-  https://i.ibb.co/bWSK1kF/01loginside.png
-  1
-  https://i.ibb.co/D4DQCWP/02login.png
-  2
-  https://i.ibb.co/M9qhdmg/03loginerr.png
-  3
-  https://i.ibb.co/kDFTTzN/04inbox1.png
-  4
-  https://i.ibb.co/hf42sgD/05inbox2.png
-  5
-  https://i.ibb.co/T13Fq10/06inbox3.png
-  6
-  https://i.ibb.co/fnbsLN0/07addCon.png
-  7
-  https://i.ibb.co/23JjbTd/08search-Con.png
-  8
-  https://i.ibb.co/r6tnKBD/09add-User-Form.png
-  9
-  https://i.ibb.co/3Tkw8zf/10add-User-Form2.png
-  10
-  https://i.ibb.co/d5cnhRf/11add-User-Form-Valid.png
-  11
-  https://i.ibb.co/ZdSsHNC/12user-Admin.png
-  12
-  https://i.ibb.co/HN05mmc/13user-Normal.png
-*/
 
   return (
     <div className={conditionalMode}>
@@ -192,7 +164,7 @@ const Media = ({ nextTab, accessToken, user }) => {
           <p className={styles.error}> &#9888; {errFormData?.thumb_img}</p>
         )}
 
-        {imagesURL.length > 0 ? (
+        {Array.isArray(imagesURL) ? (
           <div className={styles.input_field}>
             <label>Sub Images List</label>
             <div className={styles.selected_array}>

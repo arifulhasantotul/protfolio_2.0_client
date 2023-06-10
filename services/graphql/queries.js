@@ -72,18 +72,20 @@ const ALL_PROJECTS = gql`
         id
         name
       }
-      client {
-        id
-        name
-      }
       rank
       ratings
       status
-      live_site
+      des
+      client {
+        id
+        name
+        email
+      }
+      thumb_img
+      sub_images
       client_repo
       server_repo
-      thumb_img
-      des
+      live_site
     }
   }
 `;
@@ -166,14 +168,14 @@ const VERIFY_OTP = gql`
 `;
 
 export {
-  ALL_TAGS_NAME,
   ALL_CATEGORIES_NAME,
+  ALL_PROJECTS,
   ALL_PROJECTS_NAME,
   ALL_REVIEW,
-  ALL_PROJECTS,
+  ALL_TAGS_NAME,
   ALL_USERS_NAME,
-  VERIFY_OTP,
-  LOGIN_USER,
   CURRENT_USER,
   GET_USER,
+  LOGIN_USER,
+  VERIFY_OTP,
 };
