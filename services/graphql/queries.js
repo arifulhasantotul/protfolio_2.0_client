@@ -157,6 +157,14 @@ const ALL_BLOGS = gql`
       name
       img
       blog_url
+      tags {
+        id
+        name
+      }
+      categories {
+        id
+        name
+      }
     }
   }
 `;
@@ -181,13 +189,13 @@ const VERIFY_OTP = gql`
 `;
 
 export {
+  ALL_BLOGS,
   ALL_CATEGORIES_NAME,
   ALL_PROJECTS,
   ALL_PROJECTS_NAME,
   ALL_REVIEWS,
   ALL_TAGS_NAME,
   ALL_USERS_NAME,
-  ALL_BLOGS,
   CURRENT_USER,
   GET_USER,
   LOGIN_USER,
