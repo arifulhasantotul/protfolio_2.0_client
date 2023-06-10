@@ -24,7 +24,7 @@ const ALL_CATEGORIES_NAME = gql`
 
 // -------------- REVIEW --------------------------
 
-const ALL_REVIEW = gql`
+const ALL_REVIEWS = gql`
   query ListReview {
     listReview {
       id
@@ -148,6 +148,19 @@ const CURRENT_USER = gql`
     }
   }
 `;
+
+// -------------- AUTH --------------------------
+const ALL_BLOGS = gql`
+  query ListBlog {
+    listBlog {
+      id
+      name
+      img
+      blog_url
+    }
+  }
+`;
+
 // -------------- AUTH --------------------------
 
 const LOGIN_USER = gql`
@@ -171,9 +184,10 @@ export {
   ALL_CATEGORIES_NAME,
   ALL_PROJECTS,
   ALL_PROJECTS_NAME,
-  ALL_REVIEW,
+  ALL_REVIEWS,
   ALL_TAGS_NAME,
   ALL_USERS_NAME,
+  ALL_BLOGS,
   CURRENT_USER,
   GET_USER,
   LOGIN_USER,

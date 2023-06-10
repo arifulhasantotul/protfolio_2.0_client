@@ -116,6 +116,37 @@ const ADD_TAG = gql`
   }
 `;
 
+// -------------- Blog --------------------------
+const ADD_BLOG = gql`
+  mutation CreateBlog($input: CreateBlogInput!) {
+    createBlog(input: $input) {
+      id
+      name
+      blog_url
+      img
+      categories {
+        id
+        name
+      }
+      tags {
+        id
+        name
+      }
+    }
+  }
+`;
+
+const UPDATE_BLOG = gql`
+  mutation UpdateBlog($updateBlogId: ID!, $input: UpdateBlogInput!) {
+    updateBlog(id: $updateBlogId, input: $input) {
+      id
+      img
+      name
+      blog_url
+    }
+  }
+`;
+
 // -------------- OTP --------------------------
 const GET_OTP = gql`
   mutation GetOtp($email: String!) {
@@ -124,12 +155,14 @@ const GET_OTP = gql`
 `;
 
 export {
+  ADD_BLOG,
   ADD_CATEGORY,
   ADD_PROJECT,
   ADD_REVIEW,
   ADD_TAG,
   ADD_USER,
   GET_OTP,
+  UPDATE_BLOG,
   UPDATE_PROFILE_IMAGE,
   UPDATE_USER_DETAILS,
   UPDATE_USER_PASS,

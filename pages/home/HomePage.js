@@ -7,7 +7,7 @@ import AddReview from "@/components/ReviewComp/AddReview";
 import SimpleButton from "@/components/SimpleButton/SimpleButton";
 import ReviewSlider from "@/components/Slider/ReviewSlider";
 import { useStateContext } from "@/context/ContextProvider";
-import { ALL_REVIEW } from "@/services/graphql/queries";
+import { ALL_REVIEWS } from "@/services/graphql/queries";
 import styles from "@/styles/HomePage.module.css";
 import { Container, Grid } from "@mui/material";
 import client from "apollo-client";
@@ -17,7 +17,7 @@ import { fakeData } from "../../test-data/sliderData";
 
 export const getAllReview = async () => {
   const { data } = await client.query({
-    query: ALL_REVIEW,
+    query: ALL_REVIEWS,
   });
   return data.listReview;
 };
