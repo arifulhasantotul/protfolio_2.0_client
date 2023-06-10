@@ -1,6 +1,7 @@
 import styles from "@/styles/ReviewSlider.module.css";
 import { Autoplay, Keyboard, Mousewheel, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import DataNotFound from "../FetchingResult/DataNotFound";
 import ProjectCard from "../ProjectComp/ProjectCard";
 
 const ProjectSlider = ({ allProject }) => {
@@ -35,10 +36,8 @@ const ProjectSlider = ({ allProject }) => {
             </SwiperSlide>
           ))}
         </Swiper>
-      ) : allProject.length === 0 ? (
-        <div>Not Found</div>
       ) : (
-        <div>Loading...</div>
+        <DataNotFound title="Projects not found" />
       )}
     </div>
   );
