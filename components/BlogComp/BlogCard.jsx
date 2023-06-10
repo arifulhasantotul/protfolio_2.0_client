@@ -6,7 +6,6 @@ import { BsTag } from "react-icons/bs";
 import { MdCategory } from "react-icons/md";
 
 const BlogCard = ({ details }) => {
-  console.log("🚀 ~ file: BlogCard.jsx:2 ~ BlogCard ~ details:", details);
   const { currentColor, darkTheme } = useStateContext();
   const conditionalMode = darkTheme ? styles.dark : styles.light;
   return (

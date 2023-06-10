@@ -12,7 +12,7 @@ const Blog = ({ blogs, accessToken }) => {
   return (
     <div className={`${styles.blog_page} ${conditionalMode}`}>
       <>
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" className={styles.p0}>
           <PageHeader title="All Blog" />
           <div className={styles.card_wrapper}>
             {Array.isArray(blogs) ? (
