@@ -1,3 +1,4 @@
+import DataNotFound from "@/components/FetchingResult/DataNotFound";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/ProjectsComponent.module.css";
@@ -45,6 +46,9 @@ const ProjectsComponent = ({ projects }) => {
                 : null}
             </tbody>
           </table>
+          {!Array.isArray(projects) && (
+            <DataNotFound title="Projects not found" />
+          )}
         </div>
       </Container>
     </div>

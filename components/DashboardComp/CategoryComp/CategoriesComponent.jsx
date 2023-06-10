@@ -1,3 +1,4 @@
+import DataNotFound from "@/components/FetchingResult/DataNotFound";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/CategoriesComponent.module.css";
@@ -45,6 +46,9 @@ const CategoriesComponent = ({ categories }) => {
                 : null}
             </tbody>
           </table>
+          {!Array.isArray(categories) && (
+            <DataNotFound title="Categories not found" />
+          )}
         </div>
       </Container>
     </div>

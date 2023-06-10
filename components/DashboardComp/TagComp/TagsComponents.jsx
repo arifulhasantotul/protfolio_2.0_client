@@ -1,3 +1,4 @@
+import DataNotFound from "@/components/FetchingResult/DataNotFound";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/TagsComponent.module.css";
@@ -46,6 +47,7 @@ const TagsComponent = ({ tags }) => {
                 : null}
             </tbody>
           </table>
+          {!Array.isArray(tags) && <DataNotFound title="Tags not found" />}
         </div>
       </Container>
     </div>
