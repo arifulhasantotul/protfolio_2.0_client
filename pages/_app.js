@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { CookiesProvider, useCookies } from "react-cookie";
 import "swiper/css/bundle";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
 import Layout from "../components/Layout/Layout";
 
 function MyApp({ Component, pageProps, router }) {

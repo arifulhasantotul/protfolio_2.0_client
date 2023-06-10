@@ -35,7 +35,6 @@ const AddCategoryComponent = () => {
           },
         },
       });
-      console.log(data);
 
       if (data?.createCategory?.id) {
         successToast(darkTheme, "Category created successfully. 😊");

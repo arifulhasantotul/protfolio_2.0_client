@@ -1,0 +1,141 @@
+.card {
+  border-radius: 12px;
+  width: 650px;
+  height: calc(100% - 60px);
+  padding: 10px;
+  margin: 10px 0;
+  margin-top: 50px;
+}
+
+.light.card {
+  background: var(--bg_light_btn);
+  box-shadow: var(--bg_light_btn_shadow);
+}
+
+.dark.card {
+  background: var(--bg_dark_btn);
+  box-shadow: var(--bg_dark_btn_shadow);
+}
+
+.card_item {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.up_div {
+  margin-top: -50px;
+}
+
+.card_title {
+  font-size: var(--FS_md);
+  font-weight: 600;
+  margin-bottom: 10px;
+  padding-right: 10px;
+}
+
+.card_img {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.card_img .image {
+  margin-top: -25px;
+  transition: var(--transition);
+}
+
+.card_info {
+  padding-left: 8px;
+}
+
+.card_info .title {
+  display: flex;
+  align-items: center;
+  font-size: var(--FS_sm);
+}
+
+.light .card_title,
+.light .card_info .title {
+  color: var(--dark_text);
+}
+
+.dark .card_title,
+.dark .card_info .title {
+  color: var(--light_text);
+}
+
+.card_img:hover .image {
+  transform: scale(1.2);
+}
+
+.tag {
+  display: inline-block;
+  margin: 10px 12px 2px 0;
+  width: max-content;
+  font-size: var(--FS_sm);
+  padding: 3px 7px;
+  border-radius: 15px;
+}
+
+@media (max-width: 700px) {
+  .card {
+    max-width: 600px;
+    padding: 5px;
+  }
+  .card_img {
+    width: 350px;
+    height: calc(350px / 2);
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    max-width: 380px;
+    padding: 5px;
+  }
+  .card_item {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+  }
+  .card_info {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .card {
+    width: 100%;
+  }
+  .card_img {
+    width: 310px;
+    height: calc(310px / 2);
+  }
+
+  .up_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title {
+    font-size: var(--FS_md);
+  }
+}
+
+@media (max-width: 345px) {
+  .card_img {
+    width: 270px;
+    height: calc(270px / 2);
+  }
+
+  .title {
+    font-size: var(--FS_md);
+  }
+}

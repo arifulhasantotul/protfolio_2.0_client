@@ -38,7 +38,6 @@ const AddTagComponent = () => {
           },
         },
       });
-      console.log(data);
 
       if (data?.createTag?.id) {
         successToast(darkTheme, "Tag created successfully. 😊");
