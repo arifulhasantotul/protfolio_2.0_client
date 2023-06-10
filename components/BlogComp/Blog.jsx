@@ -1,11 +1,11 @@
+import BlogCard from "@/components/BlogComp/BlogCard";
 import DataNotFound from "@/components/FetchingResult/DataNotFound";
 import PageHeader from "@/components/PageHeader/PageHeader";
-import ProjectCard from "@/components/ProjectComp/ProjectCard";
 import { useStateContext } from "@/context/ContextProvider";
 import styles from "@/styles/Project.module.css";
 import { Container } from "@mui/material";
 
-const Project = ({ projects, accessToken }) => {
+const Blog = ({ blogs, accessToken }) => {
   const { currentColor, darkTheme } = useStateContext();
   const conditionalMode = darkTheme ? styles.dark : styles.light;
 
@@ -13,14 +13,12 @@ const Project = ({ projects, accessToken }) => {
     <div className={`${styles.project_page} ${conditionalMode}`}>
       <>
         <Container maxWidth="xl">
-          <PageHeader title="All Project" />
+          <PageHeader title="All Blog" />
           <div className={styles.card_wrapper}>
-            {Array.isArray(projects) ? (
-              projects.map((item, idx) => (
-                <ProjectCard key={idx} details={item} />
-              ))
+            {Array.isArray(blogs) ? (
+              blogs.map((item, idx) => <BlogCard key={idx} details={item} />)
             ) : (
-              <DataNotFound title="Projects not found" />
+              <DataNotFound title="Blogs not found" />
             )}
           </div>
         </Container>
@@ -29,4 +27,4 @@ const Project = ({ projects, accessToken }) => {
   );
 };
 
-export default Project;
+export default Blog;
