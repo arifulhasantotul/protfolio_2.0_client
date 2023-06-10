@@ -78,3 +78,38 @@ export const projectsData = [
 //   "client_side": "https://github.com/arifulhasantotul/bros_chat_app",
 //   "server_side": "https://github.com/arifulhasantotul/bros_chat_app"
 // }
+
+/*
+{
+  "_id": {
+    "$oid": "6232b25527eb670e99cac340"
+  },
+  "name": "Desire",
+  "aos": "fade-left",
+  "category": "Design",
+  "condition": "Finalized",
+  "details": [
+    "Watch collection site",
+    "Only design",
+    "Responsive"
+  ],
+  "tag": [
+    " HTML",
+    "CSS",
+    " Bootstrap",
+    " VS Code"
+  ],
+  "dp_img": "https://i.ibb.co/C28VpH5/des1.jpg",
+  "sub_img": [
+    "https://i.ibb.co/C28VpH5/des1.jpg",
+    "https://i.ibb.co/TcS165c/des2.jpg",
+    "https://i.ibb.co/1QWB0Mz/des3.jpg",
+    "https://i.ibb.co/6bFLfT2/des4.jpg",
+    "https://i.ibb.co/3kPzr3z/des5.jpg",
+    "https://i.ibb.co/wYLyTDC/des6.jpg"
+  ],
+  "live_link": "https://desier.netlify.app/",
+  "client_side": "https://github.com/arifulhasantotul/projectdesire"
+}
+
+*/

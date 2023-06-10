@@ -106,6 +106,16 @@ const ADD_REVIEW = gql`
   }
 `;
 
+// -------------- Tag --------------------------
+const ADD_TAG = gql`
+  mutation CreateTag($input: CreateTagInput!) {
+    createTag(input: $input) {
+      id
+      name
+    }
+  }
+`;
+
 // -------------- OTP --------------------------
 const GET_OTP = gql`
   mutation GetOtp($email: String!) {
@@ -116,10 +126,11 @@ const GET_OTP = gql`
 export {
   ADD_CATEGORY,
   ADD_PROJECT,
-  GET_OTP,
-  ADD_USER,
   ADD_REVIEW,
-  UPDATE_USER_DETAILS,
+  ADD_TAG,
+  ADD_USER,
+  GET_OTP,
   UPDATE_PROFILE_IMAGE,
+  UPDATE_USER_DETAILS,
   UPDATE_USER_PASS,
 };

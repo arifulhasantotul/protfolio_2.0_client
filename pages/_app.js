@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps, router }) {
   const [cookies] = useCookies(["portfolio_2_0"]);
   const accessToken = cookies["portfolio_2_0"];
   const nextRouter = useRouter();
-  const routerPath = nextRouter.asPath;
+  const routerPath = nextRouter.pathname;
   const [ssrRendering, setSsrRendering] = useState(false);
   // const httpLink = new HttpLink({ uri: `${activeURI}/graphql` });
   // const authMiddleware = new ApolloLink((operation, forward) => {

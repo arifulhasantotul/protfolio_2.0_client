@@ -1,0 +1,21 @@
+.project_page {
+  margin: 0;
+  padding: 20px 0;
+  width: 100%;
+  z-index: -1;
+  min-height: calc(100vh - 90px);
+}
+.project_page.light {
+  background: var(--bg_white);
+}
+
+.project_page.dark {
+  background: var(--bg_dark);
+}
+
+.card_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,15 @@
+.overview_wrapper {
+  margin: 0;
+  padding: 20px 0;
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  z-index: -1;
+}
+
+.light.overview_wrapper {
+  background: var(--bg_white);
+}
+
+.dark.overview_wrapper {
+  background: var(--bg_dark);
+}

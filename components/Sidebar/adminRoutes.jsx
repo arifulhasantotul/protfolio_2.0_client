@@ -1,9 +1,10 @@
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
-import { BiBookAdd, BiMessageAdd } from "react-icons/bi";
-import { BsGrid1X2 } from "react-icons/bs";
+import { BiBookAdd, BiMessageAdd, BiPlusCircle } from "react-icons/bi";
+import { BsGrid1X2, BsTag } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 import { GoCommentDiscussion } from "react-icons/go";
 import { ImBlog } from "react-icons/im";
+import { MdCategory } from "react-icons/md";
 
 export const adminRoutes = [
   {
@@ -15,6 +16,30 @@ export const adminRoutes = [
         icon: <AiOutlineAppstoreAdd />,
         name: "Add Project",
         path: "/dashboard/addProject",
+      },
+    ],
+  },
+  {
+    icon: <MdCategory />,
+    name: "Categories",
+    path: "/dashboard/categories",
+    sub: [
+      {
+        icon: <BiPlusCircle />,
+        name: "Add Category",
+        path: "/dashboard/addCategory",
+      },
+    ],
+  },
+  {
+    icon: <BsTag />,
+    name: "Tags",
+    path: "/dashboard/tags",
+    sub: [
+      {
+        icon: <BiPlusCircle />,
+        name: "Add Tag",
+        path: "/dashboard/addTag",
       },
     ],
   },

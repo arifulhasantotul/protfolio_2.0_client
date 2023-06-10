@@ -22,7 +22,7 @@ export const getAllReview = async () => {
   return data.listReview;
 };
 
-const HomePage = ({ accessToken }) => {
+const HomePage = ({ projects, accessToken }) => {
   const { darkTheme } = useStateContext();
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
@@ -65,10 +65,10 @@ const HomePage = ({ accessToken }) => {
         </Grid>
 
         <hr className={styles.break_line} />
-        <PageHeader title="Demo Projects" />
+        <PageHeader title="Projects" />
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <HomeProjects />
+            <HomeProjects projects={projects} />
           </Grid>
         </Grid>
 
