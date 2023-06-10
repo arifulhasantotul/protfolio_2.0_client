@@ -1,8 +1,8 @@
+import DashOverviewComponent from "@/components/DashboardComp/OverviewComp/DashOverviewComponent";
 import { ALL_CATEGORIES_NAME } from "@/services/graphql/queries";
 import { extractJWT, getCookie } from "@/services/utils/cookieExtract";
 import client from "apollo-client";
 import Head from "next/head";
-import DashboardPage from "./DashboardPage";
 
 export default function Dashboard({ categories, accessToken }) {
   return (
@@ -14,7 +14,7 @@ export default function Dashboard({ categories, accessToken }) {
       </Head>
 
       <main>
-        <DashboardPage categories={categories} accessToken={accessToken} />
+        <DashOverviewComponent accessToken={accessToken} />
       </main>
     </div>
   );

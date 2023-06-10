@@ -6,7 +6,6 @@ import { Container } from "@mui/material";
 import { MdDeleteOutline, MdEdit } from "react-icons/md";
 
 const TagsComponent = ({ tags }) => {
-  console.log("🚀 ~ file: TagsComponents.jsx:7 ~ TagsComponent ~ tags:", tags);
   const { currentColor, darkTheme } = useStateContext();
 
   // css conditionalMode for dark mode
