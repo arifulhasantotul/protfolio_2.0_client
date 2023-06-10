@@ -1,10 +1,10 @@
-import { ALL_PROJECTS } from "@/services/graphql/queries";
+import { ALL_BLOGS, ALL_PROJECTS } from "@/services/graphql/queries";
 import { getCookie } from "@/services/utils/cookieExtract";
 import client from "apollo-client";
 import Head from "next/head";
 import HomePage from "./home/HomePage";
 
-export default function DefaultPage({ projects, accessToken }) {
+export default function DefaultPage({ projects, blogs, accessToken }) {
   return (
     <div className="page_wrapper">
       <Head>
@@ -14,7 +14,7 @@ export default function DefaultPage({ projects, accessToken }) {
       </Head>
 
       <main>
-        <HomePage projects={projects} accessToken={accessToken} />
+        <HomePage projects={projects} blogs={blogs} accessToken={accessToken} />
       </main>
     </div>
   );
@@ -30,13 +30,18 @@ export async function getServerSideProps(ctx) {
     accessToken = null;
   }
 
-  const { data } = await client.query({
+  const data1 = await client.query({
     query: ALL_PROJECTS,
+  });
+
+  const data2 = await client.query({
+    query: ALL_BLOGS,
   });
 
   return {
     props: {
-      projects: data?.listProject || [],
+      projects: data1?.data?.listProject || [],
+      blogs: data2?.data?.listBlog || [],
       accessToken: accessToken,
     },
   };

@@ -1,7 +1,15 @@
 import BlogCard from "@/components/BlogComp/BlogCard";
 import DataNotFound from "@/components/FetchingResult/DataNotFound";
 import styles from "@/styles/ReviewSlider.module.css";
-import { Autoplay, Keyboard, Mousewheel, Navigation, Pagination } from "swiper";
+import {
+  Autoplay,
+  EffectCoverflow,
+  Keyboard,
+  Mousewheel,
+  Navigation,
+  Pagination,
+  Virtual,
+} from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const BlogSlider = ({ allBlog }) => {
@@ -9,19 +17,57 @@ const BlogSlider = ({ allBlog }) => {
     <div className={styles.slider_wrapper}>
       {Array.isArray(allBlog) ? (
         <Swiper
-          cssMode={true}
-          mousewheel={true}
+          effect={"coverflow"}
+          centeredSlides={true}
+          coverflowEffect={{
+            rotate: 60,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+          }}
           keyboard={true}
           grabCursor={true}
           autoplay={{
-            delay: 2000,
-            disableOnInteraction: true,
+            delay: 2500,
+            disableOnInteraction: false,
           }}
           pagination={{
             clickable: true,
           }}
-          modules={[Autoplay, Navigation, Pagination, Mousewheel, Keyboard]}
-          className="project_swiper"
+          breakpoints={{
+            450: {
+              slidesPerView: 1.5,
+              spaceBetween: 20,
+            },
+            600: {
+              slidesPerView: 1,
+              spaceBetween: 5,
+            },
+            768: {
+              slidesPerView: 1.5,
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            1500: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
+          }}
+          virtual
+          modules={[
+            EffectCoverflow,
+            Autoplay,
+            Navigation,
+            Pagination,
+            Mousewheel,
+            Keyboard,
+            Virtual,
+          ]}
+          className="blog_swiper"
         >
           {allBlog.map((item, idx) => (
             <SwiperSlide
@@ -29,7 +75,8 @@ const BlogSlider = ({ allBlog }) => {
               style={{
                 display: "flex",
                 justifyContent: "center",
-                paddingBottom: 20,
+                alignItems: "center",
+                paddingBottom: "100px",
               }}
             >
               <BlogCard details={item} />
