@@ -84,7 +84,7 @@ const ContextProvider = ({ children }) => {
   const handleLogout = () => {
     removeCookie("portfolio_2_0");
     localStorage.removeItem("portfolioIdToken");
-    window.location.reload();
+    window.location.replace("/");
   };
 
   useEffect(() => {

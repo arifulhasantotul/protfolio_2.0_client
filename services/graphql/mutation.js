@@ -116,6 +116,24 @@ const ADD_TAG = gql`
   }
 `;
 
+const UPDATE_TAG = gql`
+  mutation UpdateTag($id: ID!, $input: UpdateTagInput!) {
+    updateTag(id: $id, input: $input) {
+      id
+      name
+    }
+  }
+`;
+
+const DELETE_TAG = gql`
+  mutation DeleteTag($id: ID!) {
+    deleteTag(id: $id) {
+      id
+      name
+    }
+  }
+`;
+
 // -------------- Blog --------------------------
 const ADD_BLOG = gql`
   mutation CreateBlog($input: CreateBlogInput!) {
@@ -161,9 +179,11 @@ export {
   ADD_REVIEW,
   ADD_TAG,
   ADD_USER,
+  DELETE_TAG,
   GET_OTP,
   UPDATE_BLOG,
   UPDATE_PROFILE_IMAGE,
+  UPDATE_TAG,
   UPDATE_USER_DETAILS,
   UPDATE_USER_PASS,
 };
