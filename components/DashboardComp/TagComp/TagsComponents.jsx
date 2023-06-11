@@ -5,19 +5,32 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { DELETE_TAG, UPDATE_TAG } from "@/services/graphql/mutation";
+import { ALL_TAGS } from "@/services/graphql/queries";
 import { failedToast, successToast } from "@/services/utils/toasts";
 import styles from "@/styles/TagsComponent.module.css";
 import { useMutation } from "@apollo/client";
 import { Container } from "@mui/material";
+import { swrFetcher } from "apolloClient";
 import { useState } from "react";
 import { MdDeleteOutline, MdEdit } from "react-icons/md";
+import useSWR from "swr";
 
-const TagsComponent = ({ tags }) => {
+const TagsComponent = ({ initTags, accessToken }) => {
   const { currentColor, darkTheme } = useStateContext();
 
   const [openModal, setOpenModal] = useState(false);
   const [updateTag, { loading }] = useMutation(UPDATE_TAG);
   const [deleteTag, { loading: deleteLoading }] = useMutation(DELETE_TAG);
+
+  const fetcher = async () => {
+    const { listTag } = await swrFetcher(accessToken, ALL_TAGS, {});
+    return listTag;
+  };
+
+  const { data, mutate, error } = useSWR([ALL_TAGS, {}], fetcher, {
+    initialData: initTags,
+    revalidateOnFocus: false,
+  });
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -37,6 +50,7 @@ const TagsComponent = ({ tags }) => {
 
       if (data?.deleteTag?.id) {
         successToast(darkTheme, "Tag deleted successfully. 😊");
+        mutate();
       }
     } catch (err) {
       console.log("🚀 ~ file: TagsComponent.jsx:56 ~ handleUpdate ~ err:", err);
@@ -58,6 +72,7 @@ const TagsComponent = ({ tags }) => {
 
       if (data?.updateTag?.id) {
         successToast(darkTheme, "Tag updated successfully. 😊");
+        mutate();
         handleCloseModal();
         setUpdateVal({
           id: "",
@@ -92,8 +107,8 @@ const TagsComponent = ({ tags }) => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(tags)
-                ? tags.map((tag, idx) => (
+              {Array.isArray(data)
+                ? data.map((tag, idx) => (
                     <tr key={idx}>
                       <td>{tag.name}</td>
                       <td className={styles.t_data_center}>
@@ -119,7 +134,7 @@ const TagsComponent = ({ tags }) => {
                 : null}
             </tbody>
           </table>
-          {!Array.isArray(tags) && <DataNotFound title="Tags not found" />}
+          {!Array.isArray(data) && <DataNotFound title="Tags not found" />}
         </div>
       </Container>
 

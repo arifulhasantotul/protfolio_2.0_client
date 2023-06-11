@@ -14,7 +14,7 @@ export default function DashboardTagPage({ tags, accessToken }) {
       </Head>
 
       <main>
-        <TagsComponent tags={tags} />
+        <TagsComponent initTags={tags} accessToken={accessToken} />
       </main>
     </div>
   );

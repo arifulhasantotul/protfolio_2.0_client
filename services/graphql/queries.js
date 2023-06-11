@@ -11,6 +11,23 @@ const ALL_TAGS_NAME = gql`
   }
 `;
 
+const ALL_TAGS = gql`
+  query ListTag {
+    listTag {
+      id
+      name
+      blogs {
+        id
+        name
+      }
+      projects {
+        id
+        name
+      }
+    }
+  }
+`;
+
 // -------------- CATEGORY --------------------------
 
 const ALL_CATEGORIES_NAME = gql`
@@ -195,6 +212,7 @@ export {
   ALL_PROJECTS_NAME,
   ALL_REVIEWS,
   ALL_TAGS_NAME,
+  ALL_TAGS,
   ALL_USERS_NAME,
   CURRENT_USER,
   GET_USER,
