@@ -124,6 +124,31 @@ const ADD_REVIEW = gql`
   }
 `;
 
+const UPDATE_REVIEW = gql`
+  mutation UpdateReview($id: ID!, $input: UpdateReviewInput!) {
+    updateReview(id: $id, input: $input) {
+      id
+      title
+      rating
+      reviewer {
+        id
+        name
+      }
+      projectStartDate
+      projectEndDate
+    }
+  }
+`;
+
+const DELETE_REVIEW = gql`
+  mutation DeleteReview($id: ID!) {
+    deleteReview(id: $id) {
+      id
+      title
+    }
+  }
+`;
+
 // -------------- Tag --------------------------
 const ADD_TAG = gql`
   mutation CreateTag($input: CreateTagInput!) {
@@ -198,11 +223,13 @@ export {
   ADD_TAG,
   ADD_USER,
   DELETE_CATEGORY,
+  DELETE_REVIEW,
   DELETE_TAG,
   GET_OTP,
   UPDATE_BLOG,
   UPDATE_CATEGORY,
   UPDATE_PROFILE_IMAGE,
+  UPDATE_REVIEW,
   UPDATE_TAG,
   UPDATE_USER_DETAILS,
   UPDATE_USER_PASS,
