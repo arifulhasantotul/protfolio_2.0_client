@@ -65,6 +65,7 @@
   --FS_md: 20px;
   --FS_sm: 14px;
   --FS_xs: 12px;
+  --FS_td: 16px;
 }
 
 ::-webkit-scrollbar {

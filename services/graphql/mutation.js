@@ -10,6 +10,24 @@ const ADD_CATEGORY = gql`
   }
 `;
 
+const UPDATE_CATEGORY = gql`
+  mutation UpdateCategory($id: ID!, $input: UpdateCategoryInput!) {
+    updateCategory(id: $id, input: $input) {
+      id
+      name
+    }
+  }
+`;
+
+const DELETE_CATEGORY = gql`
+  mutation DeleteCategory($id: ID!) {
+    deleteCategory(id: $id) {
+      id
+      name
+    }
+  }
+`;
+
 // -------------- PROJECT --------------------------
 const ADD_PROJECT = gql`
   mutation CreateProject($input: CreateProjectInput!) {
@@ -179,9 +197,11 @@ export {
   ADD_REVIEW,
   ADD_TAG,
   ADD_USER,
+  DELETE_CATEGORY,
   DELETE_TAG,
   GET_OTP,
   UPDATE_BLOG,
+  UPDATE_CATEGORY,
   UPDATE_PROFILE_IMAGE,
   UPDATE_TAG,
   UPDATE_USER_DETAILS,

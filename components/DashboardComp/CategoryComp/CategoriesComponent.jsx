@@ -1,12 +1,31 @@
 import DataNotFound from "@/components/FetchingResult/DataNotFound";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
+import { DELETE_CATEGORY, UPDATE_CATEGORY } from "@/services/graphql/mutation";
+import { ALL_CATEGORIES } from "@/services/graphql/queries";
 import styles from "@/styles/CategoriesComponent.module.css";
+import { useMutation } from "@apollo/client";
 import { Container } from "@mui/material";
+import { swrFetcher } from "apolloClient";
 import { MdDeleteOutline, MdEdit } from "react-icons/md";
+import useSWR from "swr";
 
-const CategoriesComponent = ({ categories }) => {
+const CategoriesComponent = ({ initCategories, accessToken }) => {
   const { currentColor, darkTheme } = useStateContext();
+
+  const [updateCategory, { loading }] = useMutation(UPDATE_CATEGORY);
+  const [deleteCategory, { loading: deleteLoading }] =
+    useMutation(DELETE_CATEGORY);
+
+  const fetcher = async () => {
+    const { listCategory } = await swrFetcher(accessToken, ALL_CATEGORIES, {});
+    return listCategory;
+  };
+
+  const { data, mutate, error } = useSWR([ALL_CATEGORIES, {}], fetcher, {
+    initialData: initCategories,
+    revalidateOnFocus: false,
+  });
 
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
@@ -30,8 +49,8 @@ const CategoriesComponent = ({ categories }) => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(categories)
-                ? categories.map((category, idx) => (
+              {Array.isArray(data)
+                ? data.map((category, idx) => (
                     <tr key={idx}>
                       <td>{category.name}</td>
                       <td className={styles.t_data_center}>
@@ -46,7 +65,7 @@ const CategoriesComponent = ({ categories }) => {
                 : null}
             </tbody>
           </table>
-          {!Array.isArray(categories) && (
+          {!Array.isArray(data) && (
             <DataNotFound title="Categories not found" />
           )}
         </div>

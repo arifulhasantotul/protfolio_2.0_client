@@ -39,6 +39,23 @@ const ALL_CATEGORIES_NAME = gql`
   }
 `;
 
+const ALL_CATEGORIES = gql`
+  query ListCategory {
+    listCategory {
+      id
+      name
+      blogs {
+        id
+        name
+      }
+      projects {
+        id
+        name
+      }
+    }
+  }
+`;
+
 // -------------- REVIEW --------------------------
 
 const ALL_REVIEWS = gql`
@@ -207,12 +224,13 @@ const VERIFY_OTP = gql`
 
 export {
   ALL_BLOGS,
+  ALL_CATEGORIES,
   ALL_CATEGORIES_NAME,
   ALL_PROJECTS,
   ALL_PROJECTS_NAME,
   ALL_REVIEWS,
-  ALL_TAGS_NAME,
   ALL_TAGS,
+  ALL_TAGS_NAME,
   ALL_USERS_NAME,
   CURRENT_USER,
   GET_USER,
