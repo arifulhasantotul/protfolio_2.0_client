@@ -1,7 +1,8 @@
+import CustomModal from "@/components/CustomModal/CustomModal";
 import DataNotFound from "@/components/FetchingResult/DataNotFound";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
-import { DELETE_REVIEW } from "@/services/graphql/mutation";
+import { DELETE_REVIEW, UPDATE_REVIEW } from "@/services/graphql/mutation";
 import { ALL_REVIEWS } from "@/services/graphql/queries";
 import { failedToast, successToast } from "@/services/utils/toasts";
 import styles from "@/styles/TagsComponent.module.css";
@@ -11,10 +12,13 @@ import { swrFetcher } from "apolloClient";
 import { useState } from "react";
 import { MdDeleteOutline, MdEdit } from "react-icons/md";
 import useSWR from "swr";
+import UpdateReview from "./UpdateReviewComponent";
 
 const ReviewsComponent = ({ initReviews, accessToken }) => {
   const { currentColor, darkTheme } = useStateContext();
 
+  const [openModal, setOpenModal] = useState(false);
+  const [updateReview, { loading }] = useMutation(UPDATE_REVIEW);
   const [deleteReview, { loading: deleteLoading }] = useMutation(DELETE_REVIEW);
 
   const fetcher = async () => {
@@ -27,10 +31,38 @@ const ReviewsComponent = ({ initReviews, accessToken }) => {
     revalidateOnFocus: false,
   });
 
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+
   const [updateVal, setUpdateVal] = useState({
     id: "",
-    name: "",
+    title: "",
+    rating: "",
+    start_date: "",
+    end_date: "",
+    comment: "",
+    reviewerId: "",
   });
+
+  const getDefVal = (item = null) => {
+    if (item) {
+      setUpdateVal((prv) => ({
+        ...prv,
+        id: item?.id,
+        title: item?.title,
+        rating: item?.rating,
+        start_date: item?.projectStartDate,
+        end_date: item?.projectEndDate,
+        comment: item?.comment,
+        reviewerId: item?.reviewerId,
+      }));
+    }
+  };
+
+  const handleEdit = (item) => {
+    getDefVal(item);
+    handleOpenModal();
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -56,22 +88,32 @@ const ReviewsComponent = ({ initReviews, accessToken }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await updateTag({
+      const { data } = await updateReview({
         variables: {
           id: updateVal?.id,
           input: {
-            name: updateVal?.name.trim(),
+            title: updateVal?.title,
+            rating: updateVal?.rating,
+            projectStartDate: updateVal?.start_date,
+            projectEndDate: updateVal?.end_date,
+            comment: updateVal?.comment,
+            reviewerId: updateVal?.reviewerId,
           },
         },
       });
 
-      if (data?.updateTag?.id) {
-        successToast(darkTheme, "Tag updated successfully. 😊");
+      if (data?.updateReview?.id) {
+        successToast(darkTheme, "Review updated successfully. 😊");
         mutate();
         handleCloseModal();
         setUpdateVal({
           id: "",
-          name: "",
+          title: "",
+          rating: "",
+          start_date: "",
+          end_date: "",
+          comment: "",
+          reviewerId: "",
         });
       }
     } catch (err) {
@@ -113,7 +155,7 @@ const ReviewsComponent = ({ initReviews, accessToken }) => {
                       <td>{review?.rating}</td>
                       <td className={styles.t_data_center}>
                         <MdEdit
-                          onClick={() => console.log("update")}
+                          onClick={() => handleEdit(review)}
                           className={styles.icon}
                           title="Edit review"
                         />
@@ -131,6 +173,19 @@ const ReviewsComponent = ({ initReviews, accessToken }) => {
           {!Array.isArray(data) && <DataNotFound title="Reviews not found" />}
         </div>
       </Container>
+
+      <CustomModal
+        open={openModal}
+        handleClose={handleCloseModal}
+        width="max-content"
+      >
+        <UpdateReview
+          reviewData={updateVal}
+          setReviewData={setUpdateVal}
+          handleSubmit={handleUpdate}
+          closeModal={handleCloseModal}
+        />
+      </CustomModal>
     </div>
   );
 };
