@@ -110,14 +110,14 @@ const TagsComponent = ({ initTags, accessToken }) => {
               {Array.isArray(data)
                 ? data.map((tag, idx) => (
                     <tr key={idx}>
-                      <td>{tag.name}</td>
+                      <td>{tag?.name}</td>
                       <td className={styles.t_data_center}>
                         <MdEdit
                           onClick={() => {
                             handleOpenModal();
                             setUpdateVal({
-                              id: tag.id,
-                              name: tag.name,
+                              id: tag?.id,
+                              name: tag?.name,
                             });
                           }}
                           className={styles.icon}
