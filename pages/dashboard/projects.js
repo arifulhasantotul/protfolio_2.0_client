@@ -14,7 +14,7 @@ export default function DashboardProjectPage({ projects, accessToken }) {
       </Head>
 
       <main>
-        <ProjectsComponent projects={projects} />
+        <ProjectsComponent initProjects={projects} accessToken={accessToken} />
       </main>
     </div>
   );

@@ -1,0 +1,11 @@
+.light.custom_modal_wrapper {
+  color: var(--dark_text);
+  background: var(--bg_white);
+  box-shadow: var(--bg_form_white_shadow);
+}
+
+.dark.custom_modal_wrapper {
+  color: var(--light_text);
+  background: var(--bg_dark);
+  box-shadow: var(--bg_dark_btn_shadow);
+}

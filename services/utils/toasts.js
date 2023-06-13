@@ -91,3 +91,26 @@ export const otpModal = async (dark, email = "your email") => {
 
   return value;
 };
+
+export const confirmModal = async (dark, msg = "") => {
+  let res = false;
+  await Swal.fire({
+    title: "Are you sure?",
+    text: msg,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+    color: dark ? "#43dde6" : "#3c3e41",
+    background: dark ? black_bg : white_bg,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      res = true;
+    } else {
+      res = false;
+    }
+  });
+
+  return res;
+};

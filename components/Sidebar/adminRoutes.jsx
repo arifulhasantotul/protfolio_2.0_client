@@ -15,7 +15,7 @@ export const adminRoutes = [
       {
         icon: <AiOutlineAppstoreAdd />,
         name: "Add Project",
-        path: "/dashboard/addProject",
+        path: "/dashboard/project/add",
       },
     ],
   },
@@ -37,7 +37,7 @@ export const adminRoutes = [
     path: "/dashboard/tags",
     sub: [
       {
-        icon: <BiPlusCircle />,
+        icon: <BiMessageAdd />,
         name: "Add Tag",
         path: "/dashboard/addTag",
       },
@@ -47,13 +47,13 @@ export const adminRoutes = [
     icon: <GoCommentDiscussion />,
     name: "Reviews",
     path: "/dashboard/reviews",
-    sub: [
-      {
-        icon: <BiMessageAdd />,
-        name: "Add Review",
-        path: "/dashboard/addReview",
-      },
-    ],
+    // sub: [
+    //   {
+    //     icon: <BiMessageAdd />,
+    //     name: "Add Review",
+    //     path: "/dashboard/addReview",
+    //   },
+    // ],
   },
   {
     icon: <ImBlog />,

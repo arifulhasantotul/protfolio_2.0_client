@@ -6,27 +6,27 @@ import styles from "@/styles/ProjectForm.module.css";
 import { useEffect, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 
-const Media = ({ nextTab, accessToken, user }) => {
+const EditMedia = ({ projectData, nextTab, accessToken, user }) => {
   const { currentColor, darkTheme, backend_url } = useStateContext();
 
   const initialData = {
-    thumb_img: "",
+    thumb_img: projectData?.thumb_img || "",
     sub_images: "",
-    live_site: "",
-    client_repo: "",
-    server_repo: "",
+    live_site: projectData?.live_site || "",
+    client_repo: projectData?.client_repo || "",
+    server_repo: projectData?.server_repo || "",
   };
 
   const [mediaData, setMediaData] = useState(initialData);
   const [errFormData, setErrFormData] = useState(initialData);
-  const [imagesURL, setImagesURL] = useState([]);
+  const [imagesURL, setImagesURL] = useState(projectData?.sub_images || []);
 
   const addImgUrl = () => {
     if (!mediaData.sub_img || !mediaData.sub_img.startsWith("https://")) {
       infoToast(darkTheme, "Invalid", "Please provide a valid image URL!");
       return;
     }
-    setImagesURL((prv) => [...prv, mediaData.sub_img]);
+    setImagesURL((prv) => Array.from(new Set([...prv, mediaData.sub_img])));
     document.getElementById("sub_img").value = "";
     setMediaData((prv) => ({ ...prv, sub_img: "" }));
     setErrFormData((prv) => ({ ...prv, sub_img: "" }));
@@ -104,7 +104,7 @@ const Media = ({ nextTab, accessToken, user }) => {
         client_repo: mediaData?.client_repo || "",
         server_repo: mediaData?.server_repo || "",
       };
-      saveToLocalStorage("portfolioAddProjectMedia", newData);
+      saveToLocalStorage("portfolioEditProjectMedia", newData);
       nextTab(3);
     } catch (err) {
       failedToast(darkTheme, err.message);
@@ -126,7 +126,7 @@ const Media = ({ nextTab, accessToken, user }) => {
   const conditionalMode = darkTheme ? styles.dark : styles.light;
 
   useEffect(() => {
-    const data = localStorage.getItem("portfolioAddProjectMedia");
+    const data = localStorage.getItem("portfolioEditProjectMedia");
     if (data == null) return;
     const mediaData = JSON.parse(data);
     if (mediaData) {
@@ -294,4 +294,4 @@ const Media = ({ nextTab, accessToken, user }) => {
   );
 };
 
-export default Media;
+export default EditMedia;
