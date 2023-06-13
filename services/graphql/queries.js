@@ -191,10 +191,12 @@ const ALL_BLOGS = gql`
       name
       img
       blog_url
+      tagsId
       tags {
         id
         name
       }
+      categoriesId
       categories {
         id
         name

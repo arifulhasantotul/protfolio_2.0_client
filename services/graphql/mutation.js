@@ -198,12 +198,21 @@ const ADD_BLOG = gql`
 `;
 
 const UPDATE_BLOG = gql`
-  mutation UpdateBlog($updateBlogId: ID!, $input: UpdateBlogInput!) {
-    updateBlog(id: $updateBlogId, input: $input) {
+  mutation UpdateBlog($id: ID!, $input: UpdateBlogInput!) {
+    updateBlog(id: $id, input: $input) {
       id
       img
       name
       blog_url
+    }
+  }
+`;
+
+const DELETE_BLOG = gql`
+  mutation DeleteBlog($id: ID!) {
+    deleteBlog(id: $id) {
+      id
+      name
     }
   }
 `;
@@ -222,6 +231,7 @@ export {
   ADD_REVIEW,
   ADD_TAG,
   ADD_USER,
+  DELETE_BLOG,
   DELETE_CATEGORY,
   DELETE_REVIEW,
   DELETE_TAG,

@@ -90,6 +90,14 @@ const UpdateReview = ({
     <div className={`${conditionalMode}`}>
       <>
         <form className={styles.form_wrapper} onSubmit={handleSubmit}>
+          <h1
+            style={{
+              textAlign: "center",
+              marginBottom: "15px",
+            }}
+          >
+            Update Review
+          </h1>
           <div className={styles.half_width_inputs}>
             {/* title field */}
             <div className={styles.input_field}>
@@ -210,7 +218,7 @@ const UpdateReview = ({
               />
               {screenSize > 450 && <div></div>}
               <SimpleFormButton
-                name="Done 👍"
+                name="Update 👍"
                 type="submit"
                 tooltip="Double click to submit"
                 // disabled={isDisabled}

@@ -1,10 +1,19 @@
 import BlogsComponent from "@/components/DashboardComp/BlogComp/BlogComponent";
-import { ALL_BLOGS } from "@/services/graphql/queries";
+import {
+  ALL_BLOGS,
+  ALL_CATEGORIES_NAME,
+  ALL_TAGS_NAME,
+} from "@/services/graphql/queries";
 import { extractJWT, getCookie } from "@/services/utils/cookieExtract";
 import client from "apollo-client";
 import Head from "next/head";
 
-export default function DashboardTagPage({ blogs, accessToken }) {
+export default function DashboardTagPage({
+  blogs,
+  categories,
+  tags,
+  accessToken,
+}) {
   return (
     <div className="page_wrapper">
       <Head>
@@ -14,7 +23,12 @@ export default function DashboardTagPage({ blogs, accessToken }) {
       </Head>
 
       <main>
-        <BlogsComponent blogs={blogs} />
+        <BlogsComponent
+          initBlogs={blogs}
+          categories={categories}
+          tags={tags}
+          accessToken={accessToken}
+        />
       </main>
     </div>
   );
@@ -45,9 +59,19 @@ export async function getServerSideProps(ctx) {
     query: ALL_BLOGS,
   });
 
+  const { data: categories } = await client.query({
+    query: ALL_CATEGORIES_NAME,
+  });
+
+  const { data: tags } = await client.query({
+    query: ALL_TAGS_NAME,
+  });
+
   return {
     props: {
       blogs: data?.listBlog || [],
+      categories: categories?.listCategory || [],
+      tags: tags?.listTag || [],
       accessToken: accessToken,
     },
   };
