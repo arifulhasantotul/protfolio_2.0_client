@@ -4,7 +4,11 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
 import { DELETE_BLOG, UPDATE_BLOG } from "@/services/graphql/mutation";
 import { ALL_BLOGS } from "@/services/graphql/queries";
-import { failedToast, successToast } from "@/services/utils/toasts";
+import {
+  confirmModal,
+  failedToast,
+  successToast,
+} from "@/services/utils/toasts";
 import styles from "@/styles/BlogsComponent.module.css";
 import { useMutation } from "@apollo/client";
 import { Container } from "@mui/material";
@@ -48,6 +52,11 @@ const BlogsComponent = ({ initBlogs, categories, tags, accessToken }) => {
   const [blogData, setBlogData] = useState(initialData);
 
   const handleDelete = async (id) => {
+    const confirm = await confirmModal(
+      darkTheme,
+      "Are you sure to delete this blog?"
+    );
+    if (!confirm) return;
     try {
       const { data } = await deleteBlog({
         variables: {

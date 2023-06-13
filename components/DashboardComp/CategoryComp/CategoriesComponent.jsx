@@ -6,7 +6,11 @@ import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { DELETE_CATEGORY, UPDATE_CATEGORY } from "@/services/graphql/mutation";
 import { ALL_CATEGORIES } from "@/services/graphql/queries";
-import { failedToast, successToast } from "@/services/utils/toasts";
+import {
+  confirmModal,
+  failedToast,
+  successToast,
+} from "@/services/utils/toasts";
 import styles from "@/styles/CategoriesComponent.module.css";
 import { useMutation } from "@apollo/client";
 import { Container } from "@mui/material";
@@ -41,6 +45,11 @@ const CategoriesComponent = ({ initCategories, accessToken }) => {
   });
 
   const handleDelete = async (id) => {
+    const confirm = await confirmModal(
+      darkTheme,
+      "Are you sure to delete this category?"
+    );
+    if (!confirm) return;
     try {
       const { data } = await deleteCategory({
         variables: {

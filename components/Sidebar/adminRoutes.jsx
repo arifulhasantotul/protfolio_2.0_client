@@ -15,7 +15,7 @@ export const adminRoutes = [
       {
         icon: <AiOutlineAppstoreAdd />,
         name: "Add Project",
-        path: "/dashboard/addProject",
+        path: "/dashboard/project/add",
       },
     ],
   },

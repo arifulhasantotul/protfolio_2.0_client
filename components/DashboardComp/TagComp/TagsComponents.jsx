@@ -6,7 +6,11 @@ import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { DELETE_TAG, UPDATE_TAG } from "@/services/graphql/mutation";
 import { ALL_TAGS } from "@/services/graphql/queries";
-import { failedToast, successToast } from "@/services/utils/toasts";
+import {
+  confirmModal,
+  failedToast,
+  successToast,
+} from "@/services/utils/toasts";
 import styles from "@/styles/TagsComponent.module.css";
 import { useMutation } from "@apollo/client";
 import { Container } from "@mui/material";
@@ -41,6 +45,11 @@ const TagsComponent = ({ initTags, accessToken }) => {
   });
 
   const handleDelete = async (id) => {
+    const confirm = await confirmModal(
+      darkTheme,
+      "Are you sure to delete this tag?"
+    );
+    if (!confirm) return;
     try {
       const { data } = await deleteTag({
         variables: {

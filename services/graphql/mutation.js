@@ -38,6 +38,24 @@ const ADD_PROJECT = gql`
   }
 `;
 
+const UPDATE_PROJECT = gql`
+  mutation UpdateProject($id: ID!, $input: UpdateProjectInput!) {
+    updateProject(id: $id, input: $input) {
+      id
+      name
+    }
+  }
+`;
+
+const DELETE_PROJECT = gql`
+  mutation DeleteProject($id: ID!) {
+    deleteProject(id: $id) {
+      id
+      name
+    }
+  }
+`;
+
 // -------------- USER --------------------------
 const ADD_USER = gql`
   mutation CreateUser($input: CreateUserInput!) {
@@ -233,12 +251,14 @@ export {
   ADD_USER,
   DELETE_BLOG,
   DELETE_CATEGORY,
+  DELETE_PROJECT,
   DELETE_REVIEW,
   DELETE_TAG,
   GET_OTP,
   UPDATE_BLOG,
   UPDATE_CATEGORY,
   UPDATE_PROFILE_IMAGE,
+  UPDATE_PROJECT,
   UPDATE_REVIEW,
   UPDATE_TAG,
   UPDATE_USER_DETAILS,

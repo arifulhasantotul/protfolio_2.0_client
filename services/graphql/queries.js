@@ -124,6 +124,42 @@ const ALL_PROJECTS = gql`
   }
 `;
 
+const GET_PROJECT_BY_ID = gql`
+  query GetProject($id: ID!) {
+    getProject(id: $id) {
+      id
+      name
+      slug
+      rank
+      ratings
+      status
+      categoriesId
+      categories {
+        id
+        name
+      }
+      tagsId
+      tags {
+        id
+        name
+      }
+      clientId
+      client {
+        id
+        name
+      }
+      des
+      live_site
+      client_repo
+      server_repo
+      thumb_img
+      sub_images
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 // -------------- USER --------------------------
 
 const ALL_USERS_NAME = gql`
@@ -235,6 +271,7 @@ export {
   ALL_TAGS_NAME,
   ALL_USERS_NAME,
   CURRENT_USER,
+  GET_PROJECT_BY_ID,
   GET_USER,
   LOGIN_USER,
   VERIFY_OTP,

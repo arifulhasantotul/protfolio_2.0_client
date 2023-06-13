@@ -4,7 +4,11 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
 import { DELETE_REVIEW, UPDATE_REVIEW } from "@/services/graphql/mutation";
 import { ALL_REVIEWS } from "@/services/graphql/queries";
-import { failedToast, successToast } from "@/services/utils/toasts";
+import {
+  confirmModal,
+  failedToast,
+  successToast,
+} from "@/services/utils/toasts";
 import styles from "@/styles/TagsComponent.module.css";
 import { useMutation } from "@apollo/client";
 import { Container } from "@mui/material";
@@ -65,6 +69,12 @@ const ReviewsComponent = ({ initReviews, accessToken }) => {
   };
 
   const handleDelete = async (id) => {
+    const confirm = await confirmModal(
+      darkTheme,
+      "Are you sure to delete this review?"
+    );
+    if (!confirm) return;
+
     try {
       const { data } = await deleteReview({
         variables: {
