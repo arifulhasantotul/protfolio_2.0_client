@@ -346,7 +346,7 @@ const EditBasic = ({
                     className={styles.selected_item}
                     key={idx}
                   >
-                    {item.name}{" "}
+                    {item?.name}{" "}
                     <IoMdCloseCircle
                       title="Remove category"
                       style={{
@@ -404,7 +404,7 @@ const EditBasic = ({
                     className={styles.selected_item}
                     key={idx}
                   >
-                    {item.name}
+                    {item?.name}
                     <IoMdCloseCircle
                       title="Remove category"
                       style={{

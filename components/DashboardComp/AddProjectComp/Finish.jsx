@@ -251,7 +251,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
                     className={styles.selected_item}
                     key={idx}
                   >
-                    {item.name}{" "}
+                    {item?.name}{" "}
                   </span>
                 ))}
               </div>
@@ -270,7 +270,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
                     className={styles.selected_item}
                     key={idx}
                   >
-                    #{item.name}
+                    #{item?.name}
                   </span>
                 ))}
               </div>

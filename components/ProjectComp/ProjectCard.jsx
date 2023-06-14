@@ -52,7 +52,7 @@ const ProjectCard = ({ details }) => {
                       background: currentColor,
                     }}
                   >
-                    {item.name}
+                    {item?.name}
                   </p>
                 ))}
             </div>

@@ -334,7 +334,7 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
                     className={styles.selected_item}
                     key={idx}
                   >
-                    {item.name}{" "}
+                    {item?.name}{" "}
                     <IoMdCloseCircle
                       title="Remove category"
                       style={{
@@ -347,7 +347,7 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
                           selectedCategoriesId,
                           setSelectedCategories,
                           setSelectedCategoriesId,
-                          item.id
+                          item?.id
                         )
                       }
                     />
@@ -392,7 +392,7 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
                     className={styles.selected_item}
                     key={idx}
                   >
-                    {item.name}
+                    {item?.name}
                     <IoMdCloseCircle
                       title="Remove category"
                       style={{
@@ -405,7 +405,7 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
                           selectedTagsId,
                           setSelectedTags,
                           setSelectedTagsId,
-                          item.id
+                          item?.id
                         )
                       }
                     />

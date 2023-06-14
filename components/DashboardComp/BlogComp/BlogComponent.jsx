@@ -144,7 +144,7 @@ const BlogsComponent = ({ initBlogs, categories, tags, accessToken }) => {
               {Array.isArray(data)
                 ? data.map((blog, idx) => (
                     <tr key={idx}>
-                      <td>{blog.name}</td>
+                      <td>{blog?.name}</td>
                       <td className={styles.t_data_center}>
                         <MdEdit
                           onClick={() => handleEdit(blog)}

@@ -44,11 +44,11 @@ const LowerNavbar = () => {
             <Link key={idx} href={path.to}>
               <span
                 className={
-                  pageURL === path.to ? styles.activeLink : styles.link
+                  pageURL === path?.to ? styles.activeLink : styles.link
                 }
-                title={`Go to: ${path.to}`}
+                title={`Go to: ${path?.to}`}
               >
-                <span title={path.name} className={styles.link_icon}>
+                <span title={path?.name} className={styles.link_icon}>
                   {path.icon}
                 </span>
                 <span
@@ -57,7 +57,7 @@ const LowerNavbar = () => {
                     color: currentColor,
                   }}
                 >
-                  {path.name}
+                  {path?.name}
                 </span>
                 <div
                   className={styles.indicator}

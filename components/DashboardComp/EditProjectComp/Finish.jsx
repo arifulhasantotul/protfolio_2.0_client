@@ -273,7 +273,7 @@ const EditFinish = ({
                     className={styles.selected_item}
                     key={idx}
                   >
-                    {item.name}{" "}
+                    {item?.name}{" "}
                   </span>
                 ))}
               </div>
@@ -292,7 +292,7 @@ const EditFinish = ({
                     className={styles.selected_item}
                     key={idx}
                   >
-                    #{item.name}
+                    #{item?.name}
                   </span>
                 ))}
               </div>

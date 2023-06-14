@@ -84,11 +84,13 @@ const ProjectsComponent = ({ initProjects, accessToken }) => {
               {Array.isArray(data)
                 ? data.map((project, idx) => (
                     <tr key={idx}>
-                      <td>{project.name}</td>
+                      <td>{project?.name}</td>
                       <td className={styles.t_data_center}>
                         <MdEdit
                           onClick={() =>
-                            router.push(`/dashboard/project/edit/${project.id}`)
+                            router.push(
+                              `/dashboard/project/edit/${project?.id}`
+                            )
                           }
                           className={styles.icon}
                           title="Edit project"
