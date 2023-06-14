@@ -10,7 +10,8 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
-const Login = ({ accessToken }) => {
+const Login = ({ accessToken, userIP }) => {
+  console.log("🚀 ~ file: Login.jsx:14 ~ Login ~ userIP:", userIP);
   const router = useRouter();
   const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
   const {
@@ -45,9 +46,14 @@ const Login = ({ accessToken }) => {
     try {
       const user = await customLoginUser(
         registerData?.email,
-        registerData?.password
+        registerData?.password,
+        userIP?.query,
+        navigator?.userAgentData?.mobile ? true : false,
+        navigator?.platform || navigator?.userAgentData?.platform,
+        navigator?.userAgent,
+        userIP?.regionName,
+        userIP?.country
       );
-
       setLoginUserData((prevState) => ({
         ...prevState,
         token: user?.token,

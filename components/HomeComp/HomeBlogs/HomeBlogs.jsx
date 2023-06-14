@@ -1,5 +1,7 @@
+import DataNotFound from "@/components/FetchingResult/DataNotFound";
 import BlogSlider from "@/components/Slider/BlogSlider";
 import { useStateContext } from "@/context/ContextProvider";
+import { validArray } from "@/services/utils/common";
 import styles from "@/styles/HomeProjects.module.css";
 
 const HomeBlogs = ({ blogs }) => {
@@ -11,7 +13,11 @@ const HomeBlogs = ({ blogs }) => {
   return (
     <div className={`${conditionalMode} ${styles.project_card}`}>
       <div className={styles.card_wrapper}>
-        <BlogSlider allBlog={blogs} />
+        {validArray(blogs) ? (
+          <BlogSlider allBlog={blogs} />
+        ) : (
+          <DataNotFound title="Blogs not found" />
+        )}
       </div>
     </div>
   );

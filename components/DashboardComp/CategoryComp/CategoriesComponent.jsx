@@ -6,6 +6,7 @@ import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { DELETE_CATEGORY, UPDATE_CATEGORY } from "@/services/graphql/mutation";
 import { ALL_CATEGORIES } from "@/services/graphql/queries";
+import { validArray } from "@/services/utils/common";
 import {
   confirmModal,
   failedToast,
@@ -116,7 +117,7 @@ const CategoriesComponent = ({ initCategories, accessToken }) => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(data)
+              {validArray(data)
                 ? data.map((category, idx) => (
                     <tr key={idx}>
                       <td>{category.name}</td>
@@ -143,9 +144,7 @@ const CategoriesComponent = ({ initCategories, accessToken }) => {
                 : null}
             </tbody>
           </table>
-          {!Array.isArray(data) && (
-            <DataNotFound title="Categories not found" />
-          )}
+          {!validArray(data) && <DataNotFound title="Categories not found" />}
         </div>
       </Container>
 

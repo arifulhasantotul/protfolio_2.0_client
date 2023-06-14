@@ -7,7 +7,16 @@ import { useCookies } from "react-cookie";
 
 const StateContext = createContext();
 
-const getUser = async (email, password) => {
+const getUser = async (
+  email,
+  password,
+  userIP,
+  onMobile,
+  userPlatform,
+  userAgent,
+  ipRegion,
+  ipCountry
+) => {
   if (!email || !password) return;
 
   const { data } = await client.query({
@@ -15,6 +24,12 @@ const getUser = async (email, password) => {
     variables: {
       email: email,
       password: password,
+      userIP: userIP,
+      onMobile: onMobile,
+      userPlatform: userPlatform,
+      userAgent: userAgent,
+      ipRegion: ipRegion,
+      ipCountry: ipCountry,
     },
   });
   return data.loginUser;
@@ -72,11 +87,29 @@ const ContextProvider = ({ children }) => {
     localStorage.setItem("portfolioThemeColorName", name);
   };
 
-  const customLoginUser = (email, password) => {
+  const customLoginUser = (
+    email,
+    password,
+    userIP,
+    onMobile,
+    userPlatform,
+    userAgent,
+    ipRegion,
+    ipCountry
+  ) => {
     if (!email || !password)
       return failedToast(darkTheme, "Please fill all fields");
 
-    const foundUser = getUser(email, password);
+    const foundUser = getUser(
+      email,
+      password,
+      userIP,
+      onMobile,
+      userPlatform,
+      userAgent,
+      ipRegion,
+      ipCountry
+    );
     if (!foundUser) return;
     return foundUser;
   };

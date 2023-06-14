@@ -4,6 +4,7 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
 import { DELETE_BLOG, UPDATE_BLOG } from "@/services/graphql/mutation";
 import { ALL_BLOGS } from "@/services/graphql/queries";
+import { validArray } from "@/services/utils/common";
 import {
   confirmModal,
   failedToast,
@@ -141,7 +142,7 @@ const BlogsComponent = ({ initBlogs, categories, tags, accessToken }) => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(data)
+              {validArray(data)
                 ? data.map((blog, idx) => (
                     <tr key={idx}>
                       <td>{blog?.name}</td>
@@ -162,7 +163,7 @@ const BlogsComponent = ({ initBlogs, categories, tags, accessToken }) => {
                 : null}
             </tbody>
           </table>
-          {!Array.isArray(data) && <DataNotFound title="Blogs not found" />}
+          {!validArray(data) && <DataNotFound title="Blogs not found" />}
         </div>
       </Container>
 
