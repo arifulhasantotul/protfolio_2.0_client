@@ -1,3 +1,4 @@
+import DataNotFound from "@/components/FetchingResult/DataNotFound";
 import HomeBannerLeft from "@/components/HomeComp/HomeBannerLeft/HomeBannerLeft";
 import HomeBannerRight from "@/components/HomeComp/HomeBannerRight/HomeBannerRight";
 import HomeBlogs from "@/components/HomeComp/HomeBlogs/HomeBlogs";
@@ -9,6 +10,7 @@ import SimpleButton from "@/components/SimpleButton/SimpleButton";
 import ReviewSlider from "@/components/Slider/ReviewSlider";
 import { useStateContext } from "@/context/ContextProvider";
 import { ALL_REVIEWS } from "@/services/graphql/queries";
+import { validArray } from "@/services/utils/common";
 import styles from "@/styles/HomePage.module.css";
 import { Container, Grid } from "@mui/material";
 import client from "apollo-client";
@@ -84,13 +86,17 @@ const HomePage = ({ projects, blogs, accessToken }) => {
         <hr className={styles.break_line} />
         <PageHeader title="Testimonial" />
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <ReviewSlider
-              allReview={allReview}
-              // addedReview={addedReview}
-              data={fakeData}
-            />
-          </Grid>
+          {validArray(allReview) ? (
+            <Grid item xs={12}>
+              <ReviewSlider
+                allReview={allReview}
+                // addedReview={addedReview}
+                data={fakeData}
+              />
+            </Grid>
+          ) : (
+            <DataNotFound title="Review not found!" />
+          )}
           <Grid
             item
             xs={12}

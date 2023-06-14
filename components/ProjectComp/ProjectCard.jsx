@@ -97,7 +97,11 @@ const ProjectCard = ({ details }) => {
           <p className={styles.subtitle}>
             {Array.isArray(details.categories) && details.categories[0].name}{" "}
           </p>
-          <h2 className={styles.title}>{details?.name}</h2>
+          <h2 className={styles.title}>
+            {details?.name?.length > 22
+              ? `${details?.name.substring(0, 21)}...`
+              : details?.name}
+          </h2>
           <StyledRating
             className={styles.rating}
             name="customized-color"

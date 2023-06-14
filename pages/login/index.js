@@ -2,7 +2,7 @@ import Login from "@/components/LoginComp/Login";
 import { getCookie } from "@/services/utils/cookieExtract";
 import Head from "next/head";
 
-export default function LoginPage({ accessToken }) {
+export default function LoginPage({ accessToken, userIP }) {
   return (
     <div className="page_wrapper">
       <Head>
@@ -12,7 +12,7 @@ export default function LoginPage({ accessToken }) {
       </Head>
 
       <main>
-        <Login accessToken={accessToken} />
+        <Login accessToken={accessToken} userIP={userIP} />
       </main>
     </div>
   );
@@ -36,8 +36,14 @@ export async function getServerSideProps(ctx) {
       },
     };
   }
+
+  const url = "http://ip-api.com/json/?fields=61439";
+  const data = await fetch(url);
+  const resData = await data.json();
+
   return {
     props: {
+      userIP: resData,
       accessToken: accessToken,
     },
   };
