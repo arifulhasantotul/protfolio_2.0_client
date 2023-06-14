@@ -244,8 +244,26 @@ const ALL_BLOGS = gql`
 // -------------- AUTH --------------------------
 
 const LOGIN_USER = gql`
-  query LoginUser($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
+  query LoginUser(
+    $email: String!
+    $password: String!
+    $userIP: String
+    $onMobile: Boolean
+    $userPlatform: String
+    $userAgent: String
+    $ipRegion: String
+    $ipCountry: String
+  ) {
+    loginUser(
+      email: $email
+      password: $password
+      userIP: $userIP
+      onMobile: $onMobile
+      userPlatform: $userPlatform
+      userAgent: $userAgent
+      ipRegion: $ipRegion
+      ipCountry: $ipCountry
+    ) {
       userId
       token
       tokenExpiration
