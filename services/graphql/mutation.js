@@ -10,10 +10,46 @@ const ADD_CATEGORY = gql`
   }
 `;
 
+const UPDATE_CATEGORY = gql`
+  mutation UpdateCategory($id: ID!, $input: UpdateCategoryInput!) {
+    updateCategory(id: $id, input: $input) {
+      id
+      name
+    }
+  }
+`;
+
+const DELETE_CATEGORY = gql`
+  mutation DeleteCategory($id: ID!) {
+    deleteCategory(id: $id) {
+      id
+      name
+    }
+  }
+`;
+
 // -------------- PROJECT --------------------------
 const ADD_PROJECT = gql`
   mutation CreateProject($input: CreateProjectInput!) {
     createProject(input: $input) {
+      id
+      name
+    }
+  }
+`;
+
+const UPDATE_PROJECT = gql`
+  mutation UpdateProject($id: ID!, $input: UpdateProjectInput!) {
+    updateProject(id: $id, input: $input) {
+      id
+      name
+    }
+  }
+`;
+
+const DELETE_PROJECT = gql`
+  mutation DeleteProject($id: ID!) {
+    deleteProject(id: $id) {
       id
       name
     }
@@ -106,10 +142,53 @@ const ADD_REVIEW = gql`
   }
 `;
 
+const UPDATE_REVIEW = gql`
+  mutation UpdateReview($id: ID!, $input: UpdateReviewInput!) {
+    updateReview(id: $id, input: $input) {
+      id
+      title
+      rating
+      reviewer {
+        id
+        name
+      }
+      projectStartDate
+      projectEndDate
+    }
+  }
+`;
+
+const DELETE_REVIEW = gql`
+  mutation DeleteReview($id: ID!) {
+    deleteReview(id: $id) {
+      id
+      title
+    }
+  }
+`;
+
 // -------------- Tag --------------------------
 const ADD_TAG = gql`
   mutation CreateTag($input: CreateTagInput!) {
     createTag(input: $input) {
+      id
+      name
+    }
+  }
+`;
+
+const UPDATE_TAG = gql`
+  mutation UpdateTag($id: ID!, $input: UpdateTagInput!) {
+    updateTag(id: $id, input: $input) {
+      id
+      name
+    }
+  }
+`;
+
+const DELETE_TAG = gql`
+  mutation DeleteTag($id: ID!) {
+    deleteTag(id: $id) {
       id
       name
     }
@@ -137,12 +216,21 @@ const ADD_BLOG = gql`
 `;
 
 const UPDATE_BLOG = gql`
-  mutation UpdateBlog($updateBlogId: ID!, $input: UpdateBlogInput!) {
-    updateBlog(id: $updateBlogId, input: $input) {
+  mutation UpdateBlog($id: ID!, $input: UpdateBlogInput!) {
+    updateBlog(id: $id, input: $input) {
       id
       img
       name
       blog_url
+    }
+  }
+`;
+
+const DELETE_BLOG = gql`
+  mutation DeleteBlog($id: ID!) {
+    deleteBlog(id: $id) {
+      id
+      name
     }
   }
 `;
@@ -161,9 +249,18 @@ export {
   ADD_REVIEW,
   ADD_TAG,
   ADD_USER,
+  DELETE_BLOG,
+  DELETE_CATEGORY,
+  DELETE_PROJECT,
+  DELETE_REVIEW,
+  DELETE_TAG,
   GET_OTP,
   UPDATE_BLOG,
+  UPDATE_CATEGORY,
   UPDATE_PROFILE_IMAGE,
+  UPDATE_PROJECT,
+  UPDATE_REVIEW,
+  UPDATE_TAG,
   UPDATE_USER_DETAILS,
   UPDATE_USER_PASS,
 };

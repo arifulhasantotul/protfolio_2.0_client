@@ -11,30 +11,44 @@ const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
   ssr: false,
 });
 
-const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
+const EditBasic = ({
+  projectData,
+  categories,
+  tags,
+  clients,
+  nextTab,
+  accessToken,
+  user,
+}) => {
   const { currentColor, darkTheme, backend_url } = useStateContext();
 
-  const [richTextValue, setRichTextValue] = useState("");
+  const [richTextValue, setRichTextValue] = useState(projectData?.des || "");
 
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedCategoriesId, setSelectedCategoriesId] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(
+    projectData?.categories || []
+  );
+  const [selectedCategoriesId, setSelectedCategoriesId] = useState(
+    projectData?.categoriesId || []
+  );
 
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [selectedTagsId, setSelectedTagsId] = useState([]);
+  const [selectedTags, setSelectedTags] = useState(projectData?.tags || []);
+  const [selectedTagsId, setSelectedTagsId] = useState(
+    projectData?.tagsId || []
+  );
 
   const [basicLoading, setBasicLoading] = useState(true);
 
   // formData to store changed values
   const [basicData, setBasicData] = useState({
-    name: "",
-    slug: "",
-    des: "",
-    rank: 0,
-    categoriesId: [],
-    tagsId: [],
-    ratings: 0,
-    status: "Not_Started",
-    clientId: "",
+    name: projectData?.name || "",
+    slug: projectData?.slug || "",
+    des: projectData?.des || "",
+    rank: projectData?.rank || 0,
+    categoriesId: "",
+    tagsId: "",
+    ratings: projectData?.ratings || 0,
+    status: projectData?.status || "Not_Started",
+    clientId: projectData?.clientId || "",
   });
 
   // project status options
@@ -56,10 +70,8 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
   // handling new items to array
   const addToArray = (arrayOfId, setArrayFunc, value) => {
     const data = value;
-    if (!arrayOfId.includes(data)) {
-      setArrayFunc((prev) => [...prev, data]);
-      saveToLocalStorage("portfolioAddProjectBasic", basicData);
-    }
+    setArrayFunc((prev) => Array.from(new Set([...prev, data])));
+    saveToLocalStorage("portfolioEditProjectBasic", basicData);
   };
 
   // handling remove items by id from array
@@ -100,29 +112,29 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
       addToArray(selectedCategoriesId, setSelectedCategoriesId, value);
       setBasicData((prevState) => ({
         ...prevState,
-        [name]: selectedCategoriesId,
+        [name]: Array.from(new Set([...selectedCategoriesId])),
       }));
       const changedObj = {
         ...basicData,
-        [name]: selectedCategoriesId,
+        [name]: Array.from(new Set([...selectedCategoriesId])),
       };
-      saveToLocalStorage("portfolioAddProjectBasic", changedObj);
+      saveToLocalStorage("portfolioEditProjectBasic", changedObj);
       getMatch(categories, selectedCategoriesId, setSelectedCategories);
     } else if (name === "tagsId") {
       addToArray(selectedCategoriesId, setSelectedTagsId, value);
       setBasicData((prevState) => ({
         ...prevState,
-        [name]: selectedTagsId,
+        [name]: Array.from(new Set([...selectedTagsId])),
       }));
       const changedObj = {
         ...basicData,
-        [name]: selectedTagsId,
+        [name]: Array.from(new Set([...selectedTagsId])),
       };
-      saveToLocalStorage("portfolioAddProjectBasic", changedObj);
+      saveToLocalStorage("portfolioEditProjectBasic", changedObj);
       getMatch(tags, selectedTagsId, setSelectedTags);
     } else {
       setBasicData((prevState) => ({ ...prevState, [name]: value }));
-      saveToLocalStorage("portfolioAddProjectBasic", basicData);
+      saveToLocalStorage("portfolioEditProjectBasic", basicData);
     }
   };
 
@@ -130,20 +142,20 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
     if (basicData.name) {
       const slug = basicData?.name.toLowerCase().replace(/ /g, "-");
       setBasicData((prevState) => ({ ...prevState, slug }));
-      saveToLocalStorage("portfolioAddProjectBasic", basicData);
+      saveToLocalStorage("portfolioEditProjectBasic", basicData);
     } else {
       setBasicData((prevState) => ({ ...prevState, slug: "" }));
-      saveToLocalStorage("portfolioAddProjectBasic", basicData);
+      saveToLocalStorage("portfolioEditProjectBasic", basicData);
     }
   };
 
   const handleRichText = (value) => {
     if (value) {
       setBasicData((prevState) => ({ ...prevState, des: value }));
-      saveToLocalStorage("portfolioAddProjectBasic", basicData);
+      saveToLocalStorage("portfolioEditProjectBasic", basicData);
     } else {
       setBasicData((prevState) => ({ ...prevState, des: "" }));
-      saveToLocalStorage("portfolioAddProjectBasic", basicData);
+      saveToLocalStorage("portfolioEditProjectBasic", basicData);
     }
   };
 
@@ -163,7 +175,7 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
         clientId: basicData?.clientId || user?.userId,
       };
 
-      saveToLocalStorage("portfolioAddProjectBasic", newData);
+      saveToLocalStorage("portfolioEditProjectBasic", newData);
       nextTab(2);
     } catch (err) {
       failedToast(darkTheme, err.message);
@@ -176,7 +188,7 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
 
   useEffect(() => {
     setBasicLoading(true);
-    const storedContent = localStorage.getItem("portfolioAddProjectBasic");
+    const storedContent = localStorage.getItem("portfolioEditProjectBasic");
     if (storedContent == null) return;
     const parsedContent = JSON.parse(storedContent);
 
@@ -347,7 +359,7 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
                           selectedCategoriesId,
                           setSelectedCategories,
                           setSelectedCategoriesId,
-                          item?.id
+                          item.id
                         )
                       }
                     />
@@ -405,7 +417,7 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
                           selectedTagsId,
                           setSelectedTags,
                           setSelectedTagsId,
-                          item?.id
+                          item.id
                         )
                       }
                     />
@@ -465,4 +477,4 @@ const Basic = ({ categories, tags, clients, nextTab, accessToken, user }) => {
   );
 };
 
-export default Basic;
+export default EditBasic;

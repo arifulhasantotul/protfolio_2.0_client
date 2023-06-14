@@ -1,18 +1,28 @@
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
-import { ADD_PROJECT } from "@/services/graphql/mutation";
+import { UPDATE_PROJECT } from "@/services/graphql/mutation";
 import { failedToast, successToast } from "@/services/utils/toasts";
 import styles from "@/styles/ProjectForm.module.css";
 import { useMutation } from "@apollo/client";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const QuillEditor = dynamic(() => import("@/components/Editor/QuillEditor"), {
   ssr: false,
 });
 
-const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
+const EditFinish = ({
+  projectData,
+  categories,
+  tags,
+  clients,
+  nextTab,
+  accessToken,
+  user,
+}) => {
   const { currentColor, darkTheme } = useStateContext();
+  const router = useRouter();
   const initialData = {
     name: "",
     slug: "",
@@ -48,10 +58,14 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
 
   const [finishData, setFinishData] = useState(initialData);
   const [finishLoading, setFinishLoading] = useState(false);
-  const [createProject] = useMutation(ADD_PROJECT);
+  const [updateProject, { loading }] = useMutation(UPDATE_PROJECT);
 
   const [richTextValue, setRichTextValue] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
+  console.log(
+    "🚀 ~ file: Finish.jsx:62 ~ selectedCategories:",
+    selectedCategories
+  );
   const [selectedCategoriesId, setSelectedCategoriesId] = useState([]);
   const [imagesURL, setImagesURL] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -70,7 +84,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
     setArrayFunc(matchedArr);
   };
 
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     setFinishLoading(true);
     try {
@@ -78,15 +92,18 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
         ...finishData,
         sub_images: imagesURL,
       };
-      const { data } = await createProject({
+      const { data } = await updateProject({
         variables: {
+          id: projectData?.id,
           input: newData,
         },
       });
 
-      if (data?.createProject?.id) {
-        successToast(darkTheme, "Project created successfully. 😊");
-        localStorage.removeItem("portfolioAddProjectBasic");
+      if (data?.updateProject?.id) {
+        successToast(darkTheme, "Project updated successfully. 😊");
+        localStorage.removeItem("portfolioEditProjectBasic");
+        localStorage.removeItem("portfolioEditProjectMedia");
+        router.push("/dashboard/projects");
         nextTab(1);
       }
     } catch (err) {
@@ -99,8 +116,8 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
 
   useEffect(() => {
     setFinishLoading(true);
-    const b_data = localStorage.getItem("portfolioAddProjectBasic");
-    const m_data = localStorage.getItem("portfolioAddProjectMedia");
+    const b_data = localStorage.getItem("portfolioEditProjectBasic");
+    const m_data = localStorage.getItem("portfolioEditProjectMedia");
     const parsedContent = {};
     const mediaData = {};
     if (b_data !== null) {
@@ -131,21 +148,26 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
     setSelectedTagsId(parsedContent?.tagsId);
     setRichTextValue(parsedContent?.des);
     setFinishLoading(false);
-    if (Array.isArray(selectedCategoriesId)) {
-      getMatch(categories, selectedCategoriesId, setSelectedCategories);
-    }
-    if (Array.isArray(parsedContent?.tagsId)) {
-      getMatch(tags, selectedTagsId, setSelectedTags);
-    }
 
     setImagesURL(mediaData?.sub_images);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [!finishLoading]);
+
+  useEffect(() => {
+    if (Array.isArray(selectedCategoriesId)) {
+      getMatch(categories, selectedCategoriesId, setSelectedCategories);
+    }
+    if (Array.isArray(selectedTagsId)) {
+      getMatch(tags, selectedTagsId, setSelectedTags);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCategoriesId, selectedTagsId]);
+
   const conditionalMode = darkTheme ? styles.dark : styles.light;
   return (
     <div className={conditionalMode}>
-      <form onSubmit={handleSubmit} className={styles.form_wrapper}>
+      <form onSubmit={handleUpdate} className={styles.form_wrapper}>
         <div className={styles.half_width_inputs}>
           <div className={styles.input_field}>
             <label htmlFor="name">
@@ -372,7 +394,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
           <SimpleFormButton
             name="Next"
             type="submit"
-            onClick={handleSubmit}
+            onClick={handleUpdate}
             tooltip="Save & Go to next page"
           ></SimpleFormButton>
         </div>
@@ -381,4 +403,4 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
   );
 };
 
-export default Finish;
+export default EditFinish;

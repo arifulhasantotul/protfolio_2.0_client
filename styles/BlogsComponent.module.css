@@ -60,7 +60,7 @@
 }
 
 .table td {
-  font-size: var(--FS_sm);
+  font-size: var(--FS_td);
 }
 
 .table tr:last-child {
@@ -91,4 +91,5 @@
 .icon {
   margin: 0 10px;
   cursor: pointer;
+  font-size: var(--FS_md);
 }

@@ -55,10 +55,10 @@ const UpperNavbar = () => {
                   }}
                   title={`Go to: ${path.to}`}
                 >
-                  <span title={path.name} className={styles.link_icon}>
-                    {path.icon}
+                  <span title={path?.name} className={styles.link_icon}>
+                    {path?.icon}
                   </span>
-                  <span className={styles.link_name}>{path.name}</span>
+                  <span className={styles.link_name}>{path?.name}</span>
                 </span>
               </Link>
             ))}

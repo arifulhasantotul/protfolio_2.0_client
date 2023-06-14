@@ -11,6 +11,23 @@ const ALL_TAGS_NAME = gql`
   }
 `;
 
+const ALL_TAGS = gql`
+  query ListTag {
+    listTag {
+      id
+      name
+      blogs {
+        id
+        name
+      }
+      projects {
+        id
+        name
+      }
+    }
+  }
+`;
+
 // -------------- CATEGORY --------------------------
 
 const ALL_CATEGORIES_NAME = gql`
@@ -18,6 +35,23 @@ const ALL_CATEGORIES_NAME = gql`
     listCategory {
       id
       name
+    }
+  }
+`;
+
+const ALL_CATEGORIES = gql`
+  query ListCategory {
+    listCategory {
+      id
+      name
+      blogs {
+        id
+        name
+      }
+      projects {
+        id
+        name
+      }
     }
   }
 `;
@@ -90,6 +124,42 @@ const ALL_PROJECTS = gql`
   }
 `;
 
+const GET_PROJECT_BY_ID = gql`
+  query GetProject($id: ID!) {
+    getProject(id: $id) {
+      id
+      name
+      slug
+      rank
+      ratings
+      status
+      categoriesId
+      categories {
+        id
+        name
+      }
+      tagsId
+      tags {
+        id
+        name
+      }
+      clientId
+      client {
+        id
+        name
+      }
+      des
+      live_site
+      client_repo
+      server_repo
+      thumb_img
+      sub_images
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 // -------------- USER --------------------------
 
 const ALL_USERS_NAME = gql`
@@ -157,10 +227,12 @@ const ALL_BLOGS = gql`
       name
       img
       blog_url
+      tagsId
       tags {
         id
         name
       }
+      categoriesId
       categories {
         id
         name
@@ -190,13 +262,16 @@ const VERIFY_OTP = gql`
 
 export {
   ALL_BLOGS,
+  ALL_CATEGORIES,
   ALL_CATEGORIES_NAME,
   ALL_PROJECTS,
   ALL_PROJECTS_NAME,
   ALL_REVIEWS,
+  ALL_TAGS,
   ALL_TAGS_NAME,
   ALL_USERS_NAME,
   CURRENT_USER,
+  GET_PROJECT_BY_ID,
   GET_USER,
   LOGIN_USER,
   VERIFY_OTP,

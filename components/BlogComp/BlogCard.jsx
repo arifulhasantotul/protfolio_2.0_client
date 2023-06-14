@@ -56,7 +56,7 @@ const BlogCard = ({ details }) => {
                     className={styles.tag}
                     key={idx}
                   >
-                    {item.name}
+                    {item?.name}
                   </span>
                 ))}
             </div>
@@ -76,7 +76,7 @@ const BlogCard = ({ details }) => {
                     className={styles.tag}
                     key={idx}
                   >
-                    {item.name}
+                    {item?.name}
                   </span>
                 ))}
             </div>

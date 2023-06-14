@@ -7,9 +7,11 @@ import { failedToast, successToast } from "@/services/utils/toasts";
 import styles from "@/styles/AddTag.module.css";
 import { useMutation } from "@apollo/client";
 import { Container } from "@mui/material";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const AddTagComponent = () => {
+  const router = useRouter();
   const { currentColor, darkTheme } = useStateContext();
 
   // css conditionalMode for dark mode
@@ -18,6 +20,7 @@ const AddTagComponent = () => {
   const [inputData, setInputData] = useState({
     name: "",
   });
+
   const [createTag, { data, loading, error }] = useMutation(ADD_TAG);
 
   const handleInput = (e) => {
@@ -77,6 +80,12 @@ const AddTagComponent = () => {
           </div>
 
           <div className={styles.submit_btn_wrapper}>
+            <SimpleFormButton
+              name="See Tags"
+              type="button"
+              onClick={() => router.push("/dashboard/tags")}
+              tooltip="See all tags"
+            />
             {!loading ? (
               <SimpleFormButton
                 name="Create"

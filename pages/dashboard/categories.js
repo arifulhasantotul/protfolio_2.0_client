@@ -1,5 +1,5 @@
 import CategoriesComponent from "@/components/DashboardComp/CategoryComp/CategoriesComponent";
-import { ALL_CATEGORIES_NAME } from "@/services/graphql/queries";
+import { ALL_CATEGORIES } from "@/services/graphql/queries";
 import { extractJWT, getCookie } from "@/services/utils/cookieExtract";
 import client from "apollo-client";
 import Head from "next/head";
@@ -14,7 +14,10 @@ export default function DashboardTagPage({ categories, accessToken }) {
       </Head>
 
       <main>
-        <CategoriesComponent categories={categories} />
+        <CategoriesComponent
+          initCategories={categories}
+          accessToken={accessToken}
+        />
       </main>
     </div>
   );
@@ -42,7 +45,7 @@ export async function getServerSideProps(ctx) {
   }
 
   const { data } = await client.query({
-    query: ALL_CATEGORIES_NAME,
+    query: ALL_CATEGORIES,
   });
   return {
     props: {
