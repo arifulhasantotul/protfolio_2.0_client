@@ -2,6 +2,7 @@ import DataNotFound from "@/components/FetchingResult/DataNotFound";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import ProjectCard from "@/components/ProjectComp/ProjectCard";
 import { useStateContext } from "@/context/ContextProvider";
+import { validArray } from "@/services/utils/common";
 import styles from "@/styles/Project.module.css";
 import { Container } from "@mui/material";
 
@@ -15,7 +16,7 @@ const Project = ({ projects, accessToken }) => {
         <Container maxWidth="xl">
           <PageHeader title="All Project" />
           <div className={styles.card_wrapper}>
-            {Array.isArray(projects) ? (
+            {validArray(projects) ? (
               projects.map((item, idx) => (
                 <ProjectCard key={idx} details={item} />
               ))

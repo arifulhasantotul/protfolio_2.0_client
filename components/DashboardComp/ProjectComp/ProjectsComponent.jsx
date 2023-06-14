@@ -3,6 +3,7 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
 import { DELETE_PROJECT } from "@/services/graphql/mutation";
 import { ALL_PROJECTS } from "@/services/graphql/queries";
+import { validArray } from "@/services/utils/common";
 import {
   confirmModal,
   failedToast,
@@ -81,7 +82,7 @@ const ProjectsComponent = ({ initProjects, accessToken }) => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(data)
+              {validArray(data)
                 ? data.map((project, idx) => (
                     <tr key={idx}>
                       <td>{project?.name}</td>
@@ -106,7 +107,7 @@ const ProjectsComponent = ({ initProjects, accessToken }) => {
                 : null}
             </tbody>
           </table>
-          {!Array.isArray(data) && <DataNotFound title="Projects not found" />}
+          {!validArray(data) && <DataNotFound title="Projects not found" />}
         </div>
       </Container>
     </div>

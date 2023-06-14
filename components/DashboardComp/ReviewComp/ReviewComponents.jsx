@@ -4,6 +4,7 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import { useStateContext } from "@/context/ContextProvider";
 import { DELETE_REVIEW, UPDATE_REVIEW } from "@/services/graphql/mutation";
 import { ALL_REVIEWS } from "@/services/graphql/queries";
+import { validArray } from "@/services/utils/common";
 import {
   confirmModal,
   failedToast,
@@ -158,7 +159,7 @@ const ReviewsComponent = ({ initReviews, accessToken }) => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(data)
+              {validArray(data)
                 ? data.map((review, idx) => (
                     <tr key={idx}>
                       <td>{review?.title}</td>
@@ -180,7 +181,7 @@ const ReviewsComponent = ({ initReviews, accessToken }) => {
                 : null}
             </tbody>
           </table>
-          {!Array.isArray(data) && <DataNotFound title="Reviews not found" />}
+          {!validArray(data) && <DataNotFound title="Reviews not found" />}
         </div>
       </Container>
 

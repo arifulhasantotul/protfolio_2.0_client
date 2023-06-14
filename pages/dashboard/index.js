@@ -1,10 +1,8 @@
 import DashOverviewComponent from "@/components/DashboardComp/OverviewComp/DashOverviewComponent";
-import { ALL_CATEGORIES_NAME } from "@/services/graphql/queries";
 import { extractJWT, getCookie } from "@/services/utils/cookieExtract";
-import client from "apollo-client";
 import Head from "next/head";
 
-export default function Dashboard({ categories, accessToken }) {
+export default function Dashboard({ accessToken }) {
   return (
     <div className="page_wrapper">
       <Head>
@@ -41,12 +39,12 @@ export async function getServerSideProps(ctx) {
     };
   }
 
-  const { data } = await client.query({
-    query: ALL_CATEGORIES_NAME,
-  });
+  // const { data } = await client.query({
+  //   query: ALL_CATEGORIES_NAME,
+  // });
   return {
     props: {
-      categories: data?.listCategory || [],
+      // categories: data?.listCategory || [],
       accessToken: accessToken,
     },
   };

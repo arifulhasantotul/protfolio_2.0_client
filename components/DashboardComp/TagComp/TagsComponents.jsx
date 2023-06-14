@@ -6,6 +6,7 @@ import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
 import { DELETE_TAG, UPDATE_TAG } from "@/services/graphql/mutation";
 import { ALL_TAGS } from "@/services/graphql/queries";
+import { validArray } from "@/services/utils/common";
 import {
   confirmModal,
   failedToast,
@@ -116,7 +117,7 @@ const TagsComponent = ({ initTags, accessToken }) => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(data)
+              {validArray(data)
                 ? data.map((tag, idx) => (
                     <tr key={idx}>
                       <td>{tag?.name}</td>
@@ -143,7 +144,7 @@ const TagsComponent = ({ initTags, accessToken }) => {
                 : null}
             </tbody>
           </table>
-          {!Array.isArray(data) && <DataNotFound title="Tags not found" />}
+          {!validArray(data) && <DataNotFound title="Tags not found" />}
         </div>
       </Container>
 
