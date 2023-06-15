@@ -1,6 +1,7 @@
 import DataLoading from "@/components/FetchingResult/DataLoading";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
+import { detectBrowser, detectDevice } from "@/services/utils/common";
 import { failedToast } from "@/services/utils/toasts";
 import styles from "@/styles/Login.module.css";
 import { Container } from "@mui/material";
@@ -11,7 +12,6 @@ import { useCookies } from "react-cookie";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 const Login = ({ accessToken, userIP }) => {
-  console.log("🚀 ~ file: Login.jsx:14 ~ Login ~ userIP:", userIP);
   const router = useRouter();
   const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
   const {
@@ -43,14 +43,17 @@ const Login = ({ accessToken, userIP }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSendingReq(true);
+    const browserName = detectBrowser(navigator);
+    const { isMobile, device } = detectDevice(navigator);
     try {
       const user = await customLoginUser(
         registerData?.email,
         registerData?.password,
         userIP?.query,
-        navigator?.userAgentData?.mobile ? true : false,
-        navigator?.platform || navigator?.userAgentData?.platform,
+        isMobile,
+        device,
         navigator?.userAgent,
+        browserName,
         userIP?.regionName,
         userIP?.country
       );
