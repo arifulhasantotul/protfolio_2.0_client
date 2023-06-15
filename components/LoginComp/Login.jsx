@@ -49,13 +49,13 @@ const Login = ({ accessToken, userIP }) => {
       const user = await customLoginUser(
         registerData?.email,
         registerData?.password,
-        userIP?.query,
+        userIP?.ipAddress,
         isMobile,
         device,
         navigator?.userAgent,
         browserName,
-        userIP?.regionName,
-        userIP?.country
+        userIP?.city,
+        userIP?.countryName
       );
       setLoginUserData((prevState) => ({
         ...prevState,

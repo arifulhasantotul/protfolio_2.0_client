@@ -29,26 +29,25 @@ const ThemeSettings = () => {
     data,
     isLoading: isIPLoading,
     error,
-  } = useSWR("http://ip-api.com/json/?fields=61439", httpFetcher);
+  } = useSWR("https://api.db-ip.com/v2/free/self", httpFetcher);
 
   const router = useRouter();
   const [removeDevice] = useMutation(REMOVE_PROFILE_DEVICE);
 
   const handleLogout = async () => {
-    console.log("clicked");
     try {
       const browser = detectBrowser(navigator);
       const { device, isMobile } = detectDevice(navigator);
       const { data } = await removeDevice({
         variables: {
           userId: userId,
-          userIP: ipData?.query,
+          userIP: ipData?.ipAddress,
           onMobile: isMobile,
           userPlatform: device,
           userAgent: navigator?.userAgent,
           userBrowser: browser,
-          ipRegion: ipData?.regionName,
-          ipCountry: ipData?.country,
+          ipRegion: ipData?.city,
+          ipCountry: ipData?.countryName,
         },
       });
 
