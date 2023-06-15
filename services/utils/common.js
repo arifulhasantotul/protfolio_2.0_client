@@ -5,13 +5,15 @@ export const validArray = (array = []) => {
 /**
  * @TO_DETECT_MOBILE
  * @Android -
- * @iOS -
- *
+ * @iPhone -
+ * @iPad -
+ * @Desktop_Laptop -
  */
 
 export const detectMobile = (navigator) => {
   let device = "";
   let isMobile = false;
+
   let str = navigator.userAgent;
   if (str.indexOf("iPhone") > -1 && navigator.maxTouchPoints) {
     device = "iPhone";
@@ -46,6 +48,7 @@ export const detectMobile = (navigator) => {
 export const detectBrowser = (navigator) => {
   let browserName = "";
   let str = navigator.userAgent;
+
   if (str.indexOf("Edg") > -1) {
     browserName = "Edge";
   } else if (str.indexOf("Firefox") > -1) {
@@ -58,6 +61,8 @@ export const detectBrowser = (navigator) => {
     browserName = "Brave";
   } else if (str.indexOf("Chrome") > -1) {
     browserName = "Chrome";
+  } else {
+    browserName = "Unknown";
   }
 
   return browserName;

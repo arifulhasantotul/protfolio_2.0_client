@@ -14,6 +14,7 @@ const getUser = async (
   onMobile,
   userPlatform,
   userAgent,
+  userBrowser,
   ipRegion,
   ipCountry
 ) => {
@@ -28,6 +29,7 @@ const getUser = async (
       onMobile: onMobile,
       userPlatform: userPlatform,
       userAgent: userAgent,
+      userBrowser: userBrowser,
       ipRegion: ipRegion,
       ipCountry: ipCountry,
     },
@@ -94,6 +96,7 @@ const ContextProvider = ({ children }) => {
     onMobile,
     userPlatform,
     userAgent,
+    userBrowser,
     ipRegion,
     ipCountry
   ) => {
@@ -107,6 +110,7 @@ const ContextProvider = ({ children }) => {
       onMobile,
       userPlatform,
       userAgent,
+      userBrowser,
       ipRegion,
       ipCountry
     );

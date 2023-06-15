@@ -251,6 +251,7 @@ const LOGIN_USER = gql`
     $onMobile: Boolean
     $userPlatform: String
     $userAgent: String
+    $userBrowser: String
     $ipRegion: String
     $ipCountry: String
   ) {
@@ -261,6 +262,7 @@ const LOGIN_USER = gql`
       onMobile: $onMobile
       userPlatform: $userPlatform
       userAgent: $userAgent
+      userBrowser: $userBrowser
       ipRegion: $ipRegion
       ipCountry: $ipCountry
     ) {
