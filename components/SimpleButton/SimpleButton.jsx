@@ -7,6 +7,7 @@ const SimpleButton = ({
   type,
   onClick,
   children,
+  disabled = false,
   tooltip,
   swiperClassName,
 }) => {
@@ -44,6 +45,7 @@ const SimpleButton = ({
       onClick={onClick}
       onMouseEnter={() => hoverStyle(bgColor, currentColor)}
       onMouseOut={() => hoverStyle(currentColor, bgColor)}
+      disabled={disabled}
     >
       {children}
       {name}

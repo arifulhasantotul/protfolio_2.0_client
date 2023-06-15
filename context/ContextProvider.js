@@ -1,5 +1,6 @@
 import { CURRENT_USER, LOGIN_USER } from "@/services/graphql/queries";
 import { failedToast } from "@/services/utils/toasts";
+
 import client from "apollo-client";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -14,6 +15,7 @@ const getUser = async (
   onMobile,
   userPlatform,
   userAgent,
+  userBrowser,
   ipRegion,
   ipCountry
 ) => {
@@ -28,6 +30,7 @@ const getUser = async (
       onMobile: onMobile,
       userPlatform: userPlatform,
       userAgent: userAgent,
+      userBrowser: userBrowser,
       ipRegion: ipRegion,
       ipCountry: ipCountry,
     },
@@ -44,6 +47,7 @@ const me = async () => {
 
 const ContextProvider = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
+
   const accessToken = cookies["portfolio_2_0"];
 
   const [screenSize, setScreenSize] = useState(undefined);
@@ -94,6 +98,7 @@ const ContextProvider = ({ children }) => {
     onMobile,
     userPlatform,
     userAgent,
+    userBrowser,
     ipRegion,
     ipCountry
   ) => {
@@ -107,17 +112,12 @@ const ContextProvider = ({ children }) => {
       onMobile,
       userPlatform,
       userAgent,
+      userBrowser,
       ipRegion,
       ipCountry
     );
     if (!foundUser) return;
     return foundUser;
-  };
-
-  const handleLogout = () => {
-    removeCookie("portfolio_2_0");
-    localStorage.removeItem("portfolioIdToken");
-    window.location.replace("/");
   };
 
   useEffect(() => {
@@ -177,7 +177,6 @@ const ContextProvider = ({ children }) => {
         setIsUserLoading,
         accessToken,
         backend_url,
-        handleLogout,
       }}
     >
       {children}

@@ -1,22 +1,65 @@
 import { useStateContext } from "@/context/ContextProvider";
+import { REMOVE_PROFILE_DEVICE } from "@/services/graphql/mutation";
+import { detectBrowser, detectDevice } from "@/services/utils/common";
+import { failedToast } from "@/services/utils/toasts";
 import styles from "@/styles/ThemeSettings.module.css";
+import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
 import { BsCheck } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
+import useSWR from "swr";
 import SimpleButton from "../SimpleButton/SimpleButton";
 import { themeColors } from "./themeColor";
 
 const ThemeSettings = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
+  const { darkTheme, currentColor, sidebar, setSidebar, setColor } =
+    useStateContext();
+
+  const ipDetailsRef = useRef(null);
+  const ipData = ipDetailsRef.current;
+
+  const [userId, setUserId] = useState("");
+
+  const httpFetcher = (url) => fetch(url).then((res) => res.json());
+
   const {
-    darkTheme,
-    currentColor,
-    sidebar,
-    setSidebar,
-    setColor,
-    handleLogout,
-  } = useStateContext();
+    data,
+    isLoading: isIPLoading,
+    error,
+  } = useSWR("http://ip-api.com/json/?fields=61439", httpFetcher);
 
   const router = useRouter();
+  const [removeDevice] = useMutation(REMOVE_PROFILE_DEVICE);
+
+  const handleLogout = async () => {
+    console.log("clicked");
+    try {
+      const browser = detectBrowser(navigator);
+      const { device, isMobile } = detectDevice(navigator);
+      const { data } = await removeDevice({
+        variables: {
+          userId: userId,
+          userIP: ipData?.query,
+          onMobile: isMobile,
+          userPlatform: device,
+          userAgent: navigator?.userAgent,
+          userBrowser: browser,
+          ipRegion: ipData?.regionName,
+          ipCountry: ipData?.country,
+        },
+      });
+
+      removeCookie("portfolio_2_0");
+      localStorage.removeItem("portfolioIdToken");
+      window.location.replace("/");
+    } catch (err) {
+      console.log("🚀 ~ file: ThemeSettings.jsx:48 ~ handleLogout ~ err:", err);
+      failedToast(darkTheme, "Failed to logout");
+    }
+  };
 
   const toggleSidebar = () => {
     setSidebar((prevState) => !prevState);
@@ -32,6 +75,13 @@ const ThemeSettings = () => {
   // css conditionalMode for dark mode
   const conditionalMode = darkTheme ? styles.dark : styles.light;
   const conditionalSidebar = sidebar ? "" : styles.inactive;
+
+  useEffect(() => {
+    const id = localStorage.getItem("portfolioIdToken");
+    setUserId(id || "");
+    ipDetailsRef.current = data;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -59,7 +109,11 @@ const ThemeSettings = () => {
             ))}
           </div>
           <div className={styles.profile_sec}>
-            <SimpleButton type="button" onClick={handleLogout}>
+            <SimpleButton
+              type="button"
+              onClick={handleLogout}
+              disabled={isIPLoading}
+            >
               Logout
             </SimpleButton>
             <SimpleButton type="button" onClick={goToProfile}>
