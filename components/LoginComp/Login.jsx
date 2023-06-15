@@ -1,7 +1,7 @@
 import DataLoading from "@/components/FetchingResult/DataLoading";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
-import { detectBrowser, detectMobile } from "@/services/utils/common";
+import { detectBrowser, detectDevice } from "@/services/utils/common";
 import { failedToast } from "@/services/utils/toasts";
 import styles from "@/styles/Login.module.css";
 import { Container } from "@mui/material";
@@ -44,7 +44,7 @@ const Login = ({ accessToken, userIP }) => {
     e.preventDefault();
     setIsSendingReq(true);
     const browserName = detectBrowser(navigator);
-    const { isMobile, device } = detectMobile(navigator);
+    const { isMobile, device } = detectDevice(navigator);
     try {
       const user = await customLoginUser(
         registerData?.email,

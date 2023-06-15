@@ -10,7 +10,7 @@ export const validArray = (array = []) => {
  * @Desktop_Laptop -
  */
 
-export const detectMobile = (navigator) => {
+export const detectDevice = (navigator) => {
   let device = "";
   let isMobile = false;
 
