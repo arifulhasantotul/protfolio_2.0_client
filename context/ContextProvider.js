@@ -50,6 +50,8 @@ const ContextProvider = ({ children }) => {
 
   const accessToken = cookies["portfolio_2_0"];
 
+  const [userIP, setUserIP] = useState(null);
+
   const [screenSize, setScreenSize] = useState(undefined);
 
   const [sidebar, setSidebar] = useState(false);
@@ -177,6 +179,8 @@ const ContextProvider = ({ children }) => {
         setIsUserLoading,
         accessToken,
         backend_url,
+        userIP,
+        setUserIP,
       }}
     >
       {children}
