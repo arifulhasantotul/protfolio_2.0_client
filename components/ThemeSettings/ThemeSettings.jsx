@@ -16,16 +16,23 @@ import { themeColors } from "./themeColor";
 const ThemeSettings = () => {
   const router = useRouter();
   const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
-  const { darkTheme, currentColor, sidebar, setSidebar, setColor } =
-    useStateContext();
+  const {
+    darkTheme,
+    currentColor,
+    sidebar,
+    setSidebar,
+    setColor,
+    userIP,
+    setUserIP,
+  } = useStateContext();
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(0);
 
   const [removeDevice] = useMutation(REMOVE_PROFILE_DEVICE);
   const ipDetailsRef = useRef(null);
-  const ipData = ipDetailsRef.current;
+
   console.log(
     "🚀 ~ file: ThemeSettings.jsx:25 ~ ThemeSettings ~ ipData:",
-    ipData
+    userIP
   );
 
   const [userId, setUserId] = useState("");
@@ -36,7 +43,11 @@ const ThemeSettings = () => {
     data,
     isLoading: isIPLoading,
     error,
-  } = useSWR("https://api.db-ip.com/v2/free/self", httpFetcher);
+  } = useSWR("https://api.ipify.org?format=json", httpFetcher);
+  console.log(
+    "🚀 ~ file: ThemeSettings.jsx:47 ~ ThemeSettings ~ isIPLoading:",
+    isIPLoading
+  );
 
   const handleLogout = async () => {
     try {
@@ -45,13 +56,15 @@ const ThemeSettings = () => {
       const { data } = await removeDevice({
         variables: {
           userId: userId,
-          userIP: ipData?.ipAddress,
+          userIP: userIP?.ip,
           onMobile: isMobile,
           userPlatform: device,
           userAgent: navigator?.userAgent,
           userBrowser: browser,
-          ipRegion: ipData?.city,
-          ipCountry: ipData?.countryName,
+          ipRegion: "ctg",
+          ipCountry: "BD",
+          // ipRegion: ipData?.city,
+          // ipCountry: ipData?.countryName,
         },
       });
 
@@ -81,10 +94,15 @@ const ThemeSettings = () => {
   const conditionalSidebar = sidebar ? "" : styles.inactive;
 
   useEffect(() => {
+    ipDetailsRef.current = data;
+    setUserIP(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isIPLoading]);
+
+  useEffect(() => {
     const id = localStorage.getItem("portfolioIdToken");
     const loggedIn = localStorage.getItem("isUserLoggedIn");
     setUserId(id || "");
-    ipDetailsRef.current = data;
     loggedIn ? setIsUserLoggedIn(1) : setIsUserLoggedIn(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -124,11 +142,7 @@ const ThemeSettings = () => {
                 Logout
               </SimpleButton>
             ) : (
-              <SimpleButton
-                type="button"
-                onClick={() => router.push("/login")}
-                disabled={isIPLoading}
-              >
+              <SimpleButton type="button" onClick={() => router.push("/login")}>
                 Login
               </SimpleButton>
             )}

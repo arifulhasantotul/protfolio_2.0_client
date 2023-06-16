@@ -2,7 +2,7 @@ import Login from "@/components/LoginComp/Login";
 import { getCookie } from "@/services/utils/cookieExtract";
 import Head from "next/head";
 
-export default function LoginPage({ accessToken, userIP }) {
+export default function LoginPage({ accessToken }) {
   return (
     <div className="page_wrapper">
       <Head>
@@ -12,7 +12,7 @@ export default function LoginPage({ accessToken, userIP }) {
       </Head>
 
       <main>
-        <Login accessToken={accessToken} userIP={userIP} />
+        <Login accessToken={accessToken} />
       </main>
     </div>
   );
@@ -37,13 +37,8 @@ export async function getServerSideProps(ctx) {
     };
   }
 
-  const url = "https://api.db-ip.com/v2/free/self";
-  const data = await fetch(url);
-  const resData = await data.json();
-
   return {
     props: {
-      userIP: resData,
       accessToken: accessToken,
     },
   };
