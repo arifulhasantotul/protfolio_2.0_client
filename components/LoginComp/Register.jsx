@@ -1,17 +1,15 @@
+import Countdown from "@/components/Countdown/Countdown";
+import CustomModal from "@/components/CustomModal/CustomModal";
 import DataLoading from "@/components/FetchingResult/DataLoading";
 import PasswordStrengthMeter from "@/components/PasswordStrengthMeter/PasswordStrengthMeter";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
+import { nextSpecificMillisecondsMinutes } from "@/services/utils/common";
 import {
   removeFromLocalStorage,
   saveToLocalStorage,
 } from "@/services/utils/temporarySave";
-import {
-  failedToast,
-  infoToast,
-  otpModal,
-  successToast,
-} from "@/services/utils/toasts";
+import { failedToast, infoToast, successToast } from "@/services/utils/toasts";
 import styles from "@/styles/Register.module.css";
 import { Container } from "@mui/material";
 import Link from "next/link";
@@ -24,6 +22,15 @@ const Register = () => {
   const router = useRouter();
   const { currentColor, darkTheme, screenSize } = useStateContext();
   const [sendingReq, setSendingReq] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
+  const [otp, setOtp] = useState("");
+  const [otpCreatedAt, setOtpCreatedAt] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+
   const [showPass, setShowPass] = useState({
     pass1: false,
     pass2: false,
@@ -56,9 +63,10 @@ const Register = () => {
     setShowPass((prevState) => ({ ...prevState, [pass]: !prevState[pass] }));
   };
 
-  const registerUser = async () => {
+  const registerUser = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     try {
-      const otp = await otpModal(darkTheme, registerData?.email);
       if (!otp) return failedToast(darkTheme, "Invalid OTP");
 
       const matchedOTP = await verifyOTP(otp, registerData?.email);
@@ -83,7 +91,6 @@ const Register = () => {
       });
 
       if (res) {
-        // console.log("✅ register user data", res);
         successToast(darkTheme, "Success!", "User registered successfully!");
         setRegisterData(initialState);
         router.push("/login");
@@ -92,6 +99,8 @@ const Register = () => {
     } catch (err) {
       console.log("❌ Error while registering user", err);
       failedToast(darkTheme, err?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -113,9 +122,12 @@ const Register = () => {
 
       // send otp to email
       const res = await getOtp(email);
+
       if (res) {
         successToast(darkTheme, "Success!", res);
-        await registerUser();
+        const time = res.split("at ")[1];
+        setOtpCreatedAt(time);
+        handleOpenModal();
       }
     } catch (err) {
       console.log("❌ ~ file: Register.js:121 ~ handleSubmit ~ err:", err);
@@ -265,6 +277,66 @@ const Register = () => {
           )}
         </form>
       </Container>
+
+      <CustomModal
+        open={openModal}
+        handleClose={() => console.log("click on close button")}
+        width="max-content"
+        padding="15px"
+      >
+        <form className={conditionalMode} onSubmit={registerUser}>
+          <div className={styles.full_width_inputs}>
+            <Countdown
+              msg="OTP will expire within"
+              endTime={nextSpecificMillisecondsMinutes(5, otpCreatedAt)}
+            />
+            <div className={styles.input_field}>
+              <label htmlFor="name">Provide OTP</label>
+              <input
+                style={{
+                  color: currentColor,
+                }}
+                type="text"
+                id="otp"
+                name="otp"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+            className={styles.submit_btn_wrapper}
+          >
+            <SimpleFormButton
+              name="Close"
+              type="button"
+              onClick={handleCloseModal}
+              tooltip="Create new user"
+            />
+            {!loading ? (
+              <SimpleFormButton
+                name="Sign UP"
+                type="submit"
+                onClick={registerUser}
+                tooltip="Create new user"
+              />
+            ) : (
+              <div
+                style={{
+                  marginTop: "10px",
+                }}
+              >
+                <DataLoading />
+              </div>
+            )}
+          </div>
+        </form>
+      </CustomModal>
     </div>
   );
 };

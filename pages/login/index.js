@@ -37,7 +37,7 @@ export async function getServerSideProps(ctx) {
     };
   }
 
-  const url = "http://ip-api.com/json/?fields=61439";
+  const url = "https://api.db-ip.com/v2/free/self";
   const data = await fetch(url);
   const resData = await data.json();
 
