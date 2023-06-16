@@ -12,6 +12,7 @@ import { useCookies } from "react-cookie";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 const Login = ({ accessToken, userIP }) => {
+  console.log("🚀 ~ file: Login.jsx:15 ~ Login ~ userIP:", userIP);
   const router = useRouter();
   const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
   const {
@@ -71,6 +72,7 @@ const Login = ({ accessToken, userIP }) => {
           // httpOnly: process.env.NEXT_PUBLIC_RUNNING !== "dev",
         });
         localStorage.setItem("portfolioIdToken", user?.userId);
+        localStorage.setItem("isUserLoggedIn", 1);
         window.location.replace("/dashboard");
       }
       setIsSendingReq(false);

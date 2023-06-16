@@ -7,20 +7,25 @@ import {
 import PasswordStrengthMeter from "@/components/PasswordStrengthMeter/PasswordStrengthMeter";
 import SimpleFormButton from "@/components/SimpleButton/SimpleFormButton";
 import { useStateContext } from "@/context/ContextProvider";
-import {
-  failedToast,
-  infoToast,
-  otpModal,
-  successToast,
-} from "@/services/utils/toasts";
+import { nextSpecificMillisecondsMinutes } from "@/services/utils/common";
+import { failedToast, infoToast, successToast } from "@/services/utils/toasts";
 import styles from "@/styles/ChangePassword.module.css";
 import { Container } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import Countdown from "../Countdown/Countdown";
+import CustomModal from "../CustomModal/CustomModal";
 
 const ChangePassword = () => {
   const router = useRouter();
+  const [otp, setOtp] = useState("");
+  const [otpCreatedAt, setOtpCreatedAt] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   const { currentColor, darkTheme, screenSize } = useStateContext();
   const [sendingReq, setSendingReq] = useState(false);
@@ -46,9 +51,11 @@ const ChangePassword = () => {
     setShowPass((prevState) => ({ ...prevState, [pass]: !prevState[pass] }));
   };
 
-  const changePassword = async () => {
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     try {
-      const otp = await otpModal(darkTheme, registerData?.email);
+      // const otp = await otpModal(darkTheme, registerData?.email);
 
       if (!otp) return failedToast(darkTheme, "OTP not provided");
 
@@ -79,10 +86,12 @@ const ChangePassword = () => {
       }
     } catch (err) {
       console.log(
-        "🚀 ~ file: ChangePassword.js:84 ~ changePassword ~ err:",
+        "🚀 ~ file: ChangePassword.js:84 ~ handleChangePassword ~ err:",
         err
       );
       failedToast(darkTheme, err?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,7 +123,11 @@ const ChangePassword = () => {
 
       const res = await getOtp(registerData?.email);
       if (res) {
-        await changePassword();
+        // await handleChangePassword();
+        successToast(darkTheme, "Success!", res);
+        const time = res.split("at ")[1];
+        setOtpCreatedAt(time);
+        handleOpenModal();
       }
     } catch (err) {
       console.log("❌ ~ file: ChangePassword.js:58 ~ handleSubmit ~ err:", err);
@@ -223,6 +236,66 @@ const ChangePassword = () => {
           )}
         </form>
       </Container>
+
+      <CustomModal
+        open={openModal}
+        handleClose={() => console.log("click on close button")}
+        width="max-content"
+        padding="15px"
+      >
+        <form className={conditionalMode} onSubmit={handleChangePassword}>
+          <div className={styles.full_width_inputs}>
+            <Countdown
+              msg="OTP will expire within"
+              endTime={nextSpecificMillisecondsMinutes(5, otpCreatedAt)}
+            />
+            <div className={styles.input_field}>
+              <label htmlFor="name">Provide OTP</label>
+              <input
+                style={{
+                  color: currentColor,
+                }}
+                type="text"
+                id="otp"
+                name="otp"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+            className={styles.submit_btn_wrapper}
+          >
+            <SimpleFormButton
+              name="Close"
+              type="button"
+              onClick={handleCloseModal}
+              tooltip="Create new user"
+            />
+            {!loading ? (
+              <SimpleFormButton
+                name="Update Pass"
+                type="submit"
+                onClick={handleChangePassword}
+                tooltip="Create new user"
+              />
+            ) : (
+              <div
+                style={{
+                  marginTop: "10px",
+                }}
+              >
+                <DataLoading />
+              </div>
+            )}
+          </div>
+        </form>
+      </CustomModal>
     </div>
   );
 };

@@ -67,3 +67,55 @@ export const detectBrowser = (navigator) => {
 
   return browserName;
 };
+
+//
+export const nextSpecificMinutes = (nextMinutes = 0, startTime) => {
+  // NOTE: startTime format should be like this "10:00:00 AM";
+
+  const [hr, min, sec] = startTime.split(":");
+  const splitSec = sec.split(" ")[0];
+  console.log(hr, min, splitSec);
+
+  // Define the target time
+  var targetTime = new Date();
+  targetTime.setHours(+hr);
+  targetTime.setMinutes(+min);
+  targetTime.setSeconds(+splitSec);
+  targetTime.setMilliseconds(0);
+
+  // Add 5 minutes to the target time
+  var nextFiveMinutes = new Date(targetTime.getTime() + 5 * 60000); // 5 minutes = 5 * 60 seconds * 1000 milliseconds
+
+  // Extract the components of the nextFiveMinutes time
+  var hours = nextFiveMinutes.getHours();
+  var minutes = nextFiveMinutes.getMinutes();
+  var seconds = nextFiveMinutes.getSeconds();
+
+  // Format the time in the desired format (e.g., "hh:mm:ss AM/PM")
+  var formattedTime =
+    (hours % 12) +
+    ":" +
+    (minutes < 10 ? "0" : "") +
+    minutes +
+    ":" +
+    (seconds < 10 ? "0" : "") +
+    seconds +
+    " " +
+    (hours < 12 ? "AM" : "PM");
+
+  return `${formattedTime}`;
+};
+
+export const currentMillisecondsMinutes = (startTime) => {
+  if (!startTime) return null;
+  let s_time = new Date(startTime);
+  let milliseconds = s_time.getTime();
+  return milliseconds;
+};
+
+export const nextSpecificMillisecondsMinutes = (nextMinutes, startTime) => {
+  if (!startTime) return null;
+  let s_time = new Date(startTime);
+  let milliseconds = s_time.getTime() + parseInt(nextMinutes) * 60000;
+  return milliseconds;
+};

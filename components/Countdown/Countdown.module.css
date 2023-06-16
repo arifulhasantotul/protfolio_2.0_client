@@ -1,0 +1,56 @@
+.countdown_comp {
+  text-align: center;
+}
+.timer_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.timer_segment {
+  width: 70px;
+  height: 70px;
+  text-align: center;
+  border-radius: 5px;
+  margin: 5px;
+  margin-top: 10px;
+}
+
+.light .timer_segment {
+  background: var(--bg_light_btn);
+  box-shadow: var(--bg_light_btn_shadow);
+}
+
+.dark .timer_segment {
+  background: var(--bg_dark_btn);
+  box-shadow: var(--bg_dark_btn_shadow);
+}
+
+.time {
+  font-size: var(--FS_lg);
+  font-weight: 500;
+}
+
+.label {
+  margin-top: 5px;
+  font-size: var(--FS_sm);
+}
+
+.light .label {
+  border-top: 1px solid var(--dark_text);
+  color: var(--dark_text);
+}
+
+.dark .label {
+  border-top: 1px solid var(--light_text);
+  color: var(--light_text);
+}
+
+@media (max-width: 360px) {
+  .timer_wrapper {
+    max-width: 90%;
+    display: grid;
+    grid-template-columns: 80px 80px;
+  }
+}
