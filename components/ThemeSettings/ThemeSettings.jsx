@@ -1,11 +1,11 @@
 import { useStateContext } from "@/context/ContextProvider";
 import { REMOVE_PROFILE_DEVICE } from "@/services/graphql/mutation";
 import { detectBrowser, detectDevice } from "@/services/utils/common";
-import { failedToast } from "@/services/utils/toasts";
+import { failedToast, infoToast } from "@/services/utils/toasts";
 import styles from "@/styles/ThemeSettings.module.css";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { BsCheck } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
@@ -16,23 +16,15 @@ import { themeColors } from "./themeColor";
 const ThemeSettings = () => {
   const router = useRouter();
   const [cookies, setCookie, removeCookie] = useCookies(["portfolio_2_0"]);
-  const {
-    darkTheme,
-    currentColor,
-    sidebar,
-    setSidebar,
-    setColor,
-    userIP,
-    setUserIP,
-  } = useStateContext();
+  const { darkTheme, currentColor, sidebar, setSidebar, setColor, userIPRef } =
+    useStateContext();
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(0);
 
   const [removeDevice] = useMutation(REMOVE_PROFILE_DEVICE);
-  const ipDetailsRef = useRef(null);
 
   console.log(
     "🚀 ~ file: ThemeSettings.jsx:25 ~ ThemeSettings ~ ipData:",
-    userIP
+    userIPRef.current
   );
 
   const [userId, setUserId] = useState("");
@@ -56,15 +48,10 @@ const ThemeSettings = () => {
       const { data } = await removeDevice({
         variables: {
           userId: userId,
-          userIP: userIP?.ip,
           onMobile: isMobile,
           userPlatform: device,
           userAgent: navigator?.userAgent,
           userBrowser: browser,
-          ipRegion: "ctg",
-          ipCountry: "BD",
-          // ipRegion: ipData?.city,
-          // ipCountry: ipData?.countryName,
         },
       });
 
@@ -75,6 +62,18 @@ const ThemeSettings = () => {
     } catch (err) {
       console.log("🚀 ~ file: ThemeSettings.jsx:48 ~ handleLogout ~ err:", err);
       failedToast(darkTheme, "Failed to logout");
+    }
+  };
+
+  const goToLoginPage = () => {
+    if (userIPRef?.current?.ip) {
+      router.push("/login");
+    } else {
+      infoToast(
+        darkTheme,
+        "Fetching Data!",
+        "Please wait fetching some data..."
+      );
     }
   };
 
@@ -94,8 +93,7 @@ const ThemeSettings = () => {
   const conditionalSidebar = sidebar ? "" : styles.inactive;
 
   useEffect(() => {
-    ipDetailsRef.current = data;
-    setUserIP(data);
+    userIPRef.current = data;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isIPLoading]);
 
@@ -142,7 +140,7 @@ const ThemeSettings = () => {
                 Logout
               </SimpleButton>
             ) : (
-              <SimpleButton type="button" onClick={() => router.push("/login")}>
+              <SimpleButton type="button" onClick={goToLoginPage}>
                 Login
               </SimpleButton>
             )}

@@ -252,8 +252,6 @@ const LOGIN_USER = gql`
     $userPlatform: String
     $userAgent: String
     $userBrowser: String
-    $ipRegion: String
-    $ipCountry: String
   ) {
     loginUser(
       email: $email
@@ -263,8 +261,6 @@ const LOGIN_USER = gql`
       userPlatform: $userPlatform
       userAgent: $userAgent
       userBrowser: $userBrowser
-      ipRegion: $ipRegion
-      ipCountry: $ipCountry
     ) {
       userId
       token
