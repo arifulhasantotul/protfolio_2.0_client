@@ -38,6 +38,7 @@ export async function getServerSideProps(ctx) {
   }
 
   const url = "https://api.db-ip.com/v2/free/self";
+  // const url = "https://api.ipify.org?format=json";
   const data = await fetch(url);
   const resData = await data.json();
 
