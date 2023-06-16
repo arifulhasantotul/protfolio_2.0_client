@@ -121,23 +121,17 @@ const UPDATE_PROFILE_IMAGE = gql`
 const REMOVE_PROFILE_DEVICE = gql`
   mutation RemoveDevice(
     $userId: ID!
-    $userIP: String
     $onMobile: Boolean
     $userPlatform: String
     $userAgent: String
     $userBrowser: String
-    $ipRegion: String
-    $ipCountry: String
   ) {
     removeDevice(
       userId: $userId
-      userIP: $userIP
       onMobile: $onMobile
       userPlatform: $userPlatform
       userAgent: $userAgent
       userBrowser: $userBrowser
-      ipRegion: $ipRegion
-      ipCountry: $ipCountry
     )
   }
 `;
@@ -279,6 +273,7 @@ export {
   DELETE_REVIEW,
   DELETE_TAG,
   GET_OTP,
+  REMOVE_PROFILE_DEVICE,
   UPDATE_BLOG,
   UPDATE_CATEGORY,
   UPDATE_PROFILE_IMAGE,
@@ -287,5 +282,4 @@ export {
   UPDATE_TAG,
   UPDATE_USER_DETAILS,
   UPDATE_USER_PASS,
-  REMOVE_PROFILE_DEVICE,
 };

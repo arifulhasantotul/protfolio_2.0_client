@@ -20,9 +20,12 @@ const Login = ({ accessToken }) => {
     screenSize,
     customLoginUser,
     setLoginUserData,
-    userIP,
+    userIPRef,
   } = useStateContext();
-  console.log("🚀 ~ file: Login.jsx:15 ~ Login ~ userIP:", userIP);
+  console.log(
+    "🚀 ~ file: Login.jsx:15 ~ Login ~ userIP:",
+    userIPRef.current?.ip
+  );
   const [showPass, setShowPass] = useState(false);
   const [isSendingReq, setIsSendingReq] = useState(false);
   const initialState = {
@@ -51,15 +54,11 @@ const Login = ({ accessToken }) => {
       const user = await customLoginUser(
         registerData?.email,
         registerData?.password,
-        userIP?.ip,
+        userIPRef.current?.ip,
         isMobile,
         device,
         navigator?.userAgent,
-        browserName,
-        "ctg",
-        "BD"
-        // userIP?.city,
-        // userIP?.countryName
+        browserName
       );
       setLoginUserData((prevState) => ({
         ...prevState,

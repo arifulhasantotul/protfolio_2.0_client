@@ -3,7 +3,7 @@ import { failedToast } from "@/services/utils/toasts";
 
 import client from "apollo-client";
 import { useRouter } from "next/router";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 
 const StateContext = createContext();
@@ -15,9 +15,7 @@ const getUser = async (
   onMobile,
   userPlatform,
   userAgent,
-  userBrowser,
-  ipRegion,
-  ipCountry
+  userBrowser
 ) => {
   if (!email || !password) return;
 
@@ -31,8 +29,6 @@ const getUser = async (
       userPlatform: userPlatform,
       userAgent: userAgent,
       userBrowser: userBrowser,
-      ipRegion: ipRegion,
-      ipCountry: ipCountry,
     },
   });
   return data.loginUser;
@@ -50,7 +46,7 @@ const ContextProvider = ({ children }) => {
 
   const accessToken = cookies["portfolio_2_0"];
 
-  const [userIP, setUserIP] = useState(null);
+  const userIPRef = useRef(null);
 
   const [screenSize, setScreenSize] = useState(undefined);
 
@@ -100,9 +96,7 @@ const ContextProvider = ({ children }) => {
     onMobile,
     userPlatform,
     userAgent,
-    userBrowser,
-    ipRegion,
-    ipCountry
+    userBrowser
   ) => {
     if (!email || !password)
       return failedToast(darkTheme, "Please fill all fields");
@@ -114,9 +108,7 @@ const ContextProvider = ({ children }) => {
       onMobile,
       userPlatform,
       userAgent,
-      userBrowser,
-      ipRegion,
-      ipCountry
+      userBrowser
     );
     if (!foundUser) return;
     return foundUser;
@@ -179,8 +171,7 @@ const ContextProvider = ({ children }) => {
         setIsUserLoading,
         accessToken,
         backend_url,
-        userIP,
-        setUserIP,
+        userIPRef,
       }}
     >
       {children}
