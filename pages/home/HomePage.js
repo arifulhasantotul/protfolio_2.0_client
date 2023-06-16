@@ -17,6 +17,7 @@ import client from "apollo-client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { fakeData } from "../../test-data/sliderData";
+import useSWR from "swr";
 
 export const getAllReview = async () => {
   const { data } = await client.query({
@@ -26,11 +27,28 @@ export const getAllReview = async () => {
 };
 
 const HomePage = ({ projects, blogs, accessToken }) => {
-  const { darkTheme } = useStateContext();
+  const { darkTheme, userIPRef } = useStateContext();
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
   // const [addedReview, setAddedReview] = useState(false);
   const [allReview, setAllReview] = useState([]);
+
+  const httpFetcher = (url) => fetch(url).then((res) => res.json());
+
+  const {
+    data,
+    isLoading: isIPLoading,
+    error,
+  } = useSWR("https://api.ipify.org?format=json", httpFetcher);
+  console.log(
+    "🚀 ~ file: ThemeSettings.jsx:47 ~ Homepage ~ isIPLoading:",
+    userIPRef.current
+  );
+
+  useEffect(() => {
+    userIPRef.current = data;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isIPLoading]);
 
   useEffect(() => {
     getAllReview()
