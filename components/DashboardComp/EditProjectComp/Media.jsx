@@ -40,7 +40,6 @@ const EditMedia = ({ projectData, nextTab, accessToken, user }) => {
 
   const checkValidation = (e) => {
     const { name, value } = e.target;
-    console.log(value);
     if (name === "server_repo") {
       if (!value) {
         setErrFormData((prv) => ({ ...prv, [name]: "" }));

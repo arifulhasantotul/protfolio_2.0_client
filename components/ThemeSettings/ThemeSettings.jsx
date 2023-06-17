@@ -22,11 +22,6 @@ const ThemeSettings = () => {
 
   const [removeDevice] = useMutation(REMOVE_PROFILE_DEVICE);
 
-  console.log(
-    "🚀 ~ file: ThemeSettings.jsx:25 ~ ThemeSettings ~ ipData:",
-    userIPRef.current
-  );
-
   const [userId, setUserId] = useState("");
 
   const httpFetcher = (url) => fetch(url).then((res) => res.json());
@@ -36,10 +31,6 @@ const ThemeSettings = () => {
     isLoading: isIPLoading,
     error,
   } = useSWR("https://api.ipify.org?format=json", httpFetcher);
-  console.log(
-    "🚀 ~ file: ThemeSettings.jsx:47 ~ ThemeSettings ~ isIPLoading:",
-    isIPLoading
-  );
 
   const handleLogout = async () => {
     try {
