@@ -74,7 +74,6 @@ export const nextSpecificMinutes = (nextMinutes = 0, startTime) => {
 
   const [hr, min, sec] = startTime.split(":");
   const splitSec = sec.split(" ")[0];
-  console.log(hr, min, splitSec);
 
   // Define the target time
   var targetTime = new Date();

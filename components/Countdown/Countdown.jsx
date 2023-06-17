@@ -4,7 +4,6 @@ import { useStateContext } from "@/context/ContextProvider";
 import styles from "./Countdown.module.css";
 
 const Countdown = ({ msg = "Expire within", endTime }) => {
-  console.log("🚀 ~ file: Countdown.jsx:2 ~ Countdown ~ endTime:", endTime);
   const { currentColor, darkTheme } = useStateContext();
 
   const [days, setDays] = useState(0);

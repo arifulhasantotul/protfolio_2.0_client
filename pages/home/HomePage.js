@@ -40,10 +40,6 @@ const HomePage = ({ projects, blogs, accessToken }) => {
     isLoading: isIPLoading,
     error,
   } = useSWR("https://api.ipify.org?format=json", httpFetcher);
-  console.log(
-    "🚀 ~ file: ThemeSettings.jsx:47 ~ Homepage ~ isIPLoading:",
-    userIPRef.current
-  );
 
   useEffect(() => {
     userIPRef.current = data;

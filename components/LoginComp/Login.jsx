@@ -22,10 +22,7 @@ const Login = ({ accessToken }) => {
     setLoginUserData,
     userIPRef,
   } = useStateContext();
-  console.log(
-    "🚀 ~ file: Login.jsx:15 ~ Login ~ userIP:",
-    userIPRef.current?.ip
-  );
+
   const [showPass, setShowPass] = useState(false);
   const [isSendingReq, setIsSendingReq] = useState(false);
   const initialState = {

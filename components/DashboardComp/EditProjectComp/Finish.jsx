@@ -62,10 +62,7 @@ const EditFinish = ({
 
   const [richTextValue, setRichTextValue] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
-  console.log(
-    "🚀 ~ file: Finish.jsx:62 ~ selectedCategories:",
-    selectedCategories
-  );
+
   const [selectedCategoriesId, setSelectedCategoriesId] = useState([]);
   const [imagesURL, setImagesURL] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);

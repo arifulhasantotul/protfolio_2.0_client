@@ -15,7 +15,6 @@ const singleUpload = async (file) => {
       }
     );
     const file = await res.json();
-    console.log(file);
     return file;
   } catch (err) {
     console.log("Cloudinary error", err);
@@ -39,7 +38,6 @@ const singleDelete = async (public_id = "liraaj0yb0pjuwerktt2") => {
       }
     );
     const file = await res.json();
-    console.log("delete file", file);
     return file;
   } catch (err) {
     console.log("Cloudinary error", err);
@@ -47,7 +45,6 @@ const singleDelete = async (public_id = "liraaj0yb0pjuwerktt2") => {
 };
 
 const imageSizeCheck = (file) => {
-  console.log(file);
   if (file.size > 1000000) {
     return false;
   }
