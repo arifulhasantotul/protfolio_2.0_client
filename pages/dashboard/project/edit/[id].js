@@ -2,7 +2,7 @@ import EditProjectComponent from "@/components/DashboardComp/EditProjectComp";
 import {
   ALL_CATEGORIES_NAME,
   ALL_TAGS_NAME,
-  ALL_USERS_NAME,
+  ALL_USERS,
   GET_PROJECT_BY_ID,
 } from "@/services/graphql/queries";
 import { currentUserData, getCookie } from "@/services/utils/cookieExtract";
@@ -65,7 +65,7 @@ export async function getServerSideProps({ params, req, res }) {
   });
 
   const { data: clientData } = await client.query({
-    query: ALL_USERS_NAME,
+    query: ALL_USERS,
   });
 
   const { data: projectData } = await client.query({

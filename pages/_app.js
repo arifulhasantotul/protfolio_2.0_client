@@ -24,10 +24,8 @@ function MyApp({ Component, pageProps, router }) {
 
   // this useEffect is for the page transition && page loading
   useEffect(() => {
-    const handleStart = (url) =>
-      url !== routerPath ? setSsrRendering(true) : setSsrRendering(false);
-    const handleComplete = (url) =>
-      url === routerPath ? setSsrRendering(false) : setSsrRendering(true);
+    const handleStart = () => setSsrRendering(true);
+    const handleComplete = () => setSsrRendering(false);
 
     nextRouter.events.on("routeChangeStart", handleStart);
     nextRouter.events.on("routeChangeComplete", handleComplete);

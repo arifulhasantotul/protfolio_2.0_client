@@ -34,6 +34,7 @@ const ThemeSettings = () => {
 
   const handleLogout = async () => {
     try {
+      removeCookie("portfolio_2_0");
       const browser = detectBrowser(navigator);
       const { device, isMobile } = detectDevice(navigator);
       const { data } = await removeDevice({
@@ -46,7 +47,6 @@ const ThemeSettings = () => {
         },
       });
 
-      removeCookie("portfolio_2_0");
       localStorage.removeItem("portfolioIdToken");
       localStorage.removeItem("isUserLoggedIn");
       window.location.replace("/");
