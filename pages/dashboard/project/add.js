@@ -2,7 +2,7 @@ import AddProjectComponent from "@/components/DashboardComp/AddProjectComp";
 import {
   ALL_CATEGORIES_NAME,
   ALL_TAGS_NAME,
-  ALL_USERS_NAME,
+  ALL_USERS,
 } from "@/services/graphql/queries";
 import { currentUserData, getCookie } from "@/services/utils/cookieExtract";
 import client from "apollo-client";
@@ -61,7 +61,7 @@ export async function getServerSideProps({ req, res }) {
   });
 
   const clientData = await client.query({
-    query: ALL_USERS_NAME,
+    query: ALL_USERS,
   });
 
   return {

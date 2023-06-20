@@ -162,21 +162,30 @@ const GET_PROJECT_BY_ID = gql`
 
 // -------------- USER --------------------------
 
-const ALL_USERS_NAME = gql`
+const ALL_USERS = gql`
   query ListUser {
     listUser {
       id
       name
+      email
+      avatar
       phone
       role
-      email
-      dialCode
-      designation
-      avatar
-      cloudinary_id
       flag
-      country
+      dialCode
       numLen
+      designation
+      cloudinary_id
+      country
+      devices {
+        userIP
+        onMobile
+        userPlatform
+        userAgent
+        userBrowser
+        ipCity
+        ipCountry
+      }
     }
   }
 `;
@@ -285,7 +294,7 @@ export {
   ALL_REVIEWS,
   ALL_TAGS,
   ALL_TAGS_NAME,
-  ALL_USERS_NAME,
+  ALL_USERS,
   CURRENT_USER,
   GET_PROJECT_BY_ID,
   GET_USER,
