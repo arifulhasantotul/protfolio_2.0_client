@@ -2,7 +2,11 @@ import { useStateContext } from "@/context/ContextProvider";
 import { useEffect, useState } from "react";
 import styles from "./CircularProgressBar.module.css";
 
-const CircularProgressBar = ({ percentage = 45 }) => {
+const CircularProgressBar = ({
+  percentage = 45,
+  title = "HTML",
+  color = "#555",
+}) => {
   const { currentColor, darkTheme } = useStateContext();
   const [counter, setCounter] = useState(0);
 
@@ -26,38 +30,56 @@ const CircularProgressBar = ({ percentage = 45 }) => {
 
   const conditionalMode = darkTheme ? styles.dark : styles.light;
   return (
-    <div className={`${conditionalMode} ${styles.progress}`}>
-      <div className={styles.outer}>
-        <div className={styles.inner}>
-          <div className={styles.number}>{counter}%</div>
+    <>
+      <div className={`${conditionalMode} ${styles.progress}`}>
+        <div className={styles.outer}>
+          <div className={styles.inner}>
+            <div
+              style={{
+                color: color || currentColor,
+              }}
+              className={styles.number}
+            >
+              {counter}%
+            </div>
+          </div>
         </div>
-      </div>
 
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        width="160px"
-        height="160px"
-        className={styles.svg}
-      >
-        <defs>
-          <linearGradient id="GradientColor">
-            <stop offset="0%" stopColor="#e91e63" />
-            <stop offset="100%" stopColor="#673ab7" />
-          </linearGradient>
-        </defs>
-        <circle
-          className={styles.circle}
-          cx="80"
-          cy="80"
-          r="70"
-          strokeLinecap="round"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.1"
+          width="160px"
+          height="160px"
+          className={styles.svg}
+        >
+          <defs>
+            <linearGradient id="GradientColor">
+              <stop offset="0%" stopColor="#22d1EE" />
+              <stop offset="100%" stopColor="#FFE350" />
+            </linearGradient>
+          </defs>
+          <circle
+            className={styles.circle}
+            cx="80"
+            cy="80"
+            r="70"
+            strokeLinecap="round"
+            style={{
+              strokeDashoffset: strokeDashoffsetVal,
+              stroke: color || currentColor,
+            }}
+          />
+        </svg>
+        <p
           style={{
-            strokeDashoffset: strokeDashoffsetVal,
+            color: color || currentColor,
           }}
-        />
-      </svg>
-    </div>
+          className={styles.title}
+        >
+          {title}
+        </p>
+      </div>
+    </>
   );
 };
 

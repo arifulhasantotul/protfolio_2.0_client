@@ -39,9 +39,10 @@
 }
 
 .number {
-  font-size: 15px;
+  font-size: 25px;
   font-weight: 600;
   color: #555;
+  transition: 0.2s;
 }
 
 .svg {
@@ -56,6 +57,19 @@
   stroke-width: 20px;
   stroke-dasharray: 472;
   animation: progress 2s linear forwards;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #555;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.progress:hover .number,
+.circle:hover .number {
+  font-size: 38px;
 }
 
 @keyframes progress {
