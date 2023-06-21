@@ -1,0 +1,79 @@
+.progress {
+  width: 160px;
+  height: 160px;
+  position: relative;
+}
+
+.outer {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  padding: 20px;
+}
+.light .outer {
+  box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
+    -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+}
+.dark .outer {
+  box-shadow: 6px 6px 18px #0f1012, -6px -6px 18px #33383e;
+}
+
+.inner {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.light .inner {
+  box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2),
+    inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7),
+    -0.5px -0.5px 0px rgba(255, 255, 255, 1),
+    0.5px 0.5px 0px rgba(0, 0, 0, 0.15), 0px 12px 10px -10px rgba(0, 0, 0, 0.05);
+}
+
+.dark .inner {
+  box-shadow: inset 7px 7px 14px #101113, inset -7px -7px 14px #32373d;
+}
+
+.number {
+  font-size: 25px;
+  font-weight: 600;
+  color: #555;
+  transition: 0.2s;
+}
+
+.svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.circle {
+  fill: none;
+  stroke: url(#GradientColor);
+  stroke-width: 20px;
+  stroke-dasharray: 472;
+  animation: progress 2s linear forwards;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #555;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.progress:hover .number,
+.circle:hover .number {
+  font-size: 38px;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dashoffset: 472;
+  }
+}
