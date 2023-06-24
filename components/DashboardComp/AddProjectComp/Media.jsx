@@ -3,6 +3,7 @@ import { useStateContext } from "@/context/ContextProvider";
 import { saveToLocalStorage } from "@/services/utils/temporarySave";
 import { failedToast, infoToast } from "@/services/utils/toasts";
 import styles from "@/styles/ProjectForm.module.css";
+import { Checkbox } from "@mui/material";
 import { useEffect, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 
@@ -17,6 +18,7 @@ const Media = ({ nextTab, accessToken, user }) => {
     server_repo: "",
   };
 
+  const [isOfficeProject, setIsOfficeProject] = useState(false);
   const [mediaData, setMediaData] = useState(initialData);
   const [errFormData, setErrFormData] = useState(initialData);
   const [imagesURL, setImagesURL] = useState([]);
@@ -40,8 +42,8 @@ const Media = ({ nextTab, accessToken, user }) => {
 
   const checkValidation = (e) => {
     const { name, value } = e.target;
-    console.log(value);
-    if (name === "server_repo") {
+
+    if (name === "server_repo" || name === "thumb_img") {
       if (!value) {
         setErrFormData((prv) => ({ ...prv, [name]: "" }));
       } else if (!value.startsWith("https://")) {
@@ -98,6 +100,7 @@ const Media = ({ nextTab, accessToken, user }) => {
         return;
       }
       const newData = {
+        isOfficeProject: isOfficeProject || false,
         thumb_img: mediaData?.thumb_img || "",
         sub_images: imagesURL || [],
         live_site: mediaData?.live_site || "",
@@ -138,6 +141,7 @@ const Media = ({ nextTab, accessToken, user }) => {
         server_repo: mediaData?.server_repo,
       });
       setImagesURL(mediaData?.sub_images);
+      setIsOfficeProject(mediaData?.isOfficeProject);
     }
   }, []);
 
@@ -273,6 +277,27 @@ const Media = ({ nextTab, accessToken, user }) => {
         {errFormData?.server_repo && (
           <p className={styles.error}> &#9888; {errFormData?.server_repo}</p>
         )}
+
+        <div className={styles.input_field}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "10px",
+            }}
+          >
+            <Checkbox
+              checked={isOfficeProject}
+              onChange={(e) => setIsOfficeProject(e.target.checked)}
+              id="isOfficeProject"
+              color="success"
+              inputProps={{
+                "aria-label": "isOfficeProject",
+              }}
+            />
+            <label htmlFor="isOfficeProject">Office Project?</label>
+          </div>
+        </div>
         {/* Submit button */}
         <div className={styles.submit_btn_wrapper}>
           <SimpleFormButton name="Previous" onClick={() => nextTab(1)} />

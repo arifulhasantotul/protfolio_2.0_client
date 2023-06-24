@@ -56,6 +56,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
   const [imagesURL, setImagesURL] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedTagsId, setSelectedTagsId] = useState([]);
+  const [isOfficeProject, setIsOfficeProject] = useState(false);
 
   // matching two arrays for showing selected items
   const getMatch = (arrayOfObj, arrayOfId, setArrayFunc) => {
@@ -77,6 +78,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
       const newData = {
         ...finishData,
         sub_images: imagesURL,
+        isOfficeProject: isOfficeProject,
       };
       const { data } = await createProject({
         variables: {
@@ -87,6 +89,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
       if (data?.createProject?.id) {
         successToast(darkTheme, "Project created successfully. 😊");
         localStorage.removeItem("portfolioAddProjectBasic");
+        localStorage.removeItem("portfolioAddProjectMedia");
         nextTab(1);
       }
     } catch (err) {
@@ -127,6 +130,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
       server_repo: mediaData?.server_repo,
     });
 
+    setIsOfficeProject(mediaData?.isOfficeProject);
     setSelectedCategoriesId(parsedContent?.categoriesId);
     setSelectedTagsId(parsedContent?.tagsId);
     setRichTextValue(parsedContent?.des);
@@ -370,7 +374,7 @@ const Finish = ({ categories, tags, clients, nextTab, accessToken, user }) => {
         <div className={styles.submit_btn_wrapper}>
           <SimpleFormButton name="Previous" onClick={() => nextTab(2)} />
           <SimpleFormButton
-            name="Next"
+            name="Create"
             type="submit"
             onClick={handleSubmit}
             tooltip="Save & Go to next page"
