@@ -3,7 +3,6 @@ import { activeURI } from "./services/utils/devVarExport";
 
 const client = new ApolloClient({
   uri: `${activeURI}/graphql`,
-  // uri: "https://countries.trevorblades.com",
   cache: new InMemoryCache(),
   headers: {
     fetchOptions: {
